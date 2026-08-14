@@ -1,5 +1,5 @@
 {
-  "spec": "farebox-offer/0.1",
+  "spec": "farebox-offer/0.2",
   "staticSnapshot": true,
   "offer": {
     "name": "KnownFix",
@@ -13,11 +13,12 @@
   },
   "backend": {
     "status": "live-ephemeral",
-    "url": "https://legal-wombats-mix.loca.lt",
+    "url": "https://some-cities-melt.loca.lt",
+    "healthCheckedThisBuild": true,
     "requiredHeaders": {
       "bypass-tunnel-reminder": "1"
     },
-    "note": "Live now, but the URL rotates and dies with the operator machine. If it stops responding, re-read this document — do not pay while it is down."
+    "note": "Health-checked live at build time, but this URL rotates and dies with the operator machine. If it stops responding, re-read this document before paying — never pay while it is down."
   },
   "settlement": {
     "scheme": "evm-payment",
@@ -29,6 +30,7 @@
     "proofHeader": "x-payment-tx",
     "route": "GET {backend}/fix/{id} -> 402; pay; retry with proofHeader -> 200",
     "rules": [
+      "only purchase when backend.status is 'live-ephemeral' AND backend.url is non-null",
       "one mined payment of >= perFixWei to payTo redeems exactly one fix request",
       "a tx hash can never be redeemed twice",
       "alternative: day-pass tokens via the hmac-token scheme, issued by the operator after checkout"

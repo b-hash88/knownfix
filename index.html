@@ -50,13 +50,39 @@ button.copy{font-size:11px;border:1px solid #C9CFCC;background:none;color:#5C647
 <h2 id="fixes">Fixes</h2>
 <p><small>35 verified fixes for real dev errors. Search is free, three are free in full, the rest are 0.00002 ETH on Base (~$0.08). Confirm the signature is your error before buying; delivery includes cause, remedy, and how it was verified.</small></p>
 <input id="q" type="search" placeholder="filter by error text, tag, or title…" aria-label="Filter fixes">
-<section class="cat"><h2>npm &amp; packages <small>(6)</small></h2>
-<article class="fix"><h3><a href="./fixes/hardhat-verify-peer-conflict.html">npm ERESOLVE installing @nomicfoundation/hardhat-verify with Hardhat 2</a></h3>
-<pre><code>peer hardhat@"^3.12.0" from @nomicfoundation/hardhat-verify</code></pre>
-<p><small>npm · hardhat · dependencies — verified-in-production</small></p></article>
+<section class="cat"><h2>GitHub &amp; CI <small>(9)</small></h2>
 <article class="fix"><h3><a href="./fixes/npm-install-silent-failure.html">npm install 'succeeded' but the package is not there</a></h3>
 <pre><code>Cannot find module 'X' immediately after npm i X appeared to succeed</code></pre>
 <p><small>npm · dependencies · ci — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-pages-deploy-lag.html">File 404s on GitHub Pages for a minute or two after a successful push</a></h3>
+<pre><code>fresh push visible in repo but 404 on the pages URL</code></pre>
+<p><small>github-pages · deploy · ci — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-push-workflow-scope-rejected.html">git push rejected: OAuth App cannot create/update workflow without workflow scope</a></h3>
+<pre><code>! [remote rejected] main -&gt; main (refusing to allow an OAuth App to create or update workflow `.github/workflows/x.yml` without `workflow` scope)</code></pre>
+<p><small>github · git · gh-cli · github-actions · auth — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-actions-unresolved-action-version.html">GitHub Actions: Unable to resolve action, unable to find version</a></h3>
+<pre><code>##[error]Unable to resolve action `actions/checkout@v99`, unable to find version `v99`</code></pre>
+<p><small>github-actions · ci · workflow — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-actions-token-permissions-403.html">GitHub Actions: git push in a workflow fails 403 (exit code 128)</a></h3>
+<pre><code>fatal: unable to access '...': The requested URL returned error: 403 ... Process completed with exit code 128</code></pre>
+<p><small>github-actions · ci · permissions · github-token — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-actions-setup-node-cache-no-lockfile.html">actions/setup-node cache fails: Dependencies lock file is not found</a></h3>
+<pre><code>Dependencies lock file is not found in ... Supported file patterns: package-lock.json,npm-shrinkwrap.json,yarn.lock</code></pre>
+<p><small>github-actions · ci · setup-node · cache · npm — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-actions-node20-deprecation-runner.html">GitHub Actions warns Node 20 is deprecated, running with Node 24 by default</a></h3>
+<pre><code>Node 20 is being deprecated. This workflow is running with Node 24 by default. ... ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true</code></pre>
+<p><small>github-actions · ci · node · setup-node · deprecation — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-actions-skip-ci-no-run.html">How to skip a GitHub Actions run for a commit ([skip ci])</a></h3>
+<pre><code>a pushed commit should NOT trigger any workflow run</code></pre>
+<p><small>github-actions · ci · skip-ci — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-actions-invalid-workflow-yaml.html">GitHub Actions: workflow run is named by its file path and fails instantly (invalid YAML)</a></h3>
+<pre><code>a run appears named `.github/workflows/x.yml` (the file path, not the workflow name) and fails immediately</code></pre>
+<p><small>github-actions · ci · yaml · workflow — verified-in-production</small></p></article>
+</section>
+<section class="cat"><h2>npm &amp; packages <small>(4)</small></h2>
+<article class="fix"><h3><a href="./fixes/hardhat-verify-peer-conflict.html">npm ERESOLVE installing @nomicfoundation/hardhat-verify with Hardhat 2</a></h3>
+<pre><code>peer hardhat@"^3.12.0" from @nomicfoundation/hardhat-verify</code></pre>
+<p><small>npm · hardhat · dependencies — verified-in-production</small></p></article>
 <article class="fix"><h3><a href="./fixes/err-package-path-not-exported-probe.html">Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED</a> <span class="badge">free sample</span></h3>
 <pre><code>Package subpath './package.json' is not defined by "exports"</code></pre>
 <p><small>node · npm · exports-map — verified-in-production — FREE</small></p></article>
@@ -66,9 +92,6 @@ button.copy{font-size:11px;border:1px solid #C9CFCC;background:none;color:#5C647
 <article class="fix"><h3><a href="./fixes/npm-granular-token-new-package-404.html">npm publish E404 on a brand-new package with a granular access token</a></h3>
 <pre><code>npm error 404 Not Found - PUT https://registry.npmjs.org/&lt;pkg&gt; - The requested resource could not be found or you do not have permission</code></pre>
 <p><small>npm · publish · tokens · permissions — verified-in-production</small></p></article>
-<article class="fix"><h3><a href="./fixes/gh-actions-setup-node-cache-no-lockfile.html">actions/setup-node cache fails: Dependencies lock file is not found</a></h3>
-<pre><code>Dependencies lock file is not found in ... Supported file patterns: package-lock.json,npm-shrinkwrap.json,yarn.lock</code></pre>
-<p><small>github-actions · ci · setup-node · cache · npm — verified-in-production</small></p></article>
 </section>
 <section class="cat"><h2>Windows &amp; shells <small>(6)</small></h2>
 <article class="fix"><h3><a href="./fixes/windows-libuv-assert-on-exit.html">Node on Windows: 'Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING)' at exit</a></h3>
@@ -124,50 +147,27 @@ button.copy{font-size:11px;border:1px solid #C9CFCC;background:none;color:#5C647
 <pre><code>repeated ToolSearch select: calls for tools from the same server</code></pre>
 <p><small>mcp · agents · performance — documented</small></p></article>
 </section>
-<section class="cat"><h2>Deploy &amp; infra <small>(5)</small></h2>
-<article class="fix"><h3><a href="./fixes/localtunnel-dies-with-parent-shell.html">localtunnel started with &amp; goes dead (408) after the launching shell exits</a></h3>
-<pre><code>tunnel URL returns 408 minutes after working</code></pre>
-<p><small>localtunnel · tunnels · processes — verified-in-production</small></p></article>
-<article class="fix"><h3><a href="./fixes/free-tunnel-noindex-interstitial.html">Search engines cannot index a site behind a free tunnel</a></h3>
-<pre><code>crawler receives 'Tunnel website ahead!' page with meta robots noindex</code></pre>
-<p><small>seo · tunnels · crawlers · indexing — verified-in-production</small></p></article>
-<article class="fix"><h3><a href="./fixes/gh-pages-deploy-lag.html">File 404s on GitHub Pages for a minute or two after a successful push</a></h3>
-<pre><code>fresh push visible in repo but 404 on the pages URL</code></pre>
-<p><small>github-pages · deploy · ci — verified-in-production</small></p></article>
+<section class="cat"><h2>Deno &amp; serverless <small>(3)</small></h2>
 <article class="fix"><h3><a href="./fixes/deno-deploy-508-self-fetch-loop.html">Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL</a> <span class="badge">free sample</span></h3>
 <pre><code>508 (Loop Detected) on fetch to the app's own *.deno.net hostname</code></pre>
 <p><small>deno · deno-deploy · serverless · fetch — verified-in-production — FREE</small></p></article>
 <article class="fix"><h3><a href="./fixes/deno-deploy-kv-not-auto-enabled.html">Deno KV reads empty on new Deno Deploy until you attach a database</a> <span class="badge">free sample</span></h3>
 <pre><code>kv appears disabled / Deno.openKv() bound but reads and writes are empty on console.deno.com</code></pre>
 <p><small>deno · deno-deploy · kv · serverless — verified-in-production — FREE</small></p></article>
-</section>
-<section class="cat"><h2>Node.js <small>(1)</small></h2>
-<article class="fix"><h3><a href="./fixes/gh-actions-node20-deprecation-runner.html">GitHub Actions warns Node 20 is deprecated, running with Node 24 by default</a></h3>
-<pre><code>Node 20 is being deprecated. This workflow is running with Node 24 by default. ... ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true</code></pre>
-<p><small>github-actions · ci · node · setup-node · deprecation — verified-in-production</small></p></article>
-</section>
-<section class="cat"><h2>Other <small>(7)</small></h2>
-<article class="fix"><h3><a href="./fixes/gh-cli-account-revert-private-repo-404.html">git push to your own private repo fails with 'repository not found'</a> <span class="badge">free sample</span></h3>
-<pre><code>fatal: repository 'https://github.com/OWNER/REPO.git/' not found</code></pre>
-<p><small>github · gh-cli · git · auth — verified-in-production — FREE</small></p></article>
 <article class="fix"><h3><a href="./fixes/deno-openkv-unstable-flag-local.html">Deno.openKv() throws locally without the --unstable-kv flag</a> <span class="badge">free sample</span></h3>
 <pre><code>Deno.openKv is not a function / requires --unstable-kv (works on Deploy, fails on local deno run)</code></pre>
 <p><small>deno · kv · local-dev — verified-in-production — FREE</small></p></article>
-<article class="fix"><h3><a href="./fixes/gh-push-workflow-scope-rejected.html">git push rejected: OAuth App cannot create/update workflow without workflow scope</a></h3>
-<pre><code>! [remote rejected] main -&gt; main (refusing to allow an OAuth App to create or update workflow `.github/workflows/x.yml` without `workflow` scope)</code></pre>
-<p><small>github · git · gh-cli · github-actions · auth — verified-in-production</small></p></article>
-<article class="fix"><h3><a href="./fixes/gh-actions-unresolved-action-version.html">GitHub Actions: Unable to resolve action, unable to find version</a></h3>
-<pre><code>##[error]Unable to resolve action `actions/checkout@v99`, unable to find version `v99`</code></pre>
-<p><small>github-actions · ci · workflow — verified-in-production</small></p></article>
-<article class="fix"><h3><a href="./fixes/gh-actions-token-permissions-403.html">GitHub Actions: git push in a workflow fails 403 (exit code 128)</a></h3>
-<pre><code>fatal: unable to access '...': The requested URL returned error: 403 ... Process completed with exit code 128</code></pre>
-<p><small>github-actions · ci · permissions · github-token — verified-in-production</small></p></article>
-<article class="fix"><h3><a href="./fixes/gh-actions-skip-ci-no-run.html">How to skip a GitHub Actions run for a commit ([skip ci])</a></h3>
-<pre><code>a pushed commit should NOT trigger any workflow run</code></pre>
-<p><small>github-actions · ci · skip-ci — verified-in-production</small></p></article>
-<article class="fix"><h3><a href="./fixes/gh-actions-invalid-workflow-yaml.html">GitHub Actions: workflow run is named by its file path and fails instantly (invalid YAML)</a></h3>
-<pre><code>a run appears named `.github/workflows/x.yml` (the file path, not the workflow name) and fails immediately</code></pre>
-<p><small>github-actions · ci · yaml · workflow — verified-in-production</small></p></article>
+</section>
+<section class="cat"><h2>Deploy &amp; infra <small>(3)</small></h2>
+<article class="fix"><h3><a href="./fixes/localtunnel-dies-with-parent-shell.html">localtunnel started with &amp; goes dead (408) after the launching shell exits</a></h3>
+<pre><code>tunnel URL returns 408 minutes after working</code></pre>
+<p><small>localtunnel · tunnels · processes — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/free-tunnel-noindex-interstitial.html">Search engines cannot index a site behind a free tunnel</a></h3>
+<pre><code>crawler receives 'Tunnel website ahead!' page with meta robots noindex</code></pre>
+<p><small>seo · tunnels · crawlers · indexing — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/gh-cli-account-revert-private-repo-404.html">git push to your own private repo fails with 'repository not found'</a> <span class="badge">free sample</span></h3>
+<pre><code>fatal: repository 'https://github.com/OWNER/REPO.git/' not found</code></pre>
+<p><small>github · gh-cli · git · auth — verified-in-production — FREE</small></p></article>
 </section>
 
 <h2 id="tools">Tools</h2>

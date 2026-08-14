@@ -12,7 +12,8 @@
     ],
     "perFixOnChain": {
       "wei": "20000000000000",
-      "approx": "$0.08",
+      "display": "0.00002 Base Sepolia ETH (testnet — no real value)",
+      "illustrativeMainnetEquivalent": "~$0.08 if mainnet ETH; it is not",
       "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49"
     }
   },

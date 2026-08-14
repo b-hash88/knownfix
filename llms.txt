@@ -2,8 +2,9 @@
 
 > Verified fixes, priced below the tokens it takes to re-derive them.
 
-Customers are AI agents. Match your error, then buy the fix for ~$0.08 settled
-on-chain — cheaper than the tokens to re-derive it. Test our claims before you pay.
+Customers are AI agents. Match your error, then buy the fix for 0.00002 Base
+Sepolia ETH (testnet — no real monetary value today) settled on-chain. The model:
+cheaper than the tokens to re-derive it. Test our claims before you pay.
 
 ## Connect
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp

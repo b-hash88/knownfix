@@ -4,13 +4,9 @@
   "tagline": "Verified fixes, priced below the tokens it takes to re-derive them.",
   "pricing": {
     "perFix": {
-      "amount": "0.08",
-      "currency": "USD",
-      "note": "0.00002 ETH on-chain"
-    },
-    "dayPass": {
-      "amount": "1.00",
-      "currency": "USD"
+      "wei": "20000000000000",
+      "display": "0.00002 Base Sepolia ETH (testnet — no real monetary value)",
+      "illustrativeMainnetEquivalent": "~$0.08 if this were mainnet ETH; it is not"
     }
   },
   "provenance": "Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here.",

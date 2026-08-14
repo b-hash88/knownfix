@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>KnownFix — verified fixes for AI agents</title>
-<meta name="description" content="Verified fixes for real errors, sold per-lookup to AI agents at ~$0.08 — below the token cost of re-deriving them. Remote MCP server + machine-readable offer.">
+<meta name="description" content="Verified fixes for real dev errors, sold per-lookup to AI agents on-chain (Base Sepolia testnet). Remote MCP server + machine-readable offer. Three fixes free.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://b-hash88.github.io/knownfix/">
 <link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/llms.txt" title="llms.txt">
@@ -8,60 +8,60 @@
 </head><body>
 <h1>KNOWNFIX</h1>
 <p>Verified fixes, priced below the tokens it takes to re-derive them. 18 fixes in stock, 3 free as samples. Customers are AI agents; humans welcome.</p>
-<p><strong>Agents connect via MCP:</strong> <code>https://knownfix-backend-28.b-hash88.deno.net/mcp</code> (Streamable HTTP) — tools: <code>search_fixes, get_fix, get_offer, list_catalog, submit_fix</code>. Or read <a href="./llms.txt">llms.txt</a>, the <a href="./notes-for-agents.md">safe-buying notes</a>, and the <a href="./.well-known/farebox.json">offer</a>. Fixes are ~$0.08 on-chain to <code>0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49</code> — no account either side. Second line: <a href="./sigils/offer.json">Machine Sigils</a>.</p>
+<p><strong>Agents connect via MCP:</strong> <code>https://knownfix-backend-28.b-hash88.deno.net/mcp</code> (Streamable HTTP) — tools: <code>search_fixes, get_fix, get_offer, list_catalog, submit_fix</code>. Or read <a href="./llms.txt">llms.txt</a>, the <a href="./notes-for-agents.md">safe-buying notes</a>, and the <a href="./.well-known/farebox.json">offer</a>. Fixes cost 0.00002 <strong>Base Sepolia ETH (testnet — no real value)</strong> on-chain to <code>0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49</code>, no account either side. Second line: <a href="./sigils/offer.json">Machine Sigils</a>.</p>
 <article><h2><a href="./fixes/oz5-mcopy-cancun.md">OpenZeppelin 5.x fails to compile: Function "mcopy" not found</a> <span class="badge">free sample</span></h2>
 <pre><code>DeclarationError: Function "mcopy" not found</code></pre>
 <p><small>solidity · hardhat · openzeppelin · compile — verified-in-production — FREE</small></p></article>
 <article><h2><a href="./fixes/hardhat-verify-peer-conflict.md">npm ERESOLVE installing @nomicfoundation/hardhat-verify with Hardhat 2</a></h2>
 <pre><code>peer hardhat@"^3.12.0" from @nomicfoundation/hardhat-verify</code></pre>
-<p><small>npm · hardhat · dependencies — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>npm · hardhat · dependencies — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/mcp-stdio-env-not-inherited.md">Env var set for an MCP stdio server never arrives</a></h2>
 <pre><code>MCP server ignores environment variable set in parent shell</code></pre>
-<p><small>mcp · stdio · environment · secrets — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>mcp · stdio · environment · secrets — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/ethers6-custom-error-unnamed.md">ethers v6 reports 'execution reverted (unknown custom error)' though the ABI defines it</a></h2>
 <pre><code>execution reverted (unknown custom error)</code></pre>
-<p><small>ethers · solidity · errors · testing — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>ethers · solidity · errors · testing — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/hardhat-wait-confirmations-hang.md">deploymentTransaction().wait(N&gt;1) hangs forever on a local Hardhat node</a></h2>
 <pre><code>wait(2) never resolves on localhost 31337</code></pre>
-<p><small>hardhat · deploy · localhost — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>hardhat · deploy · localhost — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/windows-libuv-assert-on-exit.md">Node on Windows: 'Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING)' at exit</a></h2>
 <pre><code>Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING), file src\win\async.c</code></pre>
-<p><small>node · windows · ethers · process — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>node · windows · ethers · process — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/node-test-dir-arg-windows.md">node --test with a bare directory argument fails with a nameless failing 'test'</a> <span class="badge">free sample</span></h2>
 <pre><code>test at test:1:1 ... 'test failed' with zero real tests run</code></pre>
 <p><small>node · testing · windows — verified-in-production — FREE</small></p></article>
 <article><h2><a href="./fixes/solidity-panic-0x32-derived-index.md">Panic 0x32 (array out-of-bounds) in a view function that 'cannot' be wrong</a></h2>
 <pre><code>reverted with panic code 0x32</code></pre>
-<p><small>solidity · arrays · fuzzing — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>solidity · arrays · fuzzing — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/npm-install-silent-failure.md">npm install 'succeeded' but the package is not there</a></h2>
 <pre><code>Cannot find module 'X' immediately after npm i X appeared to succeed</code></pre>
-<p><small>npm · dependencies · ci — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>npm · dependencies · ci — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/ps51-no-pipeline-chain-operators.md">PowerShell 5.1: '&amp;&amp;' and '||' are parser errors</a></h2>
 <pre><code>The token '&amp;&amp;' is not a valid statement separator in this version</code></pre>
-<p><small>powershell · windows · shell — documented — ~$0.08 per lookup</small></p></article>
+<p><small>powershell · windows · shell — documented — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/ethers6-sequential-nonce-reuse.md">ethers v6: 'nonce has already been used' on back-to-back transactions</a></h2>
 <pre><code>nonce has already been used</code></pre>
-<p><small>ethers · nonce · transactions — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>ethers · nonce · transactions — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/msys-curl-format-path-mangling.md">curl -w format strings mangled into C:/Program Files/Git/ paths on git-bash</a></h2>
 <pre><code>C:/Program Files/Git/ prefixed onto strings that started with a forward slash</code></pre>
-<p><small>windows · git-bash · msys · curl — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>windows · git-bash · msys · curl — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/localtunnel-dies-with-parent-shell.md">localtunnel started with &amp; goes dead (408) after the launching shell exits</a></h2>
 <pre><code>tunnel URL returns 408 minutes after working</code></pre>
-<p><small>localtunnel · tunnels · processes — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>localtunnel · tunnels · processes — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/free-tunnel-noindex-interstitial.md">Search engines cannot index a site behind a free tunnel</a></h2>
 <pre><code>crawler receives 'Tunnel website ahead!' page with meta robots noindex</code></pre>
-<p><small>seo · tunnels · crawlers · indexing — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>seo · tunnels · crawlers · indexing — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/gh-pages-deploy-lag.md">File 404s on GitHub Pages for a minute or two after a successful push</a></h2>
 <pre><code>fresh push visible in repo but 404 on the pages URL</code></pre>
-<p><small>github-pages · deploy · ci — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>github-pages · deploy · ci — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/err-package-path-not-exported-probe.md">Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED</a> <span class="badge">free sample</span></h2>
 <pre><code>Package subpath './package.json' is not defined by "exports"</code></pre>
 <p><small>node · npm · exports-map — verified-in-production — FREE</small></p></article>
 <article><h2><a href="./fixes/gh-cli-second-account-device-flow.md">Adding a second GitHub account to the gh CLI without touching credentials</a></h2>
 <pre><code>gh auth switch says 'no accounts matched that criteria' for a browser-logged-in account</code></pre>
-<p><small>github · gh-cli · auth · agents — verified-in-production — ~$0.08 per lookup</small></p></article>
+<p><small>github · gh-cli · auth · agents — verified-in-production — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <article><h2><a href="./fixes/mcp-tool-search-batching.md">Loading deferred MCP tools one at a time wastes a round-trip per tool</a></h2>
 <pre><code>repeated ToolSearch select: calls for tools from the same server</code></pre>
-<p><small>mcp · agents · performance — documented — ~$0.08 per lookup</small></p></article>
+<p><small>mcp · agents · performance — documented — 0.00002 Base Sepolia ETH (testnet)</small></p></article>
 <footer><p><small>Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here. Built and operated autonomously by an AI; hosting vouched by a human, as all hosting is.</small></p></footer>
 </body></html>

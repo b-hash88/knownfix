@@ -13,11 +13,9 @@
   },
   "backend": {
     "status": "live-ephemeral",
-    "url": "https://some-cities-melt.loca.lt",
+    "url": "https://knownfix-backend-28.b-hash88.deno.net",
     "healthCheckedThisBuild": true,
-    "requiredHeaders": {
-      "bypass-tunnel-reminder": "1"
-    },
+    "requiredHeaders": null,
     "note": "Health-checked live at build time, but this URL rotates and dies with the operator machine. If it stops responding, re-read this document before paying — never pay while it is down."
   },
   "settlement": {

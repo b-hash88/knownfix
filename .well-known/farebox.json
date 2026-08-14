@@ -5,18 +5,23 @@
     "name": "KnownFix",
     "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
     "inventory": 18,
+    "freeSamples": [
+      "oz5-mcopy-cancun",
+      "node-test-dir-arg-windows",
+      "err-package-path-not-exported-probe"
+    ],
     "perFixOnChain": {
       "wei": "20000000000000",
       "approx": "$0.08",
       "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49"
     }
   },
+  "mcp": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
   "backend": {
     "status": "live-durable",
     "url": "https://knownfix-backend-28.b-hash88.deno.net",
     "healthCheckedThisBuild": true,
-    "requiredHeaders": null,
-    "note": "Durably hosted on Deno Deploy (KV-backed double-spend guard). This URL is stable and always-on — no rotation. The backend also serves its own /.well-known/farebox.json."
+    "note": "Durably hosted on Deno Deploy (KV-backed double-spend guard). Stable, always-on, no rotation. The backend serves its own /.well-known/farebox.json and a remote MCP server at /mcp."
   },
   "settlement": {
     "scheme": "evm-payment",
@@ -26,13 +31,12 @@
     "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49",
     "perFixWei": "20000000000000",
     "proofHeader": "x-payment-tx",
-    "route": "GET {backend}/fix/{id} -> 402; pay; retry with proofHeader -> 200",
+    "route": "GET {backend}/fix/{id} -> 402; pay payTo on chain 84532; retry with proofHeader -> 200",
     "rules": [
-      "only purchase when backend.status is 'live-ephemeral' AND backend.url is non-null",
-      "one mined payment of >= perFixWei to payTo redeems exactly one fix request",
-      "a tx hash can never be redeemed twice",
-      "alternative: day-pass tokens via the hmac-token scheme, issued by the operator after checkout"
+      "only purchase when backend.status is live-durable/live-ephemeral AND backend.url is non-null",
+      "sample fixes need no payment",
+      "one mined payment of >= perFixWei to payTo redeems exactly one fix; a hash never redeems twice"
     ]
   },
-  "catalog": "https://EXAMPLE.github.io/knownfix/catalog.json"
+  "catalog": "https://b-hash88.github.io/knownfix/catalog.json"
 }

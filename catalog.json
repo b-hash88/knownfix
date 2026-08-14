@@ -14,7 +14,8 @@
     }
   },
   "provenance": "Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here.",
-  "tier": "free — signatures and titles only; fix bodies are paid via the offer in .well-known/farebox.json",
+  "mcp": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
+  "tier": "free — signatures and titles; sample:true entries serve full bodies free; other bodies are paid",
   "entries": [
     {
       "id": "oz5-mcopy-cancun",
@@ -26,7 +27,9 @@
         "openzeppelin",
         "compile"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.md"
     },
     {
       "id": "hardhat-verify-peer-conflict",
@@ -37,7 +40,9 @@
         "hardhat",
         "dependencies"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/hardhat-verify-peer-conflict.md"
     },
     {
       "id": "mcp-stdio-env-not-inherited",
@@ -49,7 +54,9 @@
         "environment",
         "secrets"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/mcp-stdio-env-not-inherited.md"
     },
     {
       "id": "ethers6-custom-error-unnamed",
@@ -61,7 +68,9 @@
         "errors",
         "testing"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/ethers6-custom-error-unnamed.md"
     },
     {
       "id": "hardhat-wait-confirmations-hang",
@@ -72,7 +81,9 @@
         "deploy",
         "localhost"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/hardhat-wait-confirmations-hang.md"
     },
     {
       "id": "windows-libuv-assert-on-exit",
@@ -84,7 +95,9 @@
         "ethers",
         "process"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/windows-libuv-assert-on-exit.md"
     },
     {
       "id": "node-test-dir-arg-windows",
@@ -95,7 +108,9 @@
         "testing",
         "windows"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.md"
     },
     {
       "id": "solidity-panic-0x32-derived-index",
@@ -106,7 +121,9 @@
         "arrays",
         "fuzzing"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/solidity-panic-0x32-derived-index.md"
     },
     {
       "id": "npm-install-silent-failure",
@@ -117,7 +134,9 @@
         "dependencies",
         "ci"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/npm-install-silent-failure.md"
     },
     {
       "id": "ps51-no-pipeline-chain-operators",
@@ -128,7 +147,9 @@
         "windows",
         "shell"
       ],
-      "confidence": "documented"
+      "confidence": "documented",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/ps51-no-pipeline-chain-operators.md"
     },
     {
       "id": "ethers6-sequential-nonce-reuse",
@@ -139,7 +160,9 @@
         "nonce",
         "transactions"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/ethers6-sequential-nonce-reuse.md"
     },
     {
       "id": "msys-curl-format-path-mangling",
@@ -151,7 +174,9 @@
         "msys",
         "curl"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/msys-curl-format-path-mangling.md"
     },
     {
       "id": "localtunnel-dies-with-parent-shell",
@@ -162,7 +187,9 @@
         "tunnels",
         "processes"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/localtunnel-dies-with-parent-shell.md"
     },
     {
       "id": "free-tunnel-noindex-interstitial",
@@ -174,7 +201,9 @@
         "crawlers",
         "indexing"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/free-tunnel-noindex-interstitial.md"
     },
     {
       "id": "gh-pages-deploy-lag",
@@ -185,7 +214,9 @@
         "deploy",
         "ci"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-pages-deploy-lag.md"
     },
     {
       "id": "err-package-path-not-exported-probe",
@@ -196,7 +227,9 @@
         "npm",
         "exports-map"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.md"
     },
     {
       "id": "gh-cli-second-account-device-flow",
@@ -208,7 +241,9 @@
         "auth",
         "agents"
       ],
-      "confidence": "verified-in-production"
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-cli-second-account-device-flow.md"
     },
     {
       "id": "mcp-tool-search-batching",
@@ -219,7 +254,9 @@
         "agents",
         "performance"
       ],
-      "confidence": "documented"
+      "confidence": "documented",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/mcp-tool-search-batching.md"
     }
   ]
 }

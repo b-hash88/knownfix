@@ -12,8 +12,8 @@
     ],
     "perFixOnChain": {
       "wei": "20000000000000",
-      "display": "0.00002 Base ETH (~$0.08, real — Base mainnet)",
-      "note": "Real Base mainnet ETH; ~$0.08 varies with ETH price",
+      "display": "0.00002 ETH on Base (~$0.08)",
+      "note": "Base mainnet; ~$0.08 varies with ETH price",
       "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49"
     }
   },

@@ -12,7 +12,7 @@
 <pre><code>C:/Program Files/Git/ prefixed onto strings that started with a forward slash</code></pre>
 <p><small>windows · git-bash · msys · curl · verified-in-production</small></p>
 <div class="paid"><h2>Get the fix</h2>
-<p>Cause, remedy and verification are paid: <strong>0.00002 Base ETH (~$0.08)</strong> on Base mainnet to <code>0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49</code>. One payment, one fix.</p>
+<p>Cause, remedy and verification are paid: <strong>0.00002 ETH on Base (~$0.08)</strong> on Base mainnet to <code>0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49</code>. One payment, one fix.</p>
 <ul>
 <li><strong>MCP</strong>: call <code>get_fix</code> with <code>id: "msys-curl-format-path-mangling"</code> on <code>https://knownfix-backend-28.b-hash88.deno.net/mcp</code>, passing the tx hash as <code>paymentTx</code>.</li>
 <li><strong>HTTP</strong>: <code>GET https://knownfix-backend-28.b-hash88.deno.net/fix/msys-curl-format-path-mangling</code> returns 402 with a machine-readable offer; pay, then retry with header <code>x-payment-tx</code>.</li>

@@ -312,6 +312,73 @@
       "page": "https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.md"
     },
     {
+      "id": "deno-deploy-kv-not-auto-enabled",
+      "title": "Deno KV reads empty on new Deno Deploy until you attach a database",
+      "signature": "kv appears disabled / Deno.openKv() bound but reads and writes are empty on console.deno.com",
+      "tags": [
+        "deno",
+        "deno-deploy",
+        "kv",
+        "serverless"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/deno-deploy-kv-not-auto-enabled.md"
+    },
+    {
+      "id": "deno-openkv-unstable-flag-local",
+      "title": "Deno.openKv() throws locally without the --unstable-kv flag",
+      "signature": "Deno.openKv is not a function / requires --unstable-kv (works on Deploy, fails on local deno run)",
+      "tags": [
+        "deno",
+        "kv",
+        "local-dev"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/deno-openkv-unstable-flag-local.md"
+    },
+    {
+      "id": "mcp-registry-description-100-char-422",
+      "title": "MCP Registry publish fails 422: description exceeds 100 characters",
+      "signature": "validation failed: expected length <= 100, location body.description",
+      "tags": [
+        "mcp",
+        "mcp-registry",
+        "publishing"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-char-422.md"
+    },
+    {
+      "id": "mcp-registry-jwt-expired-401",
+      "title": "MCP Registry publish 401: Invalid or expired Registry JWT token",
+      "signature": "publish failed: server returned status 401 ... token has invalid claims: token is expired",
+      "tags": [
+        "mcp",
+        "mcp-registry",
+        "auth"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/mcp-registry-jwt-expired-401.md"
+    },
+    {
+      "id": "windows-setx-not-in-running-shell",
+      "title": "Windows: an env var set with setx is missing in the shell that set it",
+      "signature": "environment variable appears unset immediately after setx reported success",
+      "tags": [
+        "windows",
+        "environment",
+        "shell",
+        "powershell"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.md"
+    },
+    {
       "id": "mcp-tool-search-batching",
       "title": "Loading deferred MCP tools one at a time wastes a round-trip per tool",
       "signature": "repeated ToolSearch select: calls for tools from the same server",

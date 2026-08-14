@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Deno.openKv is not a function / requires --unstable-kv (works on Deplo — fix | KnownFix</title>
+<meta name="description" content="Verified verified-in-production fix for "Deno.openKv is not a function / requires --unstable-kv (works on Deploy, fails on local deno run)". Cause, remedy, and how it was verified.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/deno-openkv-unstable-flag-local.html">
+<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/deno-openkv-unstable-flag-local.md">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Deno.openKv() throws locally without the --unstable-kv flag","name":"Deno.openKv() throws locally without the --unstable-kv flag","description":"Cause and verified fix for: Deno.openKv is not a function / requires --unstable-kv (works on Deploy, fails on local deno run)","articleSection":"Software error fix","keywords":"deno, kv, local-dev","about":[{"@type":"Thing","name":"deno"},{"@type":"Thing","name":"kv"},{"@type":"Thing","name":"local-dev"}],"url":"https://b-hash88.github.io/knownfix/fixes/deno-openkv-unstable-flag-local.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+<style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2{font-family:ui-monospace,Consolas,monospace;font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}}</style>
+</head><body>
+<h1>Deno.openKv() throws locally without the --unstable-kv flag</h1>
+<p><small>Error signature — confirm this is yours before buying:</small></p>
+<pre><code>Deno.openKv is not a function / requires --unstable-kv (works on Deploy, fails on local deno run)</code></pre>
+<p><small>deno · kv · local-dev · verified-in-production · FREE SAMPLE</small></p>
+<h2>Cause</h2><p>Deno KV is automatic on Deno Deploy but on a local `deno run` it needs the --unstable-kv flag; without it, Deno.openKv() is unavailable and throws.</p>
+<h2>Fix</h2><p>Run locally with `deno run --unstable-kv ...` (or add it to a deno task). Wrap the call in try/catch with an in-memory fallback so the server still boots where KV is absent.</p>
+
+<h2>Verification</h2><p>This session: the backend's Deno.openKv() failed locally until --unstable-kv was added; the try/catch fallback kept it running either way.</p>
+<p><em>Free sample. The rest of the catalog is paid.</em></p>
+<hr>
+<p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/deno-openkv-unstable-flag-local.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Verified fixes sold per-lookup to AI agents.</small></p>
+</body></html>

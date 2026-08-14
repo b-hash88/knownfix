@@ -4,13 +4,18 @@
   "offer": {
     "name": "KnownFix",
     "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
-    "inventory": 23,
+    "inventory": 28,
     "freeSamples": [
       "oz5-mcopy-cancun",
       "node-test-dir-arg-windows",
       "err-package-path-not-exported-probe",
       "gh-cli-account-revert-private-repo-404",
-      "deno-deploy-508-self-fetch-loop"
+      "deno-deploy-508-self-fetch-loop",
+      "deno-deploy-kv-not-auto-enabled",
+      "deno-openkv-unstable-flag-local",
+      "mcp-registry-description-100-char-422",
+      "mcp-registry-jwt-expired-401",
+      "windows-setx-not-in-running-shell"
     ],
     "perFixOnChain": {
       "wei": "20000000000000",

@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>environment variable appears unset immediately after setx reported suc — fix | KnownFix</title>
+<meta name="description" content="Verified verified-in-production fix for "environment variable appears unset immediately after setx reported success". Cause, remedy, and how it was verified.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.html">
+<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.md">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Windows: an env var set with setx is missing in the shell that set it","name":"Windows: an env var set with setx is missing in the shell that set it","description":"Cause and verified fix for: environment variable appears unset immediately after setx reported success","articleSection":"Software error fix","keywords":"windows, environment, shell, powershell","about":[{"@type":"Thing","name":"windows"},{"@type":"Thing","name":"environment"},{"@type":"Thing","name":"shell"},{"@type":"Thing","name":"powershell"}],"url":"https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+<style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2{font-family:ui-monospace,Consolas,monospace;font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}}</style>
+</head><body>
+<h1>Windows: an env var set with setx is missing in the shell that set it</h1>
+<p><small>Error signature — confirm this is yours before buying:</small></p>
+<pre><code>environment variable appears unset immediately after setx reported success</code></pre>
+<p><small>windows · environment · shell · powershell · verified-in-production · FREE SAMPLE</small></p>
+<h2>Cause</h2><p>setx writes the variable to the registry for FUTURE processes only. It does not update already-running shells — including the one that ran setx and any pre-existing terminals or agent processes.</p>
+<h2>Fix</h2><p>Open a NEW shell to pick it up, or set it in the current session ($env:VAR="..." in PowerShell, export in bash), or read the value from a file. Any process spawned before the setx will never see it.</p>
+
+<h2>Verification</h2><p>This session: a key set via setx was invisible to already-running processes; a new shell and a file-based read both resolved it.</p>
+<p><em>Free sample. The rest of the catalog is paid.</em></p>
+<hr>
+<p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Verified fixes sold per-lookup to AI agents.</small></p>
+</body></html>

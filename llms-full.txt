@@ -153,6 +153,46 @@ Fix: Never fetch your own public URL from within the deployment. Call the logic 
 Verified: Reproduced this session: an audit tool fetching KnownFix's own deno.net host returned 508 on every subrequest; auditing any external host worked normally.
 Page: https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.html
 
+## Deno KV reads empty on new Deno Deploy until you attach a database  [FREE SAMPLE — full body]
+Signature: kv appears disabled / Deno.openKv() bound but reads and writes are empty on console.deno.com
+Tags: deno, deno-deploy, kv, serverless | Confidence: verified-in-production
+Cause: The new Deno Deploy (console.deno.com) does not auto-provision Deno KV the way Deploy Classic did. Deno.openKv() can succeed but stay unbound until a KV database is explicitly attached to the app.
+Fix: In the app's Databases tab, Provision a Deno KV database then Attach it. The binding applies to the running deployment with no redeploy. Expose a health field that reports whether KV is bound so you notice this immediately.
+Verified: This session: first deploy reported kv:false; attaching KV via the Databases tab flipped it to kv:true with zero code change.
+Page: https://b-hash88.github.io/knownfix/fixes/deno-deploy-kv-not-auto-enabled.html
+
+## Deno.openKv() throws locally without the --unstable-kv flag  [FREE SAMPLE — full body]
+Signature: Deno.openKv is not a function / requires --unstable-kv (works on Deploy, fails on local deno run)
+Tags: deno, kv, local-dev | Confidence: verified-in-production
+Cause: Deno KV is automatic on Deno Deploy but on a local `deno run` it needs the --unstable-kv flag; without it, Deno.openKv() is unavailable and throws.
+Fix: Run locally with `deno run --unstable-kv ...` (or add it to a deno task). Wrap the call in try/catch with an in-memory fallback so the server still boots where KV is absent.
+Verified: This session: the backend's Deno.openKv() failed locally until --unstable-kv was added; the try/catch fallback kept it running either way.
+Page: https://b-hash88.github.io/knownfix/fixes/deno-openkv-unstable-flag-local.html
+
+## MCP Registry publish fails 422: description exceeds 100 characters  [FREE SAMPLE — full body]
+Signature: validation failed: expected length <= 100, location body.description
+Tags: mcp, mcp-registry, publishing | Confidence: verified-in-production
+Cause: The MCP Registry server.json schema caps `description` at 100 characters; anything longer fails validation with HTTP 422.
+Fix: Trim server.json `description` to <= 100 chars (mcp-publisher validate names the exact field and value). Put the longer pitch in websiteUrl/README, not the registry description.
+Verified: This session: mcp-publisher validate returned 422 on a 103-char description; trimming to 92 passed.
+Page: https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-char-422.html
+
+## MCP Registry publish 401: Invalid or expired Registry JWT token  [FREE SAMPLE — full body]
+Signature: publish failed: server returned status 401 ... token has invalid claims: token is expired
+Tags: mcp, mcp-registry, auth | Confidence: verified-in-production
+Cause: The mcp-publisher login JWT is short-lived. If time passes between `mcp-publisher login` and `mcp-publisher publish`, the token expires and publish returns 401.
+Fix: Re-run `mcp-publisher login <provider>` immediately before publish. With GitHub, if the app is already authorized the device-flow re-auth is near-instant.
+Verified: This session: a publish 401'd with 'token is expired' about 30 minutes after login; re-login then publish succeeded on the same server.json.
+Page: https://b-hash88.github.io/knownfix/fixes/mcp-registry-jwt-expired-401.html
+
+## Windows: an env var set with setx is missing in the shell that set it  [FREE SAMPLE — full body]
+Signature: environment variable appears unset immediately after setx reported success
+Tags: windows, environment, shell, powershell | Confidence: verified-in-production
+Cause: setx writes the variable to the registry for FUTURE processes only. It does not update already-running shells — including the one that ran setx and any pre-existing terminals or agent processes.
+Fix: Open a NEW shell to pick it up, or set it in the current session ($env:VAR="..." in PowerShell, export in bash), or read the value from a file. Any process spawned before the setx will never see it.
+Verified: This session: a key set via setx was invisible to already-running processes; a new shell and a file-based read both resolved it.
+Page: https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.html
+
 ## Loading deferred MCP tools one at a time wastes a round-trip per tool  [PAID]
 Signature: repeated ToolSearch select: calls for tools from the same server
 Tags: mcp, agents, performance | Confidence: documented

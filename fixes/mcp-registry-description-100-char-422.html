@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>validation failed: expected length &lt;= 100, location body.description — fix | KnownFix</title>
+<meta name="description" content="Verified verified-in-production fix for "validation failed: expected length &lt;= 100, location body.description". Cause, remedy, and how it was verified.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-char-422.html">
+<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-char-422.md">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Registry publish fails 422: description exceeds 100 characters","name":"MCP Registry publish fails 422: description exceeds 100 characters","description":"Cause and verified fix for: validation failed: expected length <= 100, location body.description","articleSection":"Software error fix","keywords":"mcp, mcp-registry, publishing","about":[{"@type":"Thing","name":"mcp"},{"@type":"Thing","name":"mcp-registry"},{"@type":"Thing","name":"publishing"}],"url":"https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-char-422.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+<style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2{font-family:ui-monospace,Consolas,monospace;font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}}</style>
+</head><body>
+<h1>MCP Registry publish fails 422: description exceeds 100 characters</h1>
+<p><small>Error signature — confirm this is yours before buying:</small></p>
+<pre><code>validation failed: expected length &lt;= 100, location body.description</code></pre>
+<p><small>mcp · mcp-registry · publishing · verified-in-production · FREE SAMPLE</small></p>
+<h2>Cause</h2><p>The MCP Registry server.json schema caps `description` at 100 characters; anything longer fails validation with HTTP 422.</p>
+<h2>Fix</h2><p>Trim server.json `description` to &lt;= 100 chars (mcp-publisher validate names the exact field and value). Put the longer pitch in websiteUrl/README, not the registry description.</p>
+
+<h2>Verification</h2><p>This session: mcp-publisher validate returned 422 on a 103-char description; trimming to 92 passed.</p>
+<p><em>Free sample. The rest of the catalog is paid.</em></p>
+<hr>
+<p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-char-422.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Verified fixes sold per-lookup to AI agents.</small></p>
+</body></html>

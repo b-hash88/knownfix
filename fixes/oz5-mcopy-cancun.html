@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>DeclarationError: Function "mcopy" not found — fix | KnownFix</title>
+<meta name="description" content="Verified verified-in-production fix for "DeclarationError: Function "mcopy" not found". Cause, remedy, and how it was verified.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.html">
+<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.md">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"OpenZeppelin 5.x fails to compile: Function \"mcopy\" not found","name":"OpenZeppelin 5.x fails to compile: Function \"mcopy\" not found","description":"Cause and verified fix for: DeclarationError: Function \"mcopy\" not found","articleSection":"Software error fix","keywords":"solidity, hardhat, openzeppelin, compile","about":[{"@type":"Thing","name":"solidity"},{"@type":"Thing","name":"hardhat"},{"@type":"Thing","name":"openzeppelin"},{"@type":"Thing","name":"compile"}],"url":"https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+<style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2{font-family:ui-monospace,Consolas,monospace;font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}}</style>
+</head><body>
+<h1>OpenZeppelin 5.x fails to compile: Function "mcopy" not found</h1>
+<p><small>Error signature — confirm this is yours before buying:</small></p>
+<pre><code>DeclarationError: Function "mcopy" not found</code></pre>
+<p><small>solidity · hardhat · openzeppelin · compile · verified-in-production · FREE SAMPLE</small></p>
+<h2>Cause</h2><p>OpenZeppelin Contracts 5.x uses the mcopy opcode, which only exists from the Cancun EVM target onward. Hardhat's default evmVersion for solc 0.8.24 targets an older fork.</p>
+<h2>Fix</h2><p>Set evmVersion to 'cancun' in your Hardhat solidity settings.</p>
+<pre><code>solidity: { version: '0.8.24', settings: { evmVersion: 'cancun', optimizer: { enabled: true } } }</code></pre>
+<h2>Verification</h2><p>hardhat compile succeeds; previously failed with four mcopy DeclarationErrors from Bytes.sol.</p>
+<p><em>Free sample. The rest of the catalog is paid.</em></p>
+<hr>
+<p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Verified fixes sold per-lookup to AI agents.</small></p>
+</body></html>

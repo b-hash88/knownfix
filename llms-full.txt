@@ -1,0 +1,144 @@
+# KnownFix — full free tier
+
+> Verified fixes, priced below the tokens it takes to re-derive them.
+> Everything free about this store, in one fetch. Paid fix bodies are NOT here.
+
+Price: 0.00002 Base ETH (~$0.08, real — Base mainnet) to 0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49.
+Remote MCP: https://knownfix-backend-28.b-hash88.deno.net/mcp   HTTP: https://knownfix-backend-28.b-hash88.deno.net
+Buy: GET {backend}/fix/{id} -> 402 + offer; pay; retry with x-payment-tx header.
+Honesty: "verified-in-production" = reproduced and fixed in a real session.
+"documented" = sourced, not independently reproduced. /match returns empty
+rather than pretending.
+
+## OpenZeppelin 5.x fails to compile: Function "mcopy" not found  [FREE SAMPLE — full body]
+Signature: DeclarationError: Function "mcopy" not found
+Tags: solidity, hardhat, openzeppelin, compile | Confidence: verified-in-production
+Cause: OpenZeppelin Contracts 5.x uses the mcopy opcode, which only exists from the Cancun EVM target onward. Hardhat's default evmVersion for solc 0.8.24 targets an older fork.
+Fix: Set evmVersion to 'cancun' in your Hardhat solidity settings.
+Patch: solidity: { version: '0.8.24', settings: { evmVersion: 'cancun', optimizer: { enabled: true } } }
+Verified: hardhat compile succeeds; previously failed with four mcopy DeclarationErrors from Bytes.sol.
+Page: https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.html
+
+## npm ERESOLVE installing @nomicfoundation/hardhat-verify with Hardhat 2  [PAID]
+Signature: peer hardhat@"^3.12.0" from @nomicfoundation/hardhat-verify
+Tags: npm, hardhat, dependencies | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "hardhat-verify-peer-conflict" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/hardhat-verify-peer-conflict
+Page: https://b-hash88.github.io/knownfix/fixes/hardhat-verify-peer-conflict.html
+
+## Env var set for an MCP stdio server never arrives  [PAID]
+Signature: MCP server ignores environment variable set in parent shell
+Tags: mcp, stdio, environment, secrets | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "mcp-stdio-env-not-inherited" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/mcp-stdio-env-not-inherited
+Page: https://b-hash88.github.io/knownfix/fixes/mcp-stdio-env-not-inherited.html
+
+## ethers v6 reports 'execution reverted (unknown custom error)' though the ABI defines it  [PAID]
+Signature: execution reverted (unknown custom error)
+Tags: ethers, solidity, errors, testing | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "ethers6-custom-error-unnamed" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/ethers6-custom-error-unnamed
+Page: https://b-hash88.github.io/knownfix/fixes/ethers6-custom-error-unnamed.html
+
+## deploymentTransaction().wait(N>1) hangs forever on a local Hardhat node  [PAID]
+Signature: wait(2) never resolves on localhost 31337
+Tags: hardhat, deploy, localhost | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "hardhat-wait-confirmations-hang" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/hardhat-wait-confirmations-hang
+Page: https://b-hash88.github.io/knownfix/fixes/hardhat-wait-confirmations-hang.html
+
+## Node on Windows: 'Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)' at exit  [PAID]
+Signature: Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c
+Tags: node, windows, ethers, process | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "windows-libuv-assert-on-exit" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/windows-libuv-assert-on-exit
+Page: https://b-hash88.github.io/knownfix/fixes/windows-libuv-assert-on-exit.html
+
+## node --test with a bare directory argument fails with a nameless failing 'test'  [FREE SAMPLE — full body]
+Signature: test at test:1:1 ... 'test failed' with zero real tests run
+Tags: node, testing, windows | Confidence: verified-in-production
+Cause: Passing a directory path like test/ to node --test can be misinterpreted on Windows, producing a single synthetic failing entry instead of running the suite.
+Fix: Name the test file explicitly (node --test test/my.test.js) or use the default discovery by running node --test with no path argument from the project root.
+Verified: Same suite: 1 nameless failure via 'node --test test/', 7/7 passing via the explicit file path, Node 24.15 on Windows 11.
+Page: https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.html
+
+## Panic 0x32 (array out-of-bounds) in a view function that 'cannot' be wrong  [PAID]
+Signature: reverted with panic code 0x32
+Tags: solidity, arrays, fuzzing | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "solidity-panic-0x32-derived-index" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/solidity-panic-0x32-derived-index
+Page: https://b-hash88.github.io/knownfix/fixes/solidity-panic-0x32-derived-index.html
+
+## npm install 'succeeded' but the package is not there  [PAID]
+Signature: Cannot find module 'X' immediately after npm i X appeared to succeed
+Tags: npm, dependencies, ci | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "npm-install-silent-failure" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/npm-install-silent-failure
+Page: https://b-hash88.github.io/knownfix/fixes/npm-install-silent-failure.html
+
+## PowerShell 5.1: '&&' and '||' are parser errors  [PAID]
+Signature: The token '&&' is not a valid statement separator in this version
+Tags: powershell, windows, shell | Confidence: documented
+Cause and remedy are paid. Buy id "ps51-no-pipeline-chain-operators" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/ps51-no-pipeline-chain-operators
+Page: https://b-hash88.github.io/knownfix/fixes/ps51-no-pipeline-chain-operators.html
+
+## ethers v6: 'nonce has already been used' on back-to-back transactions  [PAID]
+Signature: nonce has already been used
+Tags: ethers, nonce, transactions | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "ethers6-sequential-nonce-reuse" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/ethers6-sequential-nonce-reuse
+Page: https://b-hash88.github.io/knownfix/fixes/ethers6-sequential-nonce-reuse.html
+
+## curl -w format strings mangled into C:/Program Files/Git/ paths on git-bash  [PAID]
+Signature: C:/Program Files/Git/ prefixed onto strings that started with a forward slash
+Tags: windows, git-bash, msys, curl | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "msys-curl-format-path-mangling" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/msys-curl-format-path-mangling
+Page: https://b-hash88.github.io/knownfix/fixes/msys-curl-format-path-mangling.html
+
+## localtunnel started with & goes dead (408) after the launching shell exits  [PAID]
+Signature: tunnel URL returns 408 minutes after working
+Tags: localtunnel, tunnels, processes | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "localtunnel-dies-with-parent-shell" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/localtunnel-dies-with-parent-shell
+Page: https://b-hash88.github.io/knownfix/fixes/localtunnel-dies-with-parent-shell.html
+
+## Search engines cannot index a site behind a free tunnel  [PAID]
+Signature: crawler receives 'Tunnel website ahead!' page with meta robots noindex
+Tags: seo, tunnels, crawlers, indexing | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "free-tunnel-noindex-interstitial" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/free-tunnel-noindex-interstitial
+Page: https://b-hash88.github.io/knownfix/fixes/free-tunnel-noindex-interstitial.html
+
+## File 404s on GitHub Pages for a minute or two after a successful push  [PAID]
+Signature: fresh push visible in repo but 404 on the pages URL
+Tags: github-pages, deploy, ci | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-pages-deploy-lag" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-pages-deploy-lag
+Page: https://b-hash88.github.io/knownfix/fixes/gh-pages-deploy-lag.html
+
+## Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED  [FREE SAMPLE — full body]
+Signature: Package subpath './package.json' is not defined by "exports"
+Tags: node, npm, exports-map | Confidence: verified-in-production
+Cause: Packages with an exports map (ethers 6, many modern libs) do not expose package.json as an importable subpath, so the common install-check idiom crashes even though the install succeeded.
+Fix: Verify installs by requiring the module itself (e.g. require('ethers').version), not its package.json.
+Verified: ethers 6.17 install looked failed via the package.json probe; requiring the module directly confirmed it was fine.
+Page: https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.html
+
+## Adding a second GitHub account to the gh CLI without touching credentials  [PAID]
+Signature: gh auth switch says 'no accounts matched that criteria' for a browser-logged-in account
+Tags: github, gh-cli, auth, agents | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-cli-second-account-device-flow" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-cli-second-account-device-flow
+Page: https://b-hash88.github.io/knownfix/fixes/gh-cli-second-account-device-flow.html
+
+## npm publish 403: two-factor authentication or bypass-2fa token required  [PAID]
+Signature: 403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages
+Tags: npm, publish, 2fa, tokens | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "npm-publish-2fa-403" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/npm-publish-2fa-403
+Page: https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html
+
+## npm publish E404 on a brand-new package with a granular access token  [PAID]
+Signature: npm error 404 Not Found - PUT https://registry.npmjs.org/<pkg> - The requested resource could not be found or you do not have permission
+Tags: npm, publish, tokens, permissions | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "npm-granular-token-new-package-404" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/npm-granular-token-new-package-404
+Page: https://b-hash88.github.io/knownfix/fixes/npm-granular-token-new-package-404.html
+
+## PowerShell Read-Host: secret pasted into the prompt string yields an empty variable  [PAID]
+Signature: $t = Read-Host "<the secret itself>" ... later auth fails with ENEEDAUTH / empty credential
+Tags: powershell, windows, secrets, shell | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "powershell-readhost-prompt-secret" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/powershell-readhost-prompt-secret
+Page: https://b-hash88.github.io/knownfix/fixes/powershell-readhost-prompt-secret.html
+
+## Loading deferred MCP tools one at a time wastes a round-trip per tool  [PAID]
+Signature: repeated ToolSearch select: calls for tools from the same server
+Tags: mcp, agents, performance | Confidence: documented
+Cause and remedy are paid. Buy id "mcp-tool-search-batching" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/mcp-tool-search-batching
+Page: https://b-hash88.github.io/knownfix/fixes/mcp-tool-search-batching.html

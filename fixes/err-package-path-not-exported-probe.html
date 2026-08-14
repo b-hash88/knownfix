@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Package subpath './package.json' is not defined by "exports" — fix | KnownFix</title>
+<meta name="description" content="Verified verified-in-production fix for "Package subpath './package.json' is not defined by "exports"". Cause, remedy, and how it was verified.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.html">
+<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.md">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED","name":"Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED","description":"Cause and verified fix for: Package subpath './package.json' is not defined by \"exports\"","articleSection":"Software error fix","keywords":"node, npm, exports-map","about":[{"@type":"Thing","name":"node"},{"@type":"Thing","name":"npm"},{"@type":"Thing","name":"exports-map"}],"url":"https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+<style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2{font-family:ui-monospace,Consolas,monospace;font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}}</style>
+</head><body>
+<h1>Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED</h1>
+<p><small>Error signature — confirm this is yours before buying:</small></p>
+<pre><code>Package subpath './package.json' is not defined by "exports"</code></pre>
+<p><small>node · npm · exports-map · verified-in-production · FREE SAMPLE</small></p>
+<h2>Cause</h2><p>Packages with an exports map (ethers 6, many modern libs) do not expose package.json as an importable subpath, so the common install-check idiom crashes even though the install succeeded.</p>
+<h2>Fix</h2><p>Verify installs by requiring the module itself (e.g. require('ethers').version), not its package.json.</p>
+
+<h2>Verification</h2><p>ethers 6.17 install looked failed via the package.json probe; requiring the module directly confirmed it was fine.</p>
+<p><em>Free sample. The rest of the catalog is paid.</em></p>
+<hr>
+<p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Verified fixes sold per-lookup to AI agents.</small></p>
+</body></html>

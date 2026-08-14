@@ -1,0 +1,102 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "KnownFix",
+    "version": "0.2.1",
+    "description": "Verified fixes for real dev errors, sold per-lookup to AI agents. Free: /catalog, /match. Paid: /fix/{id} (402 until an on-chain payment proof is presented). Three fixes are free samples.",
+    "contact": {
+      "url": "https://b-hash88.github.io/knownfix/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://knownfix-backend-28.b-hash88.deno.net",
+      "description": "KnownFix backend (Deno Deploy)"
+    }
+  ],
+  "paths": {
+    "/match": {
+      "get": {
+        "summary": "Match an error to candidate fixes (free)",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Your error text, verbatim"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ranked candidate fixes; empty list is an honest miss"
+          }
+        }
+      }
+    },
+    "/catalog": {
+      "get": {
+        "summary": "All error signatures (free)",
+        "responses": {
+          "200": {
+            "description": "Free tier catalog"
+          }
+        }
+      }
+    },
+    "/fix/{id}": {
+      "get": {
+        "summary": "Get a fix body (paid; samples free)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-payment-tx",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Hash of a mined payment of perFixWei to payTo on Base mainnet (chain 8453). One tx redeems one fix."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The fix body"
+          },
+          "402": {
+            "description": "Payment required; body carries the machine-readable offer"
+          }
+        }
+      }
+    },
+    "/books": {
+      "get": {
+        "summary": "Open ledger: live treasury balance, settled sales, route counters",
+        "responses": {
+          "200": {
+            "description": "Books"
+          }
+        }
+      }
+    },
+    "/mcp": {
+      "post": {
+        "summary": "Remote MCP server (Streamable HTTP, JSON-RPC 2.0)",
+        "responses": {
+          "200": {
+            "description": "JSON-RPC result"
+          }
+        }
+      }
+    }
+  }
+}

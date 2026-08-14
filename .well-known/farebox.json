@@ -4,11 +4,13 @@
   "offer": {
     "name": "KnownFix",
     "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
-    "inventory": 21,
+    "inventory": 23,
     "freeSamples": [
       "oz5-mcopy-cancun",
       "node-test-dir-arg-windows",
-      "err-package-path-not-exported-probe"
+      "err-package-path-not-exported-probe",
+      "gh-cli-account-revert-private-repo-404",
+      "deno-deploy-508-self-fetch-loop"
     ],
     "perFixOnChain": {
       "wei": "20000000000000",

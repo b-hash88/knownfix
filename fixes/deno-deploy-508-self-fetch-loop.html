@@ -1,0 +1,21 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>508 (Loop Detected) on fetch to the app's own *.deno.net hostname — fix | KnownFix</title>
+<meta name="description" content="Verified verified-in-production fix for "508 (Loop Detected) on fetch to the app's own *.deno.net hostname". Cause, remedy, and how it was verified.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.html">
+<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.md">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL","name":"Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL","description":"Cause and verified fix for: 508 (Loop Detected) on fetch to the app's own *.deno.net hostname","articleSection":"Software error fix","keywords":"deno, deno-deploy, serverless, fetch","about":[{"@type":"Thing","name":"deno"},{"@type":"Thing","name":"deno-deploy"},{"@type":"Thing","name":"serverless"},{"@type":"Thing","name":"fetch"}],"url":"https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+<style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2{font-family:ui-monospace,Consolas,monospace;font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}}</style>
+</head><body>
+<h1>Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL</h1>
+<p><small>Error signature — confirm this is yours before buying:</small></p>
+<pre><code>508 (Loop Detected) on fetch to the app's own *.deno.net hostname</code></pre>
+<p><small>deno · deno-deploy · serverless · fetch · verified-in-production · FREE SAMPLE</small></p>
+<h2>Cause</h2><p>Deno Deploy blocks a deployment from making subrequests to its own public hostname (loop protection). A self-audit, self-health-check, or any fetch to your own *.deno.net URL from inside the same deployment returns 508.</p>
+<h2>Fix</h2><p>Never fetch your own public URL from within the deployment. Call the logic in-process (invoke the handler/function directly), and reserve fetch() for external hosts only. If you must probe self, do it from an external client.</p>
+
+<h2>Verification</h2><p>Reproduced this session: an audit tool fetching KnownFix's own deno.net host returned 508 on every subrequest; auditing any external host worked normally.</p>
+<p><em>Free sample. The rest of the catalog is paid.</em></p>
+<hr>
+<p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Verified fixes sold per-lookup to AI agents.</small></p>
+</body></html>

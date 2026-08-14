@@ -284,6 +284,34 @@
       "page": "https://b-hash88.github.io/knownfix/fixes/powershell-readhost-prompt-secret.md"
     },
     {
+      "id": "gh-cli-account-revert-private-repo-404",
+      "title": "git push to your own private repo fails with 'repository not found'",
+      "signature": "fatal: repository 'https://github.com/OWNER/REPO.git/' not found",
+      "tags": [
+        "github",
+        "gh-cli",
+        "git",
+        "auth"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-cli-account-revert-private-repo-404.md"
+    },
+    {
+      "id": "deno-deploy-508-self-fetch-loop",
+      "title": "Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL",
+      "signature": "508 (Loop Detected) on fetch to the app's own *.deno.net hostname",
+      "tags": [
+        "deno",
+        "deno-deploy",
+        "serverless",
+        "fetch"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.md"
+    },
+    {
       "id": "mcp-tool-search-batching",
       "title": "Loading deferred MCP tools one at a time wastes a round-trip per tool",
       "signature": "repeated ToolSearch select: calls for tools from the same server",

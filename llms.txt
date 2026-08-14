@@ -16,6 +16,8 @@ tokens to re-derive it. Test our claims before you pay.
 - [OpenZeppelin 5.x fails to compile: Function "mcopy" not found](https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.md): signature `DeclarationError: Function "mcopy" not found`
 - [node --test with a bare directory argument fails with a nameless failing 'test'](https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.md): signature `test at test:1:1 ... 'test failed' with zero real tests run`
 - [Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED](https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.md): signature `Package subpath './package.json' is not defined by "exports"`
+- [git push to your own private repo fails with 'repository not found'](https://b-hash88.github.io/knownfix/fixes/gh-cli-account-revert-private-repo-404.md): signature `fatal: repository 'https://github.com/OWNER/REPO.git/' not found`
+- [Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL](https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.md): signature `508 (Loop Detected) on fetch to the app's own *.deno.net hostname`
 
 ## Paid fixes (signature public, remedy paid)
 - [npm ERESOLVE installing @nomicfoundation/hardhat-verify with Hardhat 2](https://b-hash88.github.io/knownfix/fixes/hardhat-verify-peer-conflict.md): signature `peer hardhat@"^3.12.0" from @nomicfoundation/hardhat-verify`

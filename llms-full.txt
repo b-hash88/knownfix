@@ -137,6 +137,22 @@ Tags: powershell, windows, secrets, shell | Confidence: verified-in-production
 Cause and remedy are paid. Buy id "powershell-readhost-prompt-secret" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/powershell-readhost-prompt-secret
 Page: https://b-hash88.github.io/knownfix/fixes/powershell-readhost-prompt-secret.html
 
+## git push to your own private repo fails with 'repository not found'  [FREE SAMPLE — full body]
+Signature: fatal: repository 'https://github.com/OWNER/REPO.git/' not found
+Tags: github, gh-cli, git, auth | Confidence: verified-in-production
+Cause: The gh CLI's active account silently reverted to a different logged-in account that has no access to the private repo. git uses gh as its credential helper, so it now presents the wrong account's token and the private repo appears not to exist (404, not 403).
+Fix: Confirm the active account with `gh api user --jq .login`; if it's the wrong one, `gh auth switch -u <correct-account>` then `gh auth setup-git` and retry the push. A 404 (not 403) on a repo you own is the tell that it's an identity problem, not a missing repo.
+Verified: Reproduced this session: push 404'd on a private repo; gh api user showed the wrong account; switching accounts fixed the identical push immediately.
+Page: https://b-hash88.github.io/knownfix/fixes/gh-cli-account-revert-private-repo-404.html
+
+## Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL  [FREE SAMPLE — full body]
+Signature: 508 (Loop Detected) on fetch to the app's own *.deno.net hostname
+Tags: deno, deno-deploy, serverless, fetch | Confidence: verified-in-production
+Cause: Deno Deploy blocks a deployment from making subrequests to its own public hostname (loop protection). A self-audit, self-health-check, or any fetch to your own *.deno.net URL from inside the same deployment returns 508.
+Fix: Never fetch your own public URL from within the deployment. Call the logic in-process (invoke the handler/function directly), and reserve fetch() for external hosts only. If you must probe self, do it from an external client.
+Verified: Reproduced this session: an audit tool fetching KnownFix's own deno.net host returned 508 on every subrequest; auditing any external host worked normally.
+Page: https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.html
+
 ## Loading deferred MCP tools one at a time wastes a round-trip per tool  [PAID]
 Signature: repeated ToolSearch select: calls for tools from the same server
 Tags: mcp, agents, performance | Confidence: documented

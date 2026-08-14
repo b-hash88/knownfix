@@ -1,0 +1,20 @@
+{
+  "spec": "farebox-offer/0.1",
+  "staticSnapshot": true,
+  "offer": {
+    "name": "KnownFix",
+    "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
+    "inventory": 18,
+    "perFixOnChain": {
+      "wei": "20000000000000",
+      "approx": "$0.08",
+      "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49"
+    }
+  },
+  "backend": {
+    "status": "rotating-tunnel",
+    "note": "The live checkout endpoint is ephemeral. This field is updated by the operator loop when the tunnel rotates; if stale, the catalog remains valid and the treasury address remains payable.",
+    "url": null
+  },
+  "catalog": "https://b-hash88.github.io/knownfix/catalog.json"
+}

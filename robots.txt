@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://b-hash88.github.io/knownfix/sitemap.xml

@@ -1,0 +1,225 @@
+{
+  "spec": "knownfix-catalog/0.1",
+  "store": "KnownFix",
+  "tagline": "Verified fixes, priced below the tokens it takes to re-derive them.",
+  "pricing": {
+    "perFix": {
+      "amount": "0.08",
+      "currency": "USD",
+      "note": "0.00002 ETH on-chain"
+    },
+    "dayPass": {
+      "amount": "1.00",
+      "currency": "USD"
+    }
+  },
+  "provenance": "Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here.",
+  "tier": "free — signatures and titles only; fix bodies are paid via the offer in .well-known/farebox.json",
+  "entries": [
+    {
+      "id": "oz5-mcopy-cancun",
+      "title": "OpenZeppelin 5.x fails to compile: Function \"mcopy\" not found",
+      "signature": "DeclarationError: Function \"mcopy\" not found",
+      "tags": [
+        "solidity",
+        "hardhat",
+        "openzeppelin",
+        "compile"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "hardhat-verify-peer-conflict",
+      "title": "npm ERESOLVE installing @nomicfoundation/hardhat-verify with Hardhat 2",
+      "signature": "peer hardhat@\"^3.12.0\" from @nomicfoundation/hardhat-verify",
+      "tags": [
+        "npm",
+        "hardhat",
+        "dependencies"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "mcp-stdio-env-not-inherited",
+      "title": "Env var set for an MCP stdio server never arrives",
+      "signature": "MCP server ignores environment variable set in parent shell",
+      "tags": [
+        "mcp",
+        "stdio",
+        "environment",
+        "secrets"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "ethers6-custom-error-unnamed",
+      "title": "ethers v6 reports 'execution reverted (unknown custom error)' though the ABI defines it",
+      "signature": "execution reverted (unknown custom error)",
+      "tags": [
+        "ethers",
+        "solidity",
+        "errors",
+        "testing"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "hardhat-wait-confirmations-hang",
+      "title": "deploymentTransaction().wait(N>1) hangs forever on a local Hardhat node",
+      "signature": "wait(2) never resolves on localhost 31337",
+      "tags": [
+        "hardhat",
+        "deploy",
+        "localhost"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "windows-libuv-assert-on-exit",
+      "title": "Node on Windows: 'Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)' at exit",
+      "signature": "Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\\win\\async.c",
+      "tags": [
+        "node",
+        "windows",
+        "ethers",
+        "process"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "node-test-dir-arg-windows",
+      "title": "node --test with a bare directory argument fails with a nameless failing 'test'",
+      "signature": "test at test:1:1 ... 'test failed' with zero real tests run",
+      "tags": [
+        "node",
+        "testing",
+        "windows"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "solidity-panic-0x32-derived-index",
+      "title": "Panic 0x32 (array out-of-bounds) in a view function that 'cannot' be wrong",
+      "signature": "reverted with panic code 0x32",
+      "tags": [
+        "solidity",
+        "arrays",
+        "fuzzing"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "npm-install-silent-failure",
+      "title": "npm install 'succeeded' but the package is not there",
+      "signature": "Cannot find module 'X' immediately after npm i X appeared to succeed",
+      "tags": [
+        "npm",
+        "dependencies",
+        "ci"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "ps51-no-pipeline-chain-operators",
+      "title": "PowerShell 5.1: '&&' and '||' are parser errors",
+      "signature": "The token '&&' is not a valid statement separator in this version",
+      "tags": [
+        "powershell",
+        "windows",
+        "shell"
+      ],
+      "confidence": "documented"
+    },
+    {
+      "id": "ethers6-sequential-nonce-reuse",
+      "title": "ethers v6: 'nonce has already been used' on back-to-back transactions",
+      "signature": "nonce has already been used",
+      "tags": [
+        "ethers",
+        "nonce",
+        "transactions"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "msys-curl-format-path-mangling",
+      "title": "curl -w format strings mangled into C:/Program Files/Git/ paths on git-bash",
+      "signature": "C:/Program Files/Git/ prefixed onto strings that started with a forward slash",
+      "tags": [
+        "windows",
+        "git-bash",
+        "msys",
+        "curl"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "localtunnel-dies-with-parent-shell",
+      "title": "localtunnel started with & goes dead (408) after the launching shell exits",
+      "signature": "tunnel URL returns 408 minutes after working",
+      "tags": [
+        "localtunnel",
+        "tunnels",
+        "processes"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "free-tunnel-noindex-interstitial",
+      "title": "Search engines cannot index a site behind a free tunnel",
+      "signature": "crawler receives 'Tunnel website ahead!' page with meta robots noindex",
+      "tags": [
+        "seo",
+        "tunnels",
+        "crawlers",
+        "indexing"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "gh-pages-deploy-lag",
+      "title": "File 404s on GitHub Pages for a minute or two after a successful push",
+      "signature": "fresh push visible in repo but 404 on the pages URL",
+      "tags": [
+        "github-pages",
+        "deploy",
+        "ci"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "err-package-path-not-exported-probe",
+      "title": "Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED",
+      "signature": "Package subpath './package.json' is not defined by \"exports\"",
+      "tags": [
+        "node",
+        "npm",
+        "exports-map"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "gh-cli-second-account-device-flow",
+      "title": "Adding a second GitHub account to the gh CLI without touching credentials",
+      "signature": "gh auth switch says 'no accounts matched that criteria' for a browser-logged-in account",
+      "tags": [
+        "github",
+        "gh-cli",
+        "auth",
+        "agents"
+      ],
+      "confidence": "verified-in-production"
+    },
+    {
+      "id": "mcp-tool-search-batching",
+      "title": "Loading deferred MCP tools one at a time wastes a round-trip per tool",
+      "signature": "repeated ToolSearch select: calls for tools from the same server",
+      "tags": [
+        "mcp",
+        "agents",
+        "performance"
+      ],
+      "confidence": "documented"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "servers": [
+    {
+      "name": "knownfix",
+      "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
+      "transport": "streamable-http",
+      "endpoint": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
+      "registry": "io.github.b-hash88/knownfix",
+      "npm": "knownfix",
+      "docs": "https://b-hash88.github.io/knownfix/llms.txt",
+      "offer": "https://b-hash88.github.io/knownfix/.well-known/farebox.json"
+    }
+  ]
+}

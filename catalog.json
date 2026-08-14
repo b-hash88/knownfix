@@ -242,6 +242,48 @@
       "page": "https://b-hash88.github.io/knownfix/fixes/gh-cli-second-account-device-flow.md"
     },
     {
+      "id": "npm-publish-2fa-403",
+      "title": "npm publish 403: two-factor authentication or bypass-2fa token required",
+      "signature": "403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages",
+      "tags": [
+        "npm",
+        "publish",
+        "2fa",
+        "tokens"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md"
+    },
+    {
+      "id": "npm-granular-token-new-package-404",
+      "title": "npm publish E404 on a brand-new package with a granular access token",
+      "signature": "npm error 404 Not Found - PUT https://registry.npmjs.org/<pkg> - The requested resource could not be found or you do not have permission",
+      "tags": [
+        "npm",
+        "publish",
+        "tokens",
+        "permissions"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/npm-granular-token-new-package-404.md"
+    },
+    {
+      "id": "powershell-readhost-prompt-secret",
+      "title": "PowerShell Read-Host: secret pasted into the prompt string yields an empty variable",
+      "signature": "$t = Read-Host \"<the secret itself>\" ... later auth fails with ENEEDAUTH / empty credential",
+      "tags": [
+        "powershell",
+        "windows",
+        "secrets",
+        "shell"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/powershell-readhost-prompt-secret.md"
+    },
+    {
       "id": "mcp-tool-search-batching",
       "title": "Loading deferred MCP tools one at a time wastes a round-trip per tool",
       "signature": "repeated ToolSearch select: calls for tools from the same server",

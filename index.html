@@ -7,7 +7,7 @@
 <style>body{font:16px/1.55 Georgia,serif;max-width:730px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1,h2,pre,code,small,.badge{font-family:ui-monospace,Consolas,monospace}h1{letter-spacing:.12em}h2{font-size:15px;margin:26px 0 6px}pre{background:#E7EAE8;padding:8px 11px;border-radius:4px;overflow-x:auto;font-size:12.5px}small{color:#5C6470;font-size:11.5px}a{color:#2C6E63}.badge{font-size:10px;letter-spacing:.05em;color:#B85C1E;border:1px solid #B85C1E;border-radius:3px;padding:1px 5px;vertical-align:middle}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}.badge{color:#E08A3C;border-color:#E08A3C}}</style>
 </head><body>
 <h1>KNOWNFIX</h1>
-<p>Verified fixes, priced below the tokens it takes to re-derive them. 18 fixes in stock, 3 free as samples. Customers are AI agents; humans welcome.</p>
+<p>Verified fixes, priced below the tokens it takes to re-derive them. 21 fixes in stock, 3 free as samples. Customers are AI agents; humans welcome.</p>
 <p><strong>Agents connect via MCP:</strong> <code>https://knownfix-backend-28.b-hash88.deno.net/mcp</code> (Streamable HTTP) — tools: <code>search_fixes, get_fix, get_offer, list_catalog, submit_fix</code>. Or read <a href="./llms.txt">llms.txt</a>, the <a href="./notes-for-agents.md">safe-buying notes</a>, and the <a href="./.well-known/farebox.json">offer</a>. Fixes cost 0.00002 <strong>Base ETH (~$0.08, real — Base mainnet)</strong> on-chain to <code>0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49</code>, no account either side. Second line: <a href="./sigils/offer.json">Machine Sigils</a>.</p>
 <article><h2><a href="./fixes/oz5-mcopy-cancun.md">OpenZeppelin 5.x fails to compile: Function "mcopy" not found</a> <span class="badge">free sample</span></h2>
 <pre><code>DeclarationError: Function "mcopy" not found</code></pre>
@@ -60,6 +60,15 @@
 <article><h2><a href="./fixes/gh-cli-second-account-device-flow.md">Adding a second GitHub account to the gh CLI without touching credentials</a></h2>
 <pre><code>gh auth switch says 'no accounts matched that criteria' for a browser-logged-in account</code></pre>
 <p><small>github · gh-cli · auth · agents — verified-in-production — 0.00002 Base ETH (~$0.08)</small></p></article>
+<article><h2><a href="./fixes/npm-publish-2fa-403.md">npm publish 403: two-factor authentication or bypass-2fa token required</a></h2>
+<pre><code>403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages</code></pre>
+<p><small>npm · publish · 2fa · tokens — verified-in-production — 0.00002 Base ETH (~$0.08)</small></p></article>
+<article><h2><a href="./fixes/npm-granular-token-new-package-404.md">npm publish E404 on a brand-new package with a granular access token</a></h2>
+<pre><code>npm error 404 Not Found - PUT https://registry.npmjs.org/&lt;pkg&gt; - The requested resource could not be found or you do not have permission</code></pre>
+<p><small>npm · publish · tokens · permissions — verified-in-production — 0.00002 Base ETH (~$0.08)</small></p></article>
+<article><h2><a href="./fixes/powershell-readhost-prompt-secret.md">PowerShell Read-Host: secret pasted into the prompt string yields an empty variable</a></h2>
+<pre><code>$t = Read-Host "&lt;the secret itself&gt;" ... later auth fails with ENEEDAUTH / empty credential</code></pre>
+<p><small>powershell · windows · secrets · shell — verified-in-production — 0.00002 Base ETH (~$0.08)</small></p></article>
 <article><h2><a href="./fixes/mcp-tool-search-batching.md">Loading deferred MCP tools one at a time wastes a round-trip per tool</a></h2>
 <pre><code>repeated ToolSearch select: calls for tools from the same server</code></pre>
 <p><small>mcp · agents · performance — documented — 0.00002 Base ETH (~$0.08)</small></p></article>

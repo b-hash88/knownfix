@@ -193,6 +193,48 @@ Fix: Open a NEW shell to pick it up, or set it in the current session ($env:VAR=
 Verified: This session: a key set via setx was invisible to already-running processes; a new shell and a file-based read both resolved it.
 Page: https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.html
 
+## git push rejected: OAuth App cannot create/update workflow without workflow scope  [PAID]
+Signature: ! [remote rejected] main -> main (refusing to allow an OAuth App to create or update workflow `.github/workflows/x.yml` without `workflow` scope)
+Tags: github, git, gh-cli, github-actions, auth | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-push-workflow-scope-rejected" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-push-workflow-scope-rejected
+Page: https://b-hash88.github.io/knownfix/fixes/gh-push-workflow-scope-rejected.html
+
+## GitHub Actions: Unable to resolve action, unable to find version  [PAID]
+Signature: ##[error]Unable to resolve action `actions/checkout@v99`, unable to find version `v99`
+Tags: github-actions, ci, workflow | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-actions-unresolved-action-version" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-actions-unresolved-action-version
+Page: https://b-hash88.github.io/knownfix/fixes/gh-actions-unresolved-action-version.html
+
+## GitHub Actions: git push in a workflow fails 403 (exit code 128)  [PAID]
+Signature: fatal: unable to access '...': The requested URL returned error: 403 ... Process completed with exit code 128
+Tags: github-actions, ci, permissions, github-token | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-actions-token-permissions-403" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-actions-token-permissions-403
+Page: https://b-hash88.github.io/knownfix/fixes/gh-actions-token-permissions-403.html
+
+## actions/setup-node cache fails: Dependencies lock file is not found  [PAID]
+Signature: Dependencies lock file is not found in ... Supported file patterns: package-lock.json,npm-shrinkwrap.json,yarn.lock
+Tags: github-actions, ci, setup-node, cache, npm | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-actions-setup-node-cache-no-lockfile" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-actions-setup-node-cache-no-lockfile
+Page: https://b-hash88.github.io/knownfix/fixes/gh-actions-setup-node-cache-no-lockfile.html
+
+## GitHub Actions warns Node 20 is deprecated, running with Node 24 by default  [PAID]
+Signature: Node 20 is being deprecated. This workflow is running with Node 24 by default. ... ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true
+Tags: github-actions, ci, node, setup-node, deprecation | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-actions-node20-deprecation-runner" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-actions-node20-deprecation-runner
+Page: https://b-hash88.github.io/knownfix/fixes/gh-actions-node20-deprecation-runner.html
+
+## How to skip a GitHub Actions run for a commit ([skip ci])  [PAID]
+Signature: a pushed commit should NOT trigger any workflow run
+Tags: github-actions, ci, skip-ci | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-actions-skip-ci-no-run" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-actions-skip-ci-no-run
+Page: https://b-hash88.github.io/knownfix/fixes/gh-actions-skip-ci-no-run.html
+
+## GitHub Actions: workflow run is named by its file path and fails instantly (invalid YAML)  [PAID]
+Signature: a run appears named `.github/workflows/x.yml` (the file path, not the workflow name) and fails immediately
+Tags: github-actions, ci, yaml, workflow | Confidence: verified-in-production
+Cause and remedy are paid. Buy id "gh-actions-invalid-workflow-yaml" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-actions-invalid-workflow-yaml
+Page: https://b-hash88.github.io/knownfix/fixes/gh-actions-invalid-workflow-yaml.html
+
 ## Loading deferred MCP tools one at a time wastes a round-trip per tool  [PAID]
 Signature: repeated ToolSearch select: calls for tools from the same server
 Tags: mcp, agents, performance | Confidence: documented

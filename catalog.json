@@ -379,6 +379,105 @@
       "page": "https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.md"
     },
     {
+      "id": "gh-push-workflow-scope-rejected",
+      "title": "git push rejected: OAuth App cannot create/update workflow without workflow scope",
+      "signature": "! [remote rejected] main -> main (refusing to allow an OAuth App to create or update workflow `.github/workflows/x.yml` without `workflow` scope)",
+      "tags": [
+        "github",
+        "git",
+        "gh-cli",
+        "github-actions",
+        "auth"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-push-workflow-scope-rejected.md"
+    },
+    {
+      "id": "gh-actions-unresolved-action-version",
+      "title": "GitHub Actions: Unable to resolve action, unable to find version",
+      "signature": "##[error]Unable to resolve action `actions/checkout@v99`, unable to find version `v99`",
+      "tags": [
+        "github-actions",
+        "ci",
+        "workflow"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-unresolved-action-version.md"
+    },
+    {
+      "id": "gh-actions-token-permissions-403",
+      "title": "GitHub Actions: git push in a workflow fails 403 (exit code 128)",
+      "signature": "fatal: unable to access '...': The requested URL returned error: 403 ... Process completed with exit code 128",
+      "tags": [
+        "github-actions",
+        "ci",
+        "permissions",
+        "github-token"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-token-permissions-403.md"
+    },
+    {
+      "id": "gh-actions-setup-node-cache-no-lockfile",
+      "title": "actions/setup-node cache fails: Dependencies lock file is not found",
+      "signature": "Dependencies lock file is not found in ... Supported file patterns: package-lock.json,npm-shrinkwrap.json,yarn.lock",
+      "tags": [
+        "github-actions",
+        "ci",
+        "setup-node",
+        "cache",
+        "npm"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-setup-node-cache-no-lockfile.md"
+    },
+    {
+      "id": "gh-actions-node20-deprecation-runner",
+      "title": "GitHub Actions warns Node 20 is deprecated, running with Node 24 by default",
+      "signature": "Node 20 is being deprecated. This workflow is running with Node 24 by default. ... ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true",
+      "tags": [
+        "github-actions",
+        "ci",
+        "node",
+        "setup-node",
+        "deprecation"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-node20-deprecation-runner.md"
+    },
+    {
+      "id": "gh-actions-skip-ci-no-run",
+      "title": "How to skip a GitHub Actions run for a commit ([skip ci])",
+      "signature": "a pushed commit should NOT trigger any workflow run",
+      "tags": [
+        "github-actions",
+        "ci",
+        "skip-ci"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-skip-ci-no-run.md"
+    },
+    {
+      "id": "gh-actions-invalid-workflow-yaml",
+      "title": "GitHub Actions: workflow run is named by its file path and fails instantly (invalid YAML)",
+      "signature": "a run appears named `.github/workflows/x.yml` (the file path, not the workflow name) and fails immediately",
+      "tags": [
+        "github-actions",
+        "ci",
+        "yaml",
+        "workflow"
+      ],
+      "confidence": "verified-in-production",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-invalid-workflow-yaml.md"
+    },
+    {
       "id": "mcp-tool-search-batching",
       "title": "Loading deferred MCP tools one at a time wastes a round-trip per tool",
       "signature": "repeated ToolSearch select: calls for tools from the same server",

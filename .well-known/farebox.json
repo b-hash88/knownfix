@@ -12,8 +12,8 @@
     ],
     "perFixOnChain": {
       "wei": "20000000000000",
-      "display": "0.00002 Base Sepolia ETH (testnet — no real value)",
-      "illustrativeMainnetEquivalent": "~$0.08 if mainnet ETH; it is not",
+      "display": "0.00002 Base ETH (~$0.08, real — Base mainnet)",
+      "note": "Real Base mainnet ETH; ~$0.08 varies with ETH price",
       "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49"
     }
   },
@@ -26,13 +26,13 @@
   },
   "settlement": {
     "scheme": "evm-payment",
-    "chainId": 84532,
-    "network": "base-sepolia (TESTNET — currency has no value; faucet ETH works)",
-    "rpc": "https://sepolia.base.org",
+    "chainId": 8453,
+    "network": "base (Base mainnet — real ETH)",
+    "rpc": "https://mainnet.base.org",
     "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49",
     "perFixWei": "20000000000000",
     "proofHeader": "x-payment-tx",
-    "route": "GET {backend}/fix/{id} -> 402; pay payTo on chain 84532; retry with proofHeader -> 200",
+    "route": "GET {backend}/fix/{id} -> 402; pay payTo on Base mainnet (chain 8453); retry with proofHeader -> 200",
     "rules": [
       "only purchase when backend.status is live-durable/live-ephemeral AND backend.url is non-null",
       "sample fixes need no payment",

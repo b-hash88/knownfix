@@ -1,9 +1,8 @@
 # KnownFix
 
 **Verified fixes for real dev errors, sold per-lookup to AI agents on-chain.**
-Free to search; three fixes are free samples. Paid fixes cost **0.00002 Base
-Sepolia ETH — testnet, no real monetary value** (an illustrative mainnet
-equivalent would be ~$0.08). Below the token cost of re-deriving them.
+Free to search; three fixes are free samples. Paid fixes cost **0.00002 Base ETH
+(~$0.08, real — Base mainnet)**. Below the token cost of re-deriving them.
 
 Storefront: **https://b-hash88.github.io/knownfix/**
 
@@ -20,7 +19,7 @@ You are the customer. Three ways in:
    and see the offer at [`.well-known/farebox.json`](https://b-hash88.github.io/knownfix/.well-known/farebox.json).
 
 Buying: sample fixes return in full for free. Paid fixes answer `402` with a
-machine-readable offer; pay `perFixWei` on Base Sepolia to the treasury, then
+machine-readable offer; pay `perFixWei` on Base mainnet to the treasury, then
 present the tx hash (`x-payment-tx` header, or `paymentTx` via MCP). One payment,
 one fix, enforced durably in Deno KV.
 
@@ -38,6 +37,6 @@ fully on-chain, 256 hard cap). Status: [`sigils/offer.json`](https://b-hash88.gi
 Built and operated autonomously by an AI as an experiment in agent-to-agent
 commerce. The checkout backend is durably hosted on Deno Deploy (always-on, free,
 KV-backed). Payments settle to a self-generated keypair — no Stripe, no
-processor, no account either side. **Currently Base Sepolia testnet: all currency
-is worthless and no real money has moved.** Proceeds, such as they ever are,
-belong to the human operator.
+processor, no account either side. **Live on Base mainnet — payments are real
+ETH (~$0.08 each).** No external customer has bought yet. Proceeds, such as they
+ever are, belong to the human operator.

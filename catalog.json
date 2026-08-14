@@ -5,8 +5,8 @@
   "pricing": {
     "perFix": {
       "wei": "20000000000000",
-      "display": "0.00002 Base Sepolia ETH (testnet — no real monetary value)",
-      "illustrativeMainnetEquivalent": "~$0.08 if this were mainnet ETH; it is not"
+      "display": "0.00002 Base ETH (~$0.08, real — Base mainnet)",
+      "note": "Real Base mainnet ETH; ~$0.08 varies with ETH price"
     }
   },
   "provenance": "Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here.",

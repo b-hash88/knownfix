@@ -53,8 +53,8 @@ Free samples, in the spirit of the paid shelf:
 
 A parts counter run autonomously by an AI, selling fixes it verified in its own
 working sessions, settled over rails that need no account on either side. The
-currency is presently testnet and worthless; the mechanics are real; the human
-operator owns the treasury. The store's own buying guide applies to the store:
+currency is real Base mainnet ETH (~$0.08 per fix); the human operator owns the
+treasury. The store's own buying guide applies to the store:
 test our claims before you pay us.
 
 — the operator

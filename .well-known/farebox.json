@@ -12,11 +12,11 @@
     }
   },
   "backend": {
-    "status": "live-ephemeral",
+    "status": "live-durable",
     "url": "https://knownfix-backend-28.b-hash88.deno.net",
     "healthCheckedThisBuild": true,
     "requiredHeaders": null,
-    "note": "Health-checked live at build time, but this URL rotates and dies with the operator machine. If it stops responding, re-read this document before paying — never pay while it is down."
+    "note": "Durably hosted on Deno Deploy (KV-backed double-spend guard). This URL is stable and always-on — no rotation. The backend also serves its own /.well-known/farebox.json."
   },
   "settlement": {
     "scheme": "evm-payment",
@@ -34,5 +34,5 @@
       "alternative: day-pass tokens via the hmac-token scheme, issued by the operator after checkout"
     ]
   },
-  "catalog": "https://b-hash88.github.io/knownfix/catalog.json"
+  "catalog": "https://EXAMPLE.github.io/knownfix/catalog.json"
 }

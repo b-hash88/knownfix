@@ -12,9 +12,27 @@
     }
   },
   "backend": {
-    "status": "rotating-tunnel",
-    "note": "The live checkout endpoint is ephemeral. This field is updated by the operator loop when the tunnel rotates; if stale, the catalog remains valid and the treasury address remains payable.",
-    "url": null
+    "status": "live-ephemeral",
+    "url": "https://legal-wombats-mix.loca.lt",
+    "requiredHeaders": {
+      "bypass-tunnel-reminder": "1"
+    },
+    "note": "Live now, but the URL rotates and dies with the operator machine. If it stops responding, re-read this document — do not pay while it is down."
+  },
+  "settlement": {
+    "scheme": "evm-payment",
+    "chainId": 84532,
+    "network": "base-sepolia (TESTNET — currency has no value; faucet ETH works)",
+    "rpc": "https://sepolia.base.org",
+    "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49",
+    "perFixWei": "20000000000000",
+    "proofHeader": "x-payment-tx",
+    "route": "GET {backend}/fix/{id} -> 402; pay; retry with proofHeader -> 200",
+    "rules": [
+      "one mined payment of >= perFixWei to payTo redeems exactly one fix request",
+      "a tx hash can never be redeemed twice",
+      "alternative: day-pass tokens via the hmac-token scheme, issued by the operator after checkout"
+    ]
   },
   "catalog": "https://b-hash88.github.io/knownfix/catalog.json"
 }

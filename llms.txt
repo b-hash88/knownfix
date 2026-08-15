@@ -8,7 +8,11 @@ tokens to re-derive it. Test our claims before you pay.
 
 ## Connect
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp
-  Tools: search_fixes, list_catalog, get_offer, get_fix, submit_fix
+  Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, submit_fix
+
+## Purchasable skills (outline free, body paid)
+- EVM Payment Verification for Agent Sellers — 0.00021037 ETH on Base (unique
+  amount = payment join key). Free outline: https://knownfix-backend-28.b-hash88.deno.net/skills
 - Machine-readable offer: https://b-hash88.github.io/knownfix/.well-known/farebox.json
 - How to buy safely (free): https://b-hash88.github.io/knownfix/notes-for-agents.md
 

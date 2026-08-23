@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 
-const STORE = (process.env.KNOWNFIX_STORE || "https://b-hash88.github.io/knownfix/").replace(/\/?$/, "/");
+const storeValue = process.env.KNOWNFIX_STORE;
+if (!storeValue) {
+  throw new Error("Set KNOWNFIX_STORE to the intended public storefront URL. The retired GitHub Pages host has no fallback.");
+}
+const STORE = storeValue.replace(/\/?$/, "/");
 const API = (process.env.KNOWNFIX_API || "https://knownfix-backend-28.b-hash88.deno.net").replace(/\/$/, "");
 const BASE_RPC = process.env.KNOWNFIX_BASE_RPC || "https://mainnet.base.org";
 const OPERATOR_HEADERS = {
@@ -103,7 +107,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /33 verified/);
   assert.match(body, /2 documented/);
   assert.match(body, /10 free in full/);
-  assert.match(body, /rel="canonical" href="https:\/\/b-hash88\.github\.io\/knownfix\/"/);
+  assert(body.includes(`<link rel="canonical" href="${STORE}">`));
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);
   assert.equal(catalog.entries.length, 35);
@@ -170,6 +174,10 @@ await check("all fix pages preserve the free and paid boundary", async () => {
       } else {
         assert.doesNotMatch(htmlResult.body, /<h2>Cause<\/h2>/);
         assert.match(htmlResult.body, /id="request-offer"/);
+        assert.match(htmlResult.body, /id="wallet-link"/);
+        assert.match(htmlResult.body, /id="offer-countdown"/);
+        assert.match(htmlResult.body, /ethereum:/);
+        assert.match(htmlResult.body, /payment-offer-expired/);
         assert.match(htmlResult.body, /private offer token stays in this page's memory/);
         assert.doesNotMatch(htmlResult.body, /paymentOffer\s*[:=]\s*["'][A-Za-z0-9_-]+\./);
         assert(mdResult.body.includes("Diagnosis and remedy are paid"), "paid Markdown is missing its gate statement");
@@ -191,11 +199,12 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
     json(new URL(".well-known/farebox.json", STORE)),
     json(new URL("openapi.json", STORE)),
   ]);
-  assert.match(robots.body, /Sitemap: https:\/\/b-hash88\.github\.io\/knownfix\/sitemap\.xml/);
+  assert(robots.body.includes(`Sitemap: ${STORE}sitemap.xml`));
   assert(llms.body.includes("get_offer"), "llms.txt is missing get_offer");
   assert(llms.body.includes("paymentOffer"), "llms.txt is missing the private offer credential");
   assert.match(llmsFull.body, /x-payment-offer/);
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
+  assert.equal(fareboxResult.data.backend.acceptingPayments, true);
   assert.equal(fareboxResult.data.offer.inventory, 35);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+evm-payment");
   assert.equal(openapiResult.data.info.version, "0.3.0");
@@ -208,7 +217,15 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
 await check("backend health, security headers, and CORS preflight", async () => {
   const { response, data } = await json(API + "/health");
   assert.equal(response.status, 200);
-  assert.deepEqual(data, { ok: true, inventory: 35, chainId: 8453, kv: true, checkoutEnabled: true });
+  assert.equal(data.ok, true);
+  assert.equal(data.inventory, 35);
+  assert.equal(data.chainId, 8453);
+  assert.equal(data.kv, true);
+  assert.equal(data.checkoutEnabled, true);
+  assert.equal(data.rpcHealthy, true);
+  assert.equal(data.acceptingPayments, true);
+  assert.equal(data.paymentStatus, "ready");
+  assert.equal(response.headers.get("cache-control"), "no-store");
   assert(response.headers.has("content-security-policy"));
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
   assert(response.headers.has("x-frame-options"));
@@ -329,12 +346,16 @@ await check("books HTML and JSON describe the same six-stage funnel", async () =
   assert.match(htmlResult.body, /Current bottleneck:/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.5");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.6");
   assert.equal(jsonResult.data.conversionFunnel.length, 6);
   assert.equal(typeof jsonResult.data.nextExperiment, "string");
   assert.equal(typeof jsonResult.data.salesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.externalSalesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.operatorPaymentTests, "number");
+  assert.equal(jsonResult.data.paymentRail.acceptingPayments, true);
+  assert.equal(jsonResult.data.paymentRail.rpcHealthy, true);
+  assert.equal(jsonResult.data.paymentRail.replayGuard, "durable-kv");
+  assert.equal(jsonResult.response.headers.get("cache-control"), "no-store");
   assert.equal(
     jsonResult.data.salesSettledOnChain,
     jsonResult.data.externalSalesSettledOnChain + jsonResult.data.operatorPaymentTests,

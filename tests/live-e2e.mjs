@@ -100,6 +100,21 @@ await check("storefront metadata and truthful inventory", async () => {
   return "35 entries; 33 verified, 2 documented, 10 free";
 });
 
+await check("public request UI keeps privacy opt-in", async () => {
+  const { response, body } = await text(STORE);
+  assert.equal(response.status, 200);
+  assert.match(body, /id="request-form"/);
+  assert.match(body, /id="check-request-form"/);
+  assert.match(body, /id="request-publish"[^>]*type="checkbox"/);
+  assert.doesNotMatch(body, /id="request-publish"[^>]*\schecked(?:\s|>|=)/);
+  assert.match(body, /id="request-ticket"[^>]*type="password"/);
+  assert.match(body, /pattern="req_\[0-9a-f\]\{32\}"/);
+  assert.doesNotMatch(body, /(?:local|session)Storage/);
+  assert.doesNotMatch(body, /[?&](?:ticket|request_ticket)=/i);
+  assert.match(body, /\.textContent=data\.ticket/);
+  return "private by default; ticket masked and kept out of URLs and web storage";
+});
+
 await check("sitemap and every canonical public URL", async () => {
   const { response, body } = await text(new URL("sitemap.xml", STORE));
   assert.equal(response.status, 200);
@@ -289,7 +304,7 @@ await check("public request board preserves ticket privacy", async () => {
   return "no tickets or redemption keys exposed";
 });
 
-await check("MCP initialize, registry, search, free fix, and offer", async () => {
+await check("MCP initialize, registry, search, free fix, offer, and request gate", async () => {
   const initialized = await mcp(1, "initialize", {
     protocolVersion: "2025-03-26",
     capabilities: {},
@@ -320,7 +335,14 @@ await check("MCP initialize, registry, search, free fix, and offer", async () =>
   }));
   assert.equal(offer.spec, "knownfix-payment-offer/1.0");
   assert.match(offer.token, /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/);
-  return "10 tools; search, free delivery, and signed offer work over MCP";
+  const stockedRequest = parseToolText(await mcp(6, "tools/call", {
+    name: "request_fix",
+    arguments: { signature: 'DeclarationError: Function "mcopy" not found', publish: false },
+  }));
+  assert.equal(stockedRequest.status, "already-stocked");
+  assert.equal(stockedRequest.fixId, "oz5-mcopy-cancun");
+  assert(!("ticket" in stockedRequest), "stocked request must not mint a free ticket");
+  return "10 tools; search, free delivery, signed offer, and stocked-request gate work over MCP";
 });
 
 const passed = results.filter((result) => result.ok);

@@ -256,7 +256,7 @@ await check("signed offer issuance, validation, and product binding", async () =
     body: JSON.stringify({ productType: "fix", productId: "does-not-exist" }),
   });
   assert.equal(badRequest.response.status, 404);
-  assert.equal(badRequest.data.error, "no-such-product");
+  assert.equal(badRequest.data.error, "no-such-fix");
   return "offer is private, expiring, exact-price, and product-bound";
 });
 
@@ -307,7 +307,7 @@ await check("MCP initialize, registry, search, free fix, and offer", async () =>
     arguments: { query: 'DeclarationError: Function "mcopy" not found' },
   }));
   assert.equal(searched.matches[0].id, "oz5-mcopy-cancun");
-  assert(searched.freeFix?.fix, "free top match did not include its body");
+  assert(searched.fix?.fix, "free top match did not include its body");
   const freeFix = parseToolText(await mcp(4, "tools/call", {
     name: "get_fix",
     arguments: { id: "oz5-mcopy-cancun" },

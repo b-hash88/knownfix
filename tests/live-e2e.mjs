@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 
 const STORE = (process.env.KNOWNFIX_STORE || "https://b-hash88.github.io/knownfix/").replace(/\/?$/, "/");
 const API = (process.env.KNOWNFIX_API || "https://knownfix-backend-28.b-hash88.deno.net").replace(/\/$/, "");
+const BASE_RPC = process.env.KNOWNFIX_BASE_RPC || "https://mainnet.base.org";
 const OPERATOR_HEADERS = {
   "user-agent": "KnownFix-Live-E2E/1.0",
   "x-operator": "1",
@@ -76,6 +77,19 @@ async function mcp(id, method, params = {}) {
   assert.equal(data.id, id);
   assert(!data.error, "MCP error: " + JSON.stringify(data.error));
   return data;
+}
+
+async function baseRpc(method, params) {
+  const response = await fetch(BASE_RPC, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+    signal: AbortSignal.timeout(20_000),
+  });
+  assert.equal(response.status, 200, "Base RPC HTTP failure");
+  const data = await response.json();
+  assert(!data.error, "Base RPC error: " + JSON.stringify(data.error));
+  return data.result;
 }
 
 const staticCatalogResult = await json(new URL("catalog.json", STORE));
@@ -275,6 +289,36 @@ await check("signed offer issuance, validation, and product binding", async () =
   return "offer is private, expiring, exact-price, and product-bound";
 });
 
+await check("live chain verification rejects a successful payment to the wrong recipient", async () => {
+  const offerResult = await json(API + "/offer", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ productType: "fix", productId: "windows-libuv-assert-on-exit" }),
+  });
+  assert.equal(offerResult.response.status, 201);
+  const block = await baseRpc("eth_getBlockByNumber", ["latest", true]);
+  let unrelated;
+  for (const transaction of block.transactions) {
+    if (!transaction.to || transaction.to.toLowerCase() === offerResult.data.payTo.toLowerCase()) continue;
+    const receipt = await baseRpc("eth_getTransactionReceipt", [transaction.hash]);
+    if (receipt?.status === "0x1") {
+      unrelated = transaction;
+      break;
+    }
+  }
+  assert(unrelated, "latest Base block had no suitable successful transaction");
+  const denied = await json(API + "/fix/windows-libuv-assert-on-exit", {
+    headers: {
+      "x-payment-offer": offerResult.data.token,
+      "x-payment-tx": unrelated.hash,
+    },
+  });
+  assert.equal(denied.response.status, 402);
+  assert(denied.data.denied.includes("wrong-recipient"));
+  assert(!("cause" in denied.data) && !("fix" in denied.data));
+  return "successful Base transaction was read live and rejected for the wrong recipient";
+});
+
 await check("books HTML and JSON describe the same six-stage funnel", async () => {
   const [htmlResult, jsonResult] = await Promise.all([
     text(API + "/books", { headers: { accept: "text/html" } }),
@@ -289,6 +333,12 @@ await check("books HTML and JSON describe the same six-stage funnel", async () =
   assert.equal(jsonResult.data.conversionFunnel.length, 6);
   assert.equal(typeof jsonResult.data.nextExperiment, "string");
   assert.equal(typeof jsonResult.data.salesSettledOnChain, "number");
+  assert.equal(typeof jsonResult.data.externalSalesSettledOnChain, "number");
+  assert.equal(typeof jsonResult.data.operatorPaymentTests, "number");
+  assert.equal(
+    jsonResult.data.salesSettledOnChain,
+    jsonResult.data.externalSalesSettledOnChain + jsonResult.data.operatorPaymentTests,
+  );
   assert.equal(typeof jsonResult.data.intent.paywallHits, "number");
   return "funnel published at " + jsonResult.data.generatedAt;
 });

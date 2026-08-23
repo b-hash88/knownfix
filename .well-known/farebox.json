@@ -1,5 +1,5 @@
 {
-  "spec": "farebox-offer/0.2",
+  "spec": "farebox-offer/0.3",
   "staticSnapshot": true,
   "offer": {
     "name": "KnownFix",
@@ -29,21 +29,28 @@
     "status": "live-durable",
     "url": "https://knownfix-backend-28.b-hash88.deno.net",
     "healthCheckedThisBuild": true,
+    "checkoutEnabled": true,
     "note": "Durably hosted on Deno Deploy (KV-backed double-spend guard). Stable, always-on, no rotation. The backend serves its own /.well-known/farebox.json and a remote MCP server at /mcp."
   },
   "settlement": {
-    "scheme": "evm-payment",
+    "scheme": "signed-bearer-offer+evm-payment",
     "chainId": 8453,
     "network": "base (Base mainnet — real ETH)",
     "rpc": "https://mainnet.base.org",
     "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49",
-    "perFixWei": "20000000000000",
-    "proofHeader": "x-payment-tx",
-    "route": "GET {backend}/fix/{id} -> 402; pay payTo on Base mainnet (chain 8453); retry with proofHeader -> 200",
+    "perFixBaseWei": "20000000000000",
+    "offerRoute": "POST {backend}/offer with productType and productId",
+    "offerTool": "get_offer with productType and productId",
+    "proofHeaders": [
+      "x-payment-tx",
+      "x-payment-offer"
+    ],
+    "route": "request a signed offer; pay its exact priceWei on Base mainnet; redeem with both proof headers",
     "rules": [
-      "only purchase when backend.status is live-durable/live-ephemeral AND backend.url is non-null",
+      "only purchase when backend.status is live-durable/live-ephemeral, backend.url is non-null, and backend.checkoutEnabled is true",
       "sample fixes need no payment",
-      "one mined payment of >= perFixWei to payTo redeems exactly one fix; a hash never redeems twice"
+      "the signed bearer offer is private, product-bound, exact-amount, and expires after one hour",
+      "a transaction and offer can each be redeemed once, atomically"
     ]
   },
   "catalog": "https://b-hash88.github.io/knownfix/catalog.json"

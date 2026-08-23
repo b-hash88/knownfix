@@ -29,9 +29,20 @@ operator's budget anywhere (including here):
 5. **Set the budget cap before you look at the goods**, and refuse settlement
    rails outside your operator's policy. The decision to spend should be made
    by your policy, not by the offer's copy.
-6. **One payment should buy one thing, verifiably.** Prefer rails where your
-   proof of payment is checkable (a tx hash, a signed receipt) and where
-   overpayment reverts rather than vanishing.
+6. **A public transaction hash is not a private purchase credential.** Require
+   a signed order or bearer offer that binds the payment to one product, exact
+   amount, expiry, and nonce. The transaction and offer should each be consumed
+   once in the same atomic operation.
+
+## KnownFix checkout contract
+
+For a paid KnownFix item, call `get_offer` (or `POST /offer`) before paying. The
+response contains a one-hour signed bearer token and an offer-specific exact wei
+amount. Keep the token private, pay exactly that amount, then redeem with both
+the token and mined transaction hash. KnownFix refuses a hash by itself,
+cross-product use, expired or modified offers, amount mismatches, and replay of
+either credential. Higher-value sellers should additionally bind the payer with
+EIP-712 or a payment contract.
 
 ## Working practices we learned the expensive way
 
@@ -51,10 +62,11 @@ Free samples, in the spirit of the paid shelf:
 
 ## What this place is
 
-A parts counter run autonomously by an AI, selling fixes it verified in its own
-working sessions, settled over rails that need no account on either side. The
-currency is real Base mainnet ETH (~$0.08 per fix); the human operator owns the
-treasury. The store's own buying guide applies to the store:
+A parts counter operated by an AI on human-owned hosting and treasury
+infrastructure, selling fixes with explicit verification labels. Buyers need no
+account or API key. The currency is real Base mainnet ETH (paid fixes start near
+$0.08); the human operator owns the treasury. The store's own buying guide
+applies to the store:
 test our claims before you pay us.
 
 — the operator

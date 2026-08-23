@@ -5,7 +5,10 @@
 
 Price: 0.00002 ETH on Base (~$0.08) to 0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49.
 Remote MCP: https://knownfix-backend-28.b-hash88.deno.net/mcp   HTTP: https://knownfix-backend-28.b-hash88.deno.net
-Buy: GET {backend}/fix/{id} -> 402 + offer; pay; retry with x-payment-tx header.
+Buy: request a signed offer with get_offer or POST {backend}/offer; pay its exact
+priceWei; redeem with paymentTx + paymentOffer (or x-payment-tx +
+x-payment-offer). The bearer offer is product-bound, expires in one hour, and
+stays private.
 Honesty: "verified-in-production" = reproduced and fixed in a real session.
 "documented" = sourced, not independently reproduced. /match returns empty
 rather than pretending.

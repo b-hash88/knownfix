@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "KnownFix",
-    "version": "0.2.1",
-    "description": "Verified fixes for real dev errors, sold per-lookup to AI agents. Free: /catalog, /match. Paid: /fix/{id} (402 until an on-chain payment proof is presented). Three fixes are free samples.",
+    "version": "0.3.0",
+    "description": "35 cataloged fixes: 33 verified in production, 2 documented; 10 free in full. Paid delivery requires a signed, product-bound bearer offer plus a Base-mainnet transaction.",
     "contact": {
       "url": "https://b-hash88.github.io/knownfix/"
     }
@@ -46,6 +46,60 @@
         }
       }
     },
+    "/offer": {
+      "post": {
+        "summary": "Issue a one-hour signed offer for one paid fix or skill",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "productType",
+                  "productId"
+                ],
+                "properties": {
+                  "productType": {
+                    "type": "string",
+                    "enum": [
+                      "fix",
+                      "skill"
+                    ]
+                  },
+                  "productId": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9-]{1,120}$"
+                  }
+                }
+              },
+              "example": {
+                "productType": "fix",
+                "productId": "npm-install-silent-failure"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Signed offer; keep token private",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentOffer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid product request"
+          },
+          "503": {
+            "description": "Paid checkout safely paused"
+          }
+        }
+      }
+    },
     "/fix/{id}": {
       "get": {
         "summary": "Get a fix body (paid; samples free)",
@@ -65,7 +119,16 @@
             "schema": {
               "type": "string"
             },
-            "description": "Hash of a mined payment of perFixWei to payTo on Base mainnet (chain 8453). One tx redeems one fix."
+            "description": "Hash of the mined exact-amount payment on Base mainnet."
+          },
+          {
+            "name": "x-payment-offer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Private signed bearer token returned by POST /offer."
           }
         ],
         "responses": {
@@ -73,17 +136,110 @@
             "description": "The fix body"
           },
           "402": {
-            "description": "Payment required; body carries the machine-readable offer"
+            "description": "Payment required, invalid, expired, mismatched, or already redeemed"
+          }
+        }
+      }
+    },
+    "/skills": {
+      "get": {
+        "summary": "Free skill outlines, provenance, and base prices",
+        "responses": {
+          "200": {
+            "description": "Skill catalog"
+          }
+        }
+      }
+    },
+    "/skill/{id}": {
+      "get": {
+        "summary": "Redeem a signed offer and payment for a full SKILL.md",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-payment-tx",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-payment-offer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Full skill"
+          },
+          "402": {
+            "description": "Payment required or proof rejected"
           }
         }
       }
     },
     "/books": {
       "get": {
-        "summary": "Open ledger: live treasury balance, settled sales, route counters",
+        "summary": "Server-rendered open ledger or JSON snapshot",
         "responses": {
           "200": {
-            "description": "Books"
+            "description": "Treasury, funnel, deliveries, intent, demand, and raw counters"
+          }
+        }
+      }
+    },
+    "/requests": {
+      "get": {
+        "summary": "Privacy-filtered public wanted board",
+        "responses": {
+          "200": {
+            "description": "Wanted topics and fulfilment status"
+          }
+        }
+      }
+    },
+    "/audit": {
+      "get": {
+        "summary": "Audit an agent-facing endpoint",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Machine-readable readiness report"
+          },
+          "400": {
+            "description": "Missing or unsafe target"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Liveness, inventory, KV, chain, and checkout state",
+        "responses": {
+          "200": {
+            "description": "Health state"
           }
         }
       }
@@ -94,6 +250,65 @@
         "responses": {
           "200": {
             "description": "JSON-RPC result"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentOffer": {
+        "type": "object",
+        "required": [
+          "spec",
+          "productType",
+          "productId",
+          "token",
+          "priceWei",
+          "payTo",
+          "chainId",
+          "expiresAt"
+        ],
+        "properties": {
+          "spec": {
+            "const": "knownfix-payment-offer/1.0"
+          },
+          "productType": {
+            "type": "string",
+            "enum": [
+              "fix",
+              "skill"
+            ]
+          },
+          "productId": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string",
+            "description": "Private bearer credential; never publish or log"
+          },
+          "basePriceWei": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "priceWei": {
+            "type": "string",
+            "pattern": "^[0-9]+$",
+            "description": "Exact amount to send"
+          },
+          "priceEth": {
+            "type": "string"
+          },
+          "payTo": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "chainId": {
+            "const": 8453
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

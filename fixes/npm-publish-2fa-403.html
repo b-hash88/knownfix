@@ -1,22 +1,60 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>403 Forbidden - PUT https://registry.npmjs.org/... Two-factor… — fix | KnownFix</title>
-<meta name="description" content="Verified verified-in-production fix for "403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with…". Cause, remedy, and how it was verified.">
+  <meta name="description" content="Production-verified fix for "403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with…". Confirm the signature before opening or buying the remedy.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html">
 <link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"npm publish 403: two-factor authentication or bypass-2fa token required","name":"npm publish 403: two-factor authentication or bypass-2fa token required","description":"Cause and verified fix for: 403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages","articleSection":"Software error fix","keywords":"npm, publish, 2fa, tokens","about":[{"@type":"Thing","name":"npm"},{"@type":"Thing","name":"publish"},{"@type":"Thing","name":"2fa"},{"@type":"Thing","name":"tokens"}],"url":"https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html","isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".paid"},"offers":{"@type":"Offer","price":"0.08","priceCurrency":"USD","description":"0.00002 Base ETH on Base mainnet, settled on-chain","availability":"https://schema.org/InStock"},"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
-<style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2{font-family:ui-monospace,Consolas,monospace;font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a{color:#4FA393}}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"npm publish 403: two-factor authentication or bypass-2fa token required","name":"npm publish 403: two-factor authentication or bypass-2fa token required","description":"Production-verified fix for: 403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages","articleSection":"Software error fix","keywords":"npm, publish, 2fa, tokens","about":[{"@type":"Thing","name":"npm"},{"@type":"Thing","name":"publish"},{"@type":"Thing","name":"2fa"},{"@type":"Thing","name":"tokens"}],"url":"https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html","isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".paid"},"offers":{"@type":"Offer","price":"0.08","priceCurrency":"USD","description":"0.00002 Base ETH on Base mainnet, settled on-chain","availability":"https://schema.org/InStock"},"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+  <style>body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2,button,input{font-family:ui-monospace,Consolas,monospace}h2{font-size:14px;margin-top:28px}pre{background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}button{min-height:36px;border:1px solid #2C6E63;background:transparent;color:#2C6E63;border-radius:4px;padding:7px 11px;cursor:pointer}button.copy{min-height:30px;padding:4px 8px}input{display:block;width:100%;box-sizing:border-box;margin:8px 0 10px;padding:9px 10px;border:1px solid #C9CFCC;border-radius:4px;background:#FAFBFA;color:#1A1D23}.checkout{border-top:1px solid #C9CFCC;margin-top:28px}.error{color:#A33A2B}#checkout-status{font-family:ui-monospace,Consolas,monospace;font-size:13px}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a,button{color:#4FA393;border-color:#4FA393}input{background:#1D2127;border-color:#2E343C;color:#D6D9E0}.error{color:#F08A78}}</style>
 </head><body>
 <h1>npm publish 403: two-factor authentication or bypass-2fa token required</h1>
 <p><small>Error signature — confirm this is yours before buying:</small></p>
 <pre><code>403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages</code></pre>
 <p><small>npm · publish · 2fa · tokens · verified-in-production</small></p>
-<div class="paid"><h2>Get the fix</h2>
-<p>Cause, remedy and verification are paid: <strong>0.00002 ETH on Base (~$0.08)</strong> on Base mainnet to <code>0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49</code>. One payment, one fix.</p>
-<ul>
-<li><strong>MCP</strong>: call <code>get_fix</code> with <code>id: "npm-publish-2fa-403"</code> on <code>https://knownfix-backend-28.b-hash88.deno.net/mcp</code>, passing the tx hash as <code>paymentTx</code>.</li>
-<li><strong>HTTP</strong>: <code>GET https://knownfix-backend-28.b-hash88.deno.net/fix/npm-publish-2fa-403</code> returns 402 with a machine-readable offer; pay, then retry with header <code>x-payment-tx</code>.</li>
-</ul></div>
+<section class="paid checkout"><h2>Get the fix</h2>
+<p>Base price: <strong>0.00002 ETH on Base (~$0.08)</strong>. Request a private one-hour offer before paying; it binds the exact amount and this fix to your redemption.</p>
+<button type="button" id="request-offer">Request secure offer</button>
+<div id="offer-box" hidden>
+<p><strong>1. Send exactly</strong> <code id="offer-price"></code> wei (<span id="offer-eth"></span> ETH) <button type="button" class="copy" data-copy="offer-price">Copy amount</button></p>
+<p><strong>2. To</strong> <code id="offer-address"></code> on Base mainnet <button type="button" class="copy" data-copy="offer-address">Copy address</button></p>
+<p><small>Offer expires <span id="offer-expiry"></span>. The private offer token stays in this page's memory and is never displayed or stored.</small></p>
+<label for="payment-tx"><strong>3. Paste the mined transaction hash</strong></label>
+<input id="payment-tx" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x…">
+<button type="button" id="redeem-fix">Redeem fix</button>
+</div>
+<p id="checkout-status" role="status" aria-live="polite"></p>
+<pre id="checkout-result" hidden><code></code></pre>
+<p><small>Agent route: call <code>get_offer</code>, then <code>get_fix</code> with <code>paymentTx</code> and <code>paymentOffer</code> on <code>https://knownfix-backend-28.b-hash88.deno.net/mcp</code>.</small></p>
+</section>
 <hr>
-<p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Verified fixes sold per-lookup to AI agents.</small></p>
+  <p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Cataloged fixes for AI agents, with explicit confidence labels.</small></p>
+<script>
+(function(){
+  var backend="https://knownfix-backend-28.b-hash88.deno.net", fixId="npm-publish-2fa-403", offer=null;
+  var status=document.getElementById('checkout-status'), box=document.getElementById('offer-box'), result=document.getElementById('checkout-result');
+  function message(text,isError){status.textContent=text;status.className=isError?'error':'';}
+  document.getElementById('request-offer').addEventListener('click',async function(){
+    message('Requesting a product-bound offer…'); result.hidden=true;
+    try{
+      var response=await fetch(backend+'/offer',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({productType:'fix',productId:fixId})});
+      var data=await response.json(); if(!response.ok)throw new Error(data.detail||data.error||('HTTP '+response.status));
+      offer=data; document.getElementById('offer-price').textContent=data.priceWei; document.getElementById('offer-eth').textContent=data.priceEth;
+      document.getElementById('offer-address').textContent=data.payTo; document.getElementById('offer-expiry').textContent=new Date(data.expiresAt).toLocaleString();
+      box.hidden=false; message('Offer ready. Pay the exact amount, wait for mining, then redeem here.');
+    }catch(error){message('Offer unavailable: '+error.message,true);}
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(button){button.addEventListener('click',async function(){
+    await navigator.clipboard.writeText(document.getElementById(button.dataset.copy).textContent); message('Copied.');
+  });});
+  document.getElementById('redeem-fix').addEventListener('click',async function(){
+    var tx=document.getElementById('payment-tx').value.trim(); if(!offer){message('Request an offer first.',true);return;} if(!/^0x[0-9a-fA-F]{64}$/.test(tx)){message('Enter a complete 0x transaction hash.',true);return;}
+    message('Verifying the mined payment…');
+    try{
+      var response=await fetch(backend+'/fix/'+encodeURIComponent(fixId),{headers:{'x-payment-tx':tx,'x-payment-offer':offer.token}});
+      var data=await response.json(); if(!response.ok)throw new Error((data.denied&&data.denied.join(', '))||data.detail||data.error||('HTTP '+response.status));
+      result.querySelector('code').textContent=JSON.stringify(data,null,2); result.hidden=false; box.hidden=true; offer=null; message('Payment verified. Keep the delivered fix below.');
+    }catch(error){message('Redemption not completed: '+error.message,true);}
+  });
+})();
+</script>
 </body></html>

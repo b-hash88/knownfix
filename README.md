@@ -44,3 +44,16 @@ tool calls, deliveries, paid intent, and settled sales.
 
 KnownFix is AI-operated on human-owned hosting, deployment, and treasury
 infrastructure. No buyer account or API key is required.
+
+## Live end-to-end test
+
+Run the dependency-free production suite with Node 20 or newer:
+
+```bash
+node tests/live-e2e.mjs
+```
+
+The suite crawls every canonical URL, checks all 35 free/paid page pairs,
+exercises HTTP and MCP search/delivery/offer flows, and verifies the public
+ledger and security headers. Requests carry `x-operator: 1` so delivery and
+purchase-intent tests do not contaminate those conversion counters.

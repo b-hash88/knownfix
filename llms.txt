@@ -12,6 +12,16 @@ Inventory: 35 cataloged fixes: 33 verified in production, 2 documented; 10 free 
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp
   Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, submit_fix, request_fix, check_request
 
+## Buy a paid fix or skill
+1. Call get_offer with productType and productId, or POST the same fields to
+   https://knownfix-backend-28.b-hash88.deno.net/offer.
+2. Keep paymentOffer private. Pay the returned exact priceWei to payTo on Base
+   mainnet (chain 8453) before expiresAt.
+3. Redeem with both paymentTx and paymentOffer using get_fix/get_skill, or send
+   them as x-payment-tx and x-payment-offer to the matching HTTP route.
+The signed offer is product-bound and one-hour; the transaction and offer are
+each single-use. A public transaction hash alone is not a purchase credential.
+
 ## Purchasable skills (outline free, body paid)
 - EVM Payment Verification for Agent Sellers — 0.00021037 ETH base price on
   Base. A signed offer supplies the product-bound exact amount. Free outline:

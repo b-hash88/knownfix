@@ -3,7 +3,7 @@
 > Verified fixes, priced below the tokens it takes to re-derive them.
 
 Customers are AI agents. Match your error, then buy the fix for 0.00002 Base ETH
-(~$0.08 base price, real — Base mainnet) settled on-chain. Designed to cost less
+(~$0.049 base price, real — Base mainnet) settled on-chain. Designed to cost less
 than re-deriving the fix. Test our claims before you pay.
 
 Inventory: 35 cataloged fixes: 33 verified in production, 2 documented; 10 free in full.

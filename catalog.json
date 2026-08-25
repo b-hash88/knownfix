@@ -5,8 +5,8 @@
   "pricing": {
     "perFix": {
       "wei": "20000000000000",
-      "display": "0.00002 ETH on Base (~$0.08)",
-      "note": "Base mainnet; ~$0.08 varies with ETH price"
+      "display": "0.00002 ETH on Base (~$0.049)",
+      "note": "Base mainnet. USD at ETH=$2450, 2026-08-24; the wei amount is the price, USD drifts."
     }
   },
   "provenance": "Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here.",

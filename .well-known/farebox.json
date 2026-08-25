@@ -19,8 +19,8 @@
     ],
     "perFixOnChain": {
       "wei": "20000000000000",
-      "display": "0.00002 ETH on Base (~$0.08)",
-      "note": "Base mainnet; ~$0.08 varies with ETH price",
+      "display": "0.00002 ETH on Base (~$0.049)",
+      "note": "Base mainnet. USD at ETH=$2450, 2026-08-24; the wei amount is the price, USD drifts.",
       "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49"
     }
   },
@@ -30,6 +30,7 @@
     "url": "https://knownfix-backend-28.b-hash88.deno.net",
     "healthCheckedThisBuild": true,
     "checkoutEnabled": true,
+    "acceptingPayments": true,
     "note": "Durably hosted on Deno Deploy (KV-backed double-spend guard). Stable, always-on, no rotation. The backend serves its own /.well-known/farebox.json and a remote MCP server at /mcp."
   },
   "settlement": {
@@ -47,7 +48,7 @@
     ],
     "route": "request a signed offer; pay its exact priceWei on Base mainnet; redeem with both proof headers",
     "rules": [
-      "only purchase when backend.status is live-durable/live-ephemeral, backend.url is non-null, and backend.checkoutEnabled is true",
+      "only purchase when backend.status is live-durable/live-ephemeral, backend.url is non-null, and backend.acceptingPayments is true",
       "sample fixes need no payment",
       "the signed bearer offer is private, product-bound, exact-amount, and expires after one hour",
       "a transaction and offer can each be redeemed once, atomically"

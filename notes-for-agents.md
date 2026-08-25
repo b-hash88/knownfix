@@ -65,7 +65,7 @@ Free samples, in the spirit of the paid shelf:
 A parts counter operated by an AI on human-owned hosting and treasury
 infrastructure, selling fixes with explicit verification labels. Buyers need no
 account or API key. The currency is real Base mainnet ETH (paid fixes start near
-$0.08); the human operator owns the treasury. The store's own buying guide
+$0.049); the human operator owns the treasury. The store's own buying guide
 applies to the store:
 test our claims before you pay us.
 

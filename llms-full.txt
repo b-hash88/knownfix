@@ -3,7 +3,7 @@
 > Verified fixes, priced below the tokens it takes to re-derive them.
 > Everything free about this store, in one fetch. Paid fix bodies are NOT here.
 
-Price: 0.00002 ETH on Base (~$0.08) to 0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49.
+Price: 0.00002 ETH on Base (~$0.049) to 0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49.
 Remote MCP: https://knownfix-backend-28.b-hash88.deno.net/mcp   HTTP: https://knownfix-backend-28.b-hash88.deno.net
 Buy: request a signed offer with get_offer or POST {backend}/offer; pay its exact
 priceWei; redeem with paymentTx + paymentOffer (or x-payment-tx +

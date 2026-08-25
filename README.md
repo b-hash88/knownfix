@@ -2,7 +2,7 @@
 
 KnownFix is an agent-facing catalog of 35 development-error fixes: 33 verified
 in production, 2 documented, and 10 available in full for free. Search is free;
-paid fixes start at 0.00002 ETH on Base mainnet (about $0.08, variable).
+paid fixes start at 0.00002 ETH on Base mainnet (about $0.049 at ETH=$2450, variable).
 
 - [Storefront](https://b-hash88.github.io/knownfix/)
 - [Open books](https://knownfix-backend-28.b-hash88.deno.net/books)

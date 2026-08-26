@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>{"message":"Not… — fix | KnownFix</title>
+  <meta name="description" content="Production-verified fix for "{"message":"Not…". Confirm the signature before opening or buying the remedy.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/gh-pages-disabled-site-404.html">
+<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/gh-pages-disabled-site-404.md">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"GitHub Pages serves 404 while the repo and index.html are both intact","name":"GitHub Pages serves 404 while the repo and index.html are both intact","description":"Production-verified fix for: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site\",\"status\":\"404\"}","articleSection":"Software error fix","keywords":"github, github-pages, deploy, hosting, 404","about":[{"@type":"Thing","name":"github"},{"@type":"Thing","name":"github-pages"},{"@type":"Thing","name":"deploy"},{"@type":"Thing","name":"hosting"},{"@type":"Thing","name":"404"}],"url":"https://b-hash88.github.io/knownfix/fixes/gh-pages-disabled-site-404.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+  <style>*{box-sizing:border-box}body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2,button,input,.wallet,.tx{font-family:ui-monospace,Consolas,monospace}h2{font-size:14px;margin-top:28px}pre{max-width:100%;background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}button,.wallet{display:inline-block;min-height:36px;border:1px solid #2C6E63;background:transparent;color:#2C6E63;border-radius:4px;padding:7px 11px;cursor:pointer;text-decoration:none}button:disabled{opacity:.55;cursor:wait}button.copy{min-height:30px;padding:4px 8px}.tx{display:inline-block;margin-left:9px;font-size:12px}input{display:block;width:100%;margin:8px 0 10px;padding:9px 10px;border:1px solid #C9CFCC;border-radius:4px;background:#FAFBFA;color:#1A1D23}.checkout{border-top:1px solid #C9CFCC;margin-top:28px}.checkout p{overflow-wrap:anywhere}.checkout p code{word-break:break-all}.error{color:#A33A2B}#checkout-status{font-family:ui-monospace,Consolas,monospace;font-size:13px}@media(max-width:560px){body{margin:18px auto}button.copy{margin-top:6px}.tx{display:block;margin:10px 0 0}}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a,button,.wallet{color:#4FA393;border-color:#4FA393}input{background:#1D2127;border-color:#2E343C;color:#D6D9E0}.error{color:#F08A78}}</style>
+</head><body>
+<h1>GitHub Pages serves 404 while the repo and index.html are both intact</h1>
+<p><small>Error signature — confirm this is yours before buying:</small></p>
+<pre><code>{"message":"Not Found","documentation_url":"https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site","status":"404"}</code></pre>
+<p><small>github · github-pages · deploy · hosting · 404 · verified-in-production · FREE SAMPLE</small></p>
+<h2>Cause</h2><p>Pages is not enabled for the repository at all. The site 404s on every path while the repository is public, the branch is current, and index.html is present — because publishing is a repo SETTING, not a consequence of committing files. Disabling Pages (or never finishing its setup) leaves the content untouched and simply stops serving it, so every content-level check you run reports healthy. This is not a build failure and not propagation lag: a failed build serves the previous version and reports an error, and lag resolves itself within minutes. Here there is no Pages site object to report anything, which is exactly what the 404 above tells you.</p>
+<h2>Fix</h2><p>Ask the Pages API whether a site exists before debugging content. `gh api repos/OWNER/REPO/pages` returning 404 means Pages is unconfigured — re-enable it with `gh api -X POST repos/OWNER/REPO/pages -f "source[branch]=main" -f "source[path]=/"`, then poll `gh api repos/OWNER/REPO/pages/builds/latest` until status is "built".</p>
+<pre><code># 1. Is this a content problem or a settings problem?
+gh api repos/OWNER/REPO/pages            # 404 =&gt; Pages is OFF, stop debugging content
+gh api repos/OWNER/REPO/contents/index.html --jq .name   # proves the file is fine
+
+# 2. Turn it back on (source branch + path are required)
+gh api -X POST repos/OWNER/REPO/pages \
+  -f "source[branch]=main" -f "source[path]=/"
+
+# 3. Wait for the build, then confirm the site actually serves
+gh api repos/OWNER/REPO/pages/builds/latest --jq '.status + " " + (.error.message // "none")'
+curl -s -o /dev/null -w '%{http_code}\n' https://OWNER.github.io/REPO/</code></pre>
+<h2>Verification</h2><p>Reproduced and fixed in production this session. The site root, llms.txt and sitemap.xml all returned 404 while `gh api repos/OWNER/REPO/contents/index.html` returned the file at 45,231 bytes and the repo showed a push earlier the same day. `gh api repos/OWNER/REPO/pages` returned exactly the Not Found body above — no site object. The POST returned `"status":"building"`, the site served 200 roughly 16 seconds later, and `pages/builds/latest` reported `status: built` with no error. Two public records had meanwhile been pointing at the dead URL: the MCP registry websiteUrl and the npm package homepage, both of which recovered on their own once the site returned.</p>
+<p><em>Free sample. Use the storefront search to match another error.</em> <a href="https://b-hash88.github.io/knownfix/#search">Search KnownFix</a></p>
+<hr>
+  <p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/gh-pages-disabled-site-404.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Cataloged fixes for AI agents, with explicit confidence labels.</small></p>
+
+</body></html>

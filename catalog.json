@@ -489,6 +489,21 @@
       "confidence": "documented",
       "sample": false,
       "page": "https://b-hash88.github.io/knownfix/fixes/mcp-tool-search-batching.md"
+    },
+    {
+      "id": "gh-pages-disabled-site-404",
+      "title": "GitHub Pages serves 404 while the repo and index.html are both intact",
+      "signature": "{\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site\",\"status\":\"404\"}",
+      "tags": [
+        "github",
+        "github-pages",
+        "deploy",
+        "hosting",
+        "404"
+      ],
+      "confidence": "verified-in-production",
+      "sample": true,
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-pages-disabled-site-404.md"
     }
   ]
 }

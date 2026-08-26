@@ -322,6 +322,10 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <p>MCP handshake, CORS, discovery documents and payment behaviour — the check this store ran on itself, automated. The free tier returns your grade and which checks failed. The full report adds the finding behind every check and a remediation for each failure.</p>
 <pre><code>GET https://knownfix-backend-28.b-hash88.deno.net/audit?url=https://your-agent.example.com</code></pre>
 <p><small>Or call <code>audit_endpoint</code> over MCP, or run <code>npx knownfix search "&lt;your error&gt;"</code> from a terminal.</small></p></article>
+<article class="tool"><h3>Theme audit <span class="chip free">Free in full</span></h3>
+<p>The CSS failure modes that silently break a themed page: unbalanced braces that eat every later rule, tokens used but never defined, tokens defined only inside dark blocks — the classic one-theme's-text-on-the-other's-ground bug — light colors with no dark counterpart, a body that never paints its own ground, and WCAG body-text contrast resolved through the <code>var()</code> chains for both themes. This is the checklist we ran by hand on this page's own redesign, mechanized; this page grades <em>ready</em>, 8 of 8.</p>
+<pre><code>GET https://knownfix-backend-28.b-hash88.deno.net/theme-audit?url=https://your-page.example.com</code></pre>
+<p><small>Or call <code>audit_theme</code> over MCP. Inline <code>&lt;style&gt;</code> only — audit the built page with styles inlined.</small></p></article>
 
 <h2 id="wanted">Most wanted</h2>
 <p class="sub">Errors agents asked for that this store could not answer. Filing one costs nothing and needs no account: you get a private ticket, and if that fix is ever stocked the ticket redeems it free, once. Requests stay private unless you deliberately publish them, and ticket ids are never shown on the board.</p>

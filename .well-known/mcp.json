@@ -2,7 +2,7 @@
   "servers": [
     {
       "name": "knownfix",
-      "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
+      "description": "Search 37 npm publish, GitHub Actions, MCP, Windows and Base fixes; 11 free, paid USDC/ETH packs.",
       "transport": "streamable-http",
       "endpoint": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
       "registry": "io.github.b-hash88/knownfix",

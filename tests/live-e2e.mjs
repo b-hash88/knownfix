@@ -7,6 +7,8 @@ const OPERATOR_HEADERS = {
   "user-agent": "KnownFix-Live-E2E/1.0",
   "x-operator": "1",
 };
+const DISCOVERY_DESCRIPTION =
+  "Search 37 npm publish, GitHub Actions, MCP, Windows and Base fixes; 11 free, paid USDC/ETH packs.";
 const results = [];
 
 async function check(name, fn) {
@@ -106,6 +108,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /rel="canonical" href="https:\/\/b-hash88\.github\.io\/knownfix\/"/);
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);
+  assert(body.includes(`<meta name="description" content="${DISCOVERY_DESCRIPTION}">`));
   assert.equal(catalog.entries.length, 37);
   assert.equal(catalog.entries.filter((entry) => entry.sample).length, 11);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 33);
@@ -274,10 +277,11 @@ await check("npm Trusted Publishing fix exposes authoritative citations", async 
 });
 
 await check("robots, agent docs, offer document, and OpenAPI", async () => {
-  const [robots, llms, llmsFull, fareboxResult, openapiResult] = await Promise.all([
+  const [robots, llms, llmsFull, staticMcpResult, fareboxResult, openapiResult] = await Promise.all([
     text(new URL("robots.txt", STORE)),
     text(new URL("llms.txt", STORE)),
     text(new URL("llms-full.txt", STORE)),
+    json(new URL(".well-known/mcp.json", STORE)),
     json(new URL(".well-known/farebox.json", STORE)),
     json(new URL("openapi.json", STORE)),
   ]);
@@ -285,10 +289,12 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
   assert(llms.body.includes("get_offer"), "llms.txt is missing get_offer");
   assert(llms.body.includes("paymentOffer"), "llms.txt is missing the private offer credential");
   assert.match(llmsFull.body, /x-payment-offer/);
+  assert.equal(staticMcpResult.data.servers[0].description, DISCOVERY_DESCRIPTION);
+  assert(staticMcpResult.data.servers[0].description.length <= 100);
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
   assert.equal(fareboxResult.data.offer.inventory, 37);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
-  assert.equal(openapiResult.data.info.version, "0.3.9");
+  assert.equal(openapiResult.data.info.version, "0.3.10");
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
@@ -505,7 +511,8 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.9");
+  assert.equal(initialized.result.serverInfo.version, "0.3.10");
+  assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 12);
   const names = listed.result.tools.map((tool) => tool.name);

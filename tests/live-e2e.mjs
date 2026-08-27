@@ -224,6 +224,14 @@ await check("all fix pages preserve the free and paid boundary", async () => {
         assert.match(htmlResult.body, /id="pay-usdc"/);
         assert.match(htmlResult.body, /Base Pay UserOperation hash/);
         assert.match(htmlResult.body, /private offer token stays in this page's memory/);
+        assert(
+          htmlResult.body.includes(
+            "call <code>get_fix</code> with <code>" + entry.id + "</code> alone to receive signed USDC and ETH checkout",
+          ),
+          "paid page is missing its direct get_fix checkout route",
+        );
+        assert.match(htmlResult.body, /After payment, call <code>get_fix<\/code> again/);
+        assert.doesNotMatch(htmlResult.body, /call <code>get_offer<\/code>, then <code>get_fix<\/code>/);
         assert.doesNotMatch(htmlResult.body, /paymentOffer\s*[:=]\s*["'][A-Za-z0-9_-]+\./);
         assert(mdResult.body.includes("Diagnosis and remedy are paid"), "paid Markdown is missing its gate statement");
         assert.doesNotMatch(mdResult.body, /## Cause/);

@@ -2,24 +2,28 @@
 <title>a pushed commit should NOT trigger any workflow run — fix | KnownFix</title>
   <meta name="description" content="Production-verified fix for "a pushed commit should NOT trigger any workflow run". Confirm the signature before opening or buying the remedy.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="https://b-hash88.github.io/knownfix/knownfix-icon.png">
 <link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/gh-actions-skip-ci-no-run.html">
 <link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/gh-actions-skip-ci-no-run.md">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"How to skip a GitHub Actions run for a commit ([skip ci])","name":"How to skip a GitHub Actions run for a commit ([skip ci])","description":"Production-verified fix for: a pushed commit should NOT trigger any workflow run","articleSection":"Software error fix","keywords":"github-actions, ci, skip-ci","about":[{"@type":"Thing","name":"github-actions"},{"@type":"Thing","name":"ci"},{"@type":"Thing","name":"skip-ci"}],"url":"https://b-hash88.github.io/knownfix/fixes/gh-actions-skip-ci-no-run.html","isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".paid"},"offers":{"@type":"Offer","price":"0.049","priceCurrency":"USD","description":"0.00002 Base ETH on Base mainnet, settled on-chain","availability":"https://schema.org/InStock"},"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
-  <style>*{box-sizing:border-box}body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2,button,input,.wallet,.tx{font-family:ui-monospace,Consolas,monospace}h2{font-size:14px;margin-top:28px}pre{max-width:100%;background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}button,.wallet{display:inline-block;min-height:36px;border:1px solid #2C6E63;background:transparent;color:#2C6E63;border-radius:4px;padding:7px 11px;cursor:pointer;text-decoration:none}button:disabled{opacity:.55;cursor:wait}button.copy{min-height:30px;padding:4px 8px}.tx{display:inline-block;margin-left:9px;font-size:12px}input{display:block;width:100%;margin:8px 0 10px;padding:9px 10px;border:1px solid #C9CFCC;border-radius:4px;background:#FAFBFA;color:#1A1D23}.checkout{border-top:1px solid #C9CFCC;margin-top:28px}.checkout p{overflow-wrap:anywhere}.checkout p code{word-break:break-all}.error{color:#A33A2B}#checkout-status{font-family:ui-monospace,Consolas,monospace;font-size:13px}@media(max-width:560px){body{margin:18px auto}button.copy{margin-top:6px}.tx{display:block;margin:10px 0 0}}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a,button,.wallet{color:#4FA393;border-color:#4FA393}input{background:#1D2127;border-color:#2E343C;color:#D6D9E0}.error{color:#F08A78}}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"How to skip a GitHub Actions run for a commit ([skip ci])","name":"How to skip a GitHub Actions run for a commit ([skip ci])","description":"Production-verified fix for: a pushed commit should NOT trigger any workflow run","articleSection":"Software error fix","keywords":"github-actions, ci, skip-ci","about":[{"@type":"Thing","name":"github-actions"},{"@type":"Thing","name":"ci"},{"@type":"Thing","name":"skip-ci"}],"url":"https://b-hash88.github.io/knownfix/fixes/gh-actions-skip-ci-no-run.html","isAccessibleForFree":false,"hasPart":{"@type":"WebPageElement","isAccessibleForFree":false,"cssSelector":".paid"},"offers":{"@type":"Offer","price":"0.05","priceCurrency":"USD","description":"$0.05 USDC on Base with one-click Base Pay; exact ETH also available","availability":"https://schema.org/InStock"},"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
+  <style>*{box-sizing:border-box}body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2,button,input,.wallet,.tx{font-family:ui-monospace,Consolas,monospace}h2{font-size:14px;margin-top:28px}pre{max-width:100%;background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}button,.wallet{display:inline-block;min-height:36px;border:1px solid #2C6E63;background:#2C6E63;color:#fff;border-radius:4px;padding:7px 11px;cursor:pointer;text-decoration:none}button.secondary,button.copy,.wallet{background:transparent;color:#2C6E63}button:disabled{opacity:.55;cursor:wait}.pay-actions{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}button.copy{min-height:30px;padding:4px 8px}.tx{display:inline-block;margin-left:9px;font-size:12px}input{display:block;width:100%;margin:8px 0 10px;padding:9px 10px;border:1px solid #C9CFCC;border-radius:4px;background:#FAFBFA;color:#1A1D23}.checkout{border-top:1px solid #C9CFCC;margin-top:28px}.checkout p{overflow-wrap:anywhere}.checkout p code{word-break:break-all}.error{color:#A33A2B}#checkout-status{font-family:ui-monospace,Consolas,monospace;font-size:13px}@media(max-width:560px){body{margin:18px auto}.pay-actions button{flex:1 1 100%}button.copy{margin-top:6px}.tx{display:block;margin:10px 0 0}}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a,button.secondary,button.copy,.wallet{color:#4FA393;border-color:#4FA393}button{background:#4FA393;border-color:#4FA393;color:#101815}input{background:#1D2127;border-color:#2E343C;color:#D6D9E0}.error{color:#F08A78}}</style>
 </head><body>
 <h1>How to skip a GitHub Actions run for a commit ([skip ci])</h1>
 <p><small>Error signature — confirm this is yours before buying:</small></p>
 <pre><code>a pushed commit should NOT trigger any workflow run</code></pre>
 <p><small>github-actions · ci · skip-ci · verified-in-production</small></p>
 <section class="paid checkout"><h2>Get the fix</h2>
-<p>Base price: <strong>0.00002 ETH on Base (~$0.049)</strong>. Request a private one-hour offer before paying; it binds the exact amount and this fix to your redemption.</p>
-<button type="button" id="request-offer">Request secure offer</button>
+<p><strong>$0.05 USDC on Base.</strong> The private one-hour offer binds this fix and payment to one redemption. Exact ETH remains available for autonomous wallets.</p>
+<div class="pay-actions" role="group" aria-label="Payment method">
+<button type="button" id="pay-usdc">Pay $0.05 USDC</button>
+<button type="button" id="request-eth" class="secondary">Use exact ETH</button>
+</div>
 <div id="offer-box" hidden>
-<p><strong>1. Send exactly</strong> <code id="offer-price"></code> wei (<span id="offer-eth"></span> ETH) <button type="button" class="copy" data-copy="offer-price">Copy amount</button></p>
-<p><strong>2. To</strong> <code id="offer-address"></code> on Base mainnet <button type="button" class="copy" data-copy="offer-address">Copy address</button></p>
+<p><strong>Signed offer:</strong> <span id="offer-rail"></span> <code id="offer-price"></code> <button type="button" class="copy" data-copy="offer-price">Copy amount</button></p>
+<p><strong>Recipient:</strong> <code id="offer-address"></code> on Base mainnet <button type="button" class="copy" data-copy="offer-address">Copy address</button></p>
 <p><a id="wallet-link" class="wallet" href="#" hidden>Open compatible wallet</a></p>
 <p><small>Offer expires <span id="offer-expiry"></span> · <strong id="offer-countdown"></strong>. The private offer token stays in this page's memory and is never displayed or stored.</small></p>
-<label for="payment-tx"><strong>3. Paste the mined transaction hash</strong></label>
+<label for="payment-tx"><strong id="payment-proof-label">Payment proof hash</strong> <small>(UserOperation for USDC, transaction for ETH)</small></label>
 <input id="payment-tx" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x…">
 <button type="button" id="redeem-fix">Redeem fix</button>
 <a id="tx-link" class="tx" href="#" target="_blank" rel="noopener noreferrer" hidden>View transaction on Base explorer</a>
@@ -32,49 +36,85 @@
   <p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/gh-actions-skip-ci-no-run.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Cataloged fixes for AI agents, with explicit confidence labels.</small></p>
 <script>
 (function(){
-  var backend="https://knownfix-backend-28.b-hash88.deno.net", fixId="gh-actions-skip-ci-no-run", offer=null, countdown=null;
+  var backend="https://knownfix-backend-28.b-hash88.deno.net", treasury="0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49", fixId="gh-actions-skip-ci-no-run", offer=null, countdown=null;
+  var sdkUrl='https://unpkg.com/@base-org/account@2.5.10/dist/base-account.min.js';
+  var sdkIntegrity='sha384-Jcaa5XJIs34lC6Co7Ye/mAuxCGLTEdUYQuIyl4UrwRduYb6mOmW7SUCOPX/jdsKV';
   var status=document.getElementById('checkout-status'), box=document.getElementById('offer-box'), result=document.getElementById('checkout-result');
-  var requestButton=document.getElementById('request-offer'), redeemButton=document.getElementById('redeem-fix'), walletLink=document.getElementById('wallet-link'), txLink=document.getElementById('tx-link'), txInput=document.getElementById('payment-tx');
+  var payUsdcButton=document.getElementById('pay-usdc'), ethButton=document.getElementById('request-eth'), redeemButton=document.getElementById('redeem-fix'), walletLink=document.getElementById('wallet-link'), txLink=document.getElementById('tx-link'), txInput=document.getElementById('payment-tx');
+  redeemButton.disabled=true;
   function message(text,isError){status.textContent=text;status.className=isError?'error':'';}
   function setBusy(button,busy,idle,busyText){button.disabled=busy;button.textContent=busy?busyText:idle;}
+  function wait(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}
   function errorFrom(response,data){var error=new Error((data.denied&&data.denied[0])||data.detail||data.error||('HTTP '+response.status));error.code=(data.denied&&data.denied[0])||data.error||'';return error;}
-  function validOffer(data){return data&&data.spec==='knownfix-payment-offer/1.0'&&data.productType==='fix'&&data.productId===fixId&&data.chainId===8453&&/^0x[0-9a-fA-F]{40}$/.test(data.payTo||'')&&/^\d+$/.test(data.priceWei||'')&&typeof data.token==='string'&&data.token.length>20&&Number.isFinite(Date.parse(data.expiresAt))&&Date.parse(data.expiresAt)>Date.now();}
+  function validOffer(data,currency){
+    if(!data||data.spec!=='knownfix-payment-offer/2.0'||data.productType!=='fix'||data.productId!==fixId||data.currency!==currency||data.chainId!==8453||!/^0x[0-9a-fA-F]{40}$/.test(data.payTo||'')||data.payTo.toLowerCase()!==treasury.toLowerCase()||typeof data.token!=='string'||data.token.length<20||!Number.isFinite(Date.parse(data.expiresAt))||Date.parse(data.expiresAt)<=Date.now())return false;
+    if(currency==='USDC')return data.redemption&&data.redemption.proofType==='erc-4337-user-operation-hash'&&data.usdcContract==='0x833589fcd6edb6e08f4c7c32d4f71b54bda02913'&&data.basePay&&data.basePay.params&&data.basePay.params.amount==='0.05'&&data.basePay.params.to.toLowerCase()===data.payTo.toLowerCase()&&/^0x[0-9a-f]{32}$/.test(data.basePay.params.dataSuffix||'');
+    return data.redemption&&data.redemption.proofType==='transaction-hash'&&/^\d+$/.test(data.priceWei||'')&&typeof data.paymentUri==='string'&&data.paymentUri.indexOf('ethereum:')===0;
+  }
+  function showOffer(data){
+    offer=data;var isUsdc=data.currency==='USDC';
+    document.getElementById('offer-rail').textContent=isUsdc?'Base Pay':'Exact ETH';
+    document.getElementById('offer-price').textContent=isUsdc?(data.amountUsdc+' USDC'):(data.priceWei+' wei / '+data.priceEth+' ETH');
+    document.getElementById('offer-address').textContent=data.payTo;
+    document.getElementById('payment-proof-label').textContent=isUsdc?'Base Pay UserOperation hash':'Base transaction hash';
+    document.getElementById('offer-expiry').textContent=new Date(data.expiresAt).toLocaleString();
+    walletLink.hidden=isUsdc;if(!isUsdc)walletLink.href=data.paymentUri;
+    redeemButton.disabled=false;box.hidden=false;
+    if(countdown)clearInterval(countdown);tick();countdown=setInterval(tick,1000);
+  }
   function tick(){
     if(!offer)return;
     var left=Date.parse(offer.expiresAt)-Date.now(), label=document.getElementById('offer-countdown');
     if(left<=0){clearInterval(countdown);countdown=null;offer=null;walletLink.hidden=true;redeemButton.disabled=true;label.textContent='expired';message('This offer expired before redemption. Request a new offer before paying.',true);return;}
     var minutes=Math.floor(left/60000), seconds=Math.floor((left%60000)/1000);label.textContent=minutes+'m '+String(seconds).padStart(2,'0')+'s remaining';
   }
-  requestButton.addEventListener('click',async function(){
-    setBusy(requestButton,true,'Request secure offer','Requesting offer');message('Requesting a product-bound offer…');result.hidden=true;
+  async function requestOffer(currency){
+    result.hidden=true;message('Requesting a signed '+currency+' offer…');
+    var response=await fetch(backend+'/offer',{method:'POST',headers:{'content-type':'application/json','accept':'application/json'},body:JSON.stringify({productType:'fix',productId:fixId,currency:currency}),cache:'no-store',referrerPolicy:'no-referrer'});
+    var data=await response.json().catch(function(){return {};});if(!response.ok)throw errorFrom(response,data);if(!validOffer(data,currency))throw new Error('Backend returned an invalid or expired offer contract.');
+    showOffer(data);return data;
+  }
+  function loadBasePay(){
+    if(window.base&&typeof window.base.pay==='function')return Promise.resolve(window.base);
+    return new Promise(function(resolve,reject){
+      var existing=document.querySelector('script[data-base-pay-sdk]');
+      if(existing){existing.addEventListener('load',function(){resolve(window.base);},{once:true});existing.addEventListener('error',function(){reject(new Error('Base Pay SDK failed to load.'));},{once:true});return;}
+      var script=document.createElement('script');script.src=sdkUrl;script.integrity=sdkIntegrity;script.crossOrigin='anonymous';script.referrerPolicy='no-referrer';script.dataset.basePaySdk='1';
+      script.onload=function(){window.base&&typeof window.base.pay==='function'?resolve(window.base):reject(new Error('Base Pay SDK did not initialize.'));};script.onerror=function(){reject(new Error('Base Pay SDK failed integrity or network checks.'));};document.head.appendChild(script);
+    });
+  }
+  function updateTxLink(tx){var valid=offer&&offer.currency==='ETH'&&/^0x[0-9a-fA-F]{64}$/.test(tx);txLink.hidden=!valid;if(valid)txLink.href='https://base.blockscout.com/tx/'+encodeURIComponent(tx);}
+  async function redeem(tx,retries){
+    if(!offer)throw new Error('Request a current offer first.');if(Date.parse(offer.expiresAt)<=Date.now())throw new Error('This offer expired. Request a new one before paying.');if(!/^0x[0-9a-fA-F]{64}$/.test(tx))throw new Error('Enter a complete 0x payment proof hash.');
+    setBusy(redeemButton,true,'Redeem fix','Verifying payment');
     try{
-      var response=await fetch(backend+'/offer',{method:'POST',headers:{'content-type':'application/json','accept':'application/json'},body:JSON.stringify({productType:'fix',productId:fixId}),cache:'no-store',referrerPolicy:'no-referrer'});
-      var data=await response.json().catch(function(){return {};});if(!response.ok)throw errorFrom(response,data);if(!validOffer(data))throw new Error('Backend returned an invalid or expired offer contract.');
-      offer=data;document.getElementById('offer-price').textContent=data.priceWei;document.getElementById('offer-eth').textContent=data.priceEth;document.getElementById('offer-address').textContent=data.payTo;document.getElementById('offer-expiry').textContent=new Date(data.expiresAt).toLocaleString();
-      walletLink.href='ethereum:'+data.payTo+'@'+data.chainId+'?value='+data.priceWei;walletLink.hidden=false;redeemButton.disabled=false;box.hidden=false;
-      if(countdown)clearInterval(countdown);tick();countdown=setInterval(tick,1000);message('Offer ready. Open a compatible wallet or copy the exact amount and address. Redeem after the transaction is mined.');
-    }catch(error){offer=null;box.hidden=true;message('Offer unavailable: '+error.message,true);}
-    finally{setBusy(requestButton,false,'Request secure offer','Requesting offer');}
-  });
-  document.querySelectorAll('[data-copy]').forEach(function(button){button.addEventListener('click',async function(){
-    try{await navigator.clipboard.writeText(document.getElementById(button.dataset.copy).textContent);message('Copied to clipboard.');}catch(error){message('Clipboard access was blocked. Select and copy the value manually.',true);}
-  });});
-  txInput.addEventListener('input',function(){var tx=this.value.trim();txLink.hidden=!/^0x[0-9a-fA-F]{64}$/.test(tx);if(!txLink.hidden)txLink.href='https://base.blockscout.com/tx/'+encodeURIComponent(tx);});
-  redeemButton.addEventListener('click',async function(){
-    var tx=txInput.value.trim();if(!offer){message('Request a current offer first.',true);return;}if(Date.parse(offer.expiresAt)<=Date.now()){message('This offer expired. Request a new one before paying.',true);return;}if(!/^0x[0-9a-fA-F]{64}$/.test(tx)){message('Enter a complete 0x transaction hash.',true);return;}
-    setBusy(redeemButton,true,'Redeem fix','Verifying payment');message('Verifying the mined payment on Base…');
-    try{
-      var response=await fetch(backend+'/fix/'+encodeURIComponent(fixId),{headers:{'accept':'application/json','x-payment-tx':tx,'x-payment-offer':offer.token},cache:'no-store',referrerPolicy:'no-referrer'});
-      var data=await response.json().catch(function(){return {};});if(!response.ok)throw errorFrom(response,data);
-      result.querySelector('code').textContent=JSON.stringify(data,null,2);result.hidden=false;box.hidden=true;offer=null;if(countdown)clearInterval(countdown);message('Payment verified. The purchased fix is shown below.');
-    }catch(error){
-      if(error.code==='tx-not-found'||error.code==='rpc-error')message('Payment is not visible yet. Wait a few seconds and retry; this offer remains valid.',true);
-      else if(error.code==='rpc-chain-mismatch')message('Payment verification is temporarily unavailable because the chain provider is not reporting Base mainnet. Do not send another payment; retry later.',true);
-      else if(error.code==='payment-offer-expired'){offer=null;message('The offer expired. Request a new offer; do not reuse the old amount.',true);}
-      else if(error.code==='wrong-recipient'||error.code==='wrong-payment-amount')message('That transaction does not match this offer: '+error.message+'. Do not send another payment until the address and exact amount are confirmed.',true);
-      else message('Redemption not completed: '+error.message,true);
+      for(var attempt=0;attempt<=retries;attempt++){
+        message(attempt?'Payment is settling. Verifying again…':'Verifying the payment on Base…');
+        var response=await fetch(backend+'/fix/'+encodeURIComponent(fixId),{headers:{'accept':'application/json','x-payment-tx':tx,'x-payment-offer':offer.token},cache:'no-store',referrerPolicy:'no-referrer'});
+        var data=await response.json().catch(function(){return {};});
+        if(response.ok){result.querySelector('code').textContent=JSON.stringify(data,null,2);result.hidden=false;box.hidden=true;offer=null;if(countdown)clearInterval(countdown);message('Payment verified. The purchased fix is shown below.');return;}
+        var error=errorFrom(response,data);if((error.code==='tx-not-found'||error.code==='rpc-error'||error.code==='userop-not-found'||error.code==='payment-pending'||error.code==='bundler-error')&&attempt<retries){await wait(1500);continue;}throw error;
+      }
     }finally{setBusy(redeemButton,false,'Redeem fix','Verifying payment');}
+  }
+  function explain(error){
+    if(error.code==='tx-not-found'||error.code==='rpc-error'||error.code==='userop-not-found'||error.code==='payment-pending'||error.code==='bundler-error')message('Payment is not visible yet. Wait a few seconds and retry; do not pay again.',true);
+    else if(error.code==='rpc-chain-mismatch'||error.code==='bundler-chain-mismatch')message('The verifier is not reporting Base mainnet. Do not send another payment; retry later.',true);
+    else if(error.code==='payment-offer-expired'){offer=null;message('The offer expired. Request a new offer; do not reuse the old payment parameters.',true);}
+    else if(error.code==='payment-intent-mismatch'||error.code==='usdc-transfer-not-found'||error.code==='wrong-recipient'||error.code==='wrong-payment-amount')message('That transaction does not satisfy this signed offer: '+error.message+'. Do not pay again.',true);
+    else message('Checkout not completed: '+error.message,true);
+  }
+  payUsdcButton.addEventListener('click',async function(){
+    setBusy(payUsdcButton,true,'Pay $0.05 USDC','Opening Base Pay');
+    try{var current=await requestOffer('USDC');message('Opening Base Pay. Confirm $0.05 USDC to the displayed recipient.');var base=await loadBasePay();var payment=await base.pay(current.basePay.params);if(!payment||!/^0x[0-9a-fA-F]{64}$/.test(payment.id||''))throw new Error('Base Pay did not return a UserOperation hash.');txInput.value=payment.id;updateTxLink(payment.id);await redeem(payment.id,5);}catch(error){explain(error);}finally{setBusy(payUsdcButton,false,'Pay $0.05 USDC','Opening Base Pay');}
   });
+  ethButton.addEventListener('click',async function(){
+    setBusy(ethButton,true,'Use exact ETH','Preparing ETH');
+    try{await requestOffer('ETH');message('Exact ETH offer ready. Open a compatible wallet, then paste the mined transaction hash to redeem.');}catch(error){offer=null;box.hidden=true;explain(error);}finally{setBusy(ethButton,false,'Use exact ETH','Preparing ETH');}
+  });
+  document.querySelectorAll('[data-copy]').forEach(function(button){button.addEventListener('click',async function(){try{await navigator.clipboard.writeText(document.getElementById(button.dataset.copy).textContent);message('Copied to clipboard.');}catch(error){message('Clipboard access was blocked. Select and copy the value manually.',true);}});});
+  txInput.addEventListener('input',function(){updateTxLink(this.value.trim());});
+  redeemButton.addEventListener('click',async function(){try{await redeem(txInput.value.trim(),0);}catch(error){explain(error);}});
 })();
 </script>
 </body></html>

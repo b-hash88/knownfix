@@ -3,12 +3,12 @@
 > Verified fixes, priced below the tokens it takes to re-derive them.
 > Everything free about this store, in one fetch. Paid fix bodies are NOT here.
 
-Price: 0.00002 ETH on Base (~$0.049) to 0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49.
+Price: $0.05 USDC on Base, or the signed exact-ETH equivalent, to 0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49.
 Remote MCP: https://knownfix-backend-28.b-hash88.deno.net/mcp   HTTP: https://knownfix-backend-28.b-hash88.deno.net
-Buy: request a signed offer with get_offer or POST {backend}/offer; pay its exact
-priceWei; redeem with paymentTx + paymentOffer (or x-payment-tx +
-x-payment-offer). The bearer offer is product-bound, expires in one hour, and
-stays private.
+Buy: a paid search result includes signed USDC and ETH offers, or request one
+with get_offer / POST {backend}/offer. Use its exact payment parameters; redeem
+with paymentTx + paymentOffer (or x-payment-tx + x-payment-offer). The bearer
+offer is product-bound, expires in one hour, and stays private.
 Honesty: "verified-in-production" = reproduced and fixed in a real session.
 "documented" = sourced, not independently reproduced. /match returns empty
 rather than pretending.
@@ -124,7 +124,7 @@ Page: https://b-hash88.github.io/knownfix/fixes/gh-cli-second-account-device-flo
 
 ## npm publish 403: two-factor authentication or bypass-2fa token required  [PAID]
 Signature: 403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages
-Tags: npm, publish, 2fa, tokens | Confidence: verified-in-production
+Tags: npm, publish, 2fa, tokens | Confidence: documented
 Cause and remedy are paid. Buy id "npm-publish-2fa-403" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/npm-publish-2fa-403
 Page: https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html
 
@@ -183,9 +183,9 @@ Page: https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-cha
 ## MCP Registry publish 401: Invalid or expired Registry JWT token  [FREE SAMPLE — full body]
 Signature: publish failed: server returned status 401 ... token has invalid claims: token is expired
 Tags: mcp, mcp-registry, auth | Confidence: verified-in-production
-Cause: The mcp-publisher login JWT is short-lived. If time passes between `mcp-publisher login` and `mcp-publisher publish`, the token expires and publish returns 401.
-Fix: Re-run `mcp-publisher login <provider>` immediately before publish. With GitHub, if the app is already authorized the device-flow re-auth is near-instant.
-Verified: This session: a publish 401'd with 'token is expired' about 30 minutes after login; re-login then publish succeeded on the same server.json.
+Cause: The Registry JWT issued after `mcp-publisher login` is short-lived. If time passes between login and publish, the token expires and the official registry returns 401 even when `server.json` is otherwise valid.
+Fix: Validate first, then run `mcp-publisher login <provider>` immediately before `mcp-publisher publish`. Treat the Registry JWT as a secret and do not print, copy into an agent prompt, or persist it in the repository.
+Verified: Reproduced again on 2026-08-27: the official publisher validated the same server.json, then publish returned 401 with 'token is expired'. This isolates authentication freshness from manifest validity.
 Page: https://b-hash88.github.io/knownfix/fixes/mcp-registry-jwt-expired-401.html
 
 ## Windows: an env var set with setx is missing in the shell that set it  [FREE SAMPLE — full body]

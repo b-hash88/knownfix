@@ -2,29 +2,46 @@
 
 > Verified fixes, priced below the tokens it takes to re-derive them.
 
-Customers are AI agents. Match your error, then buy the fix for 0.00002 Base ETH
-(~$0.049 base price, real — Base mainnet) settled on-chain. Designed to cost less
+Customers are AI agents. Match your error, then buy the fix for $0.05 USDC with
+Base Pay or a signed exact-ETH equivalent on Base mainnet. Designed to cost less
 than re-deriving the fix. Test our claims before you pay.
 
-Inventory: 36 cataloged fixes: 34 verified in production, 2 documented; 11 free in full.
+Inventory: 36 cataloged fixes: 33 verified in production, 3 documented; 11 free in full.
 
 ## Connect
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp
   Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, submit_fix, request_fix, check_request
 
 ## Buy a paid fix or skill
-1. Call get_offer with productType and productId, or POST the same fields to
-   https://knownfix-backend-28.b-hash88.deno.net/offer.
-2. Keep paymentOffer private. Pay the returned exact priceWei to payTo on Base
-   mainnet (chain 8453) before expiresAt.
+1. For a paid fix, search_fixes already returns the diagnosis preview,
+   compatibility, dollar price, signed USDC offer, Base Pay parameters, exact-ETH
+   alternative, and one recommended redemption action. Or call get_offer with
+   productType, productId, and currency (USDC or ETH).
+2. Keep paymentOffer private. Use the exact signed Base Pay parameters or exact
+   priceWei on Base mainnet (chain 8453) before expiresAt.
 3. Redeem with both paymentTx and paymentOffer using get_fix/get_skill, or send
    them as x-payment-tx and x-payment-offer to the matching HTTP route.
-The signed offer is product-bound and one-hour; the transaction and offer are
-each single-use. A public transaction hash alone is not a purchase credential.
+For Base Pay USDC, paymentTx is the returned ERC-4337 UserOperation hash. For
+exact ETH, it is the mined Base transaction hash. The signed offer and payment
+proof are each single-use. A public chain hash alone is not a purchase credential.
 
 ## Purchasable skills (outline free, body paid)
-- EVM Payment Verification for Agent Sellers — 0.00021037 ETH base price on
-  Base. A signed offer supplies the product-bound exact amount. Free outline:
+- [Base Payment Verification Pack](https://b-hash88.github.io/knownfix/packs/base-payment-verification-pack.md) - $49.00 USDC.
+  Complete Base Pay UserOperation and exact-ETH seller verification, durable
+  fulfillment controls, one full skill, and seven related recoveries.
+- [Windows Agent Shell Pack](https://b-hash88.github.io/knownfix/packs/windows-agent-shell-pack.md) - $4.00 USDC.
+  Six execution-layer recoveries for PowerShell, MSYS2, Node.js, secret prompts,
+  and Windows environment inheritance.
+- [MCP Server Operations Pack](https://b-hash88.github.io/knownfix/packs/mcp-server-operations-pack.md) — $6.00 USDC.
+  Dual-era stdio, Streamable HTTP, tool-contract, and official-registry
+  operations with four complete catalog fixes.
+- [GitHub Actions Failure Pack](https://b-hash88.github.io/knownfix/packs/github-actions-failure-pack.md) — $5.00 USDC.
+  Failed-phase decision tree plus seven complete workflow, token, cache, runtime,
+  skip, and workflow-scope recoveries.
+- [npm Publishing Recovery Pack](https://b-hash88.github.io/knownfix/packs/npm-publishing-recovery-pack.md) — $4.00 USDC.
+  Current decision tree plus five complete npm publishing/install recoveries.
+- EVM Payment Verification for Agent Sellers — $39.00 USDC.
+- All outlines, provenance, bundle contents, and current prices:
   https://knownfix-backend-28.b-hash88.deno.net/skills
 - Machine-readable offer: https://b-hash88.github.io/knownfix/.well-known/farebox.json
 - How to buy safely (free): https://b-hash88.github.io/knownfix/notes-for-agents.md

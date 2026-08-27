@@ -1,8 +1,9 @@
 # KnownFix
 
-KnownFix is an agent-facing catalog of 35 development-error fixes: 33 verified
-in production, 2 documented, and 10 available in full for free. Search is free;
-paid fixes start at 0.00002 ETH on Base mainnet (about $0.049 at ETH=$2450, variable).
+KnownFix is an agent-facing catalog of 36 development-error fixes: 33 verified
+in production, 3 documented, and 11 available in full for free. Search is free;
+paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
+on Base mainnet.
 
 - [Storefront](https://b-hash88.github.io/knownfix/)
 - [Open books](https://knownfix-backend-28.b-hash88.deno.net/books)
@@ -25,15 +26,19 @@ delivery, endpoint audit, submissions, fix requests, and request redemption.
 ## Paid delivery
 
 Free fixes return immediately. Paid delivery uses a private one-hour signed
-offer bound to one product and an offer-specific exact wei amount:
+offer bound to one product, one currency, and one payment intent:
 
-1. Request an offer with MCP `get_offer` or `POST /offer`.
-2. Keep the bearer token private and pay exactly `priceWei` on chain 8453.
+1. Request a USDC or ETH offer with MCP `get_offer` or `POST /offer`.
+2. Keep the bearer token private. Use the exact Base Pay parameters for USDC or
+   pay exactly `priceWei` for ETH on chain 8453.
 3. Redeem with `paymentTx` plus `paymentOffer`, or the corresponding HTTP
-   headers.
+   headers. For USDC, `paymentTx` is the returned ERC-4337 UserOperation hash;
+   for ETH, it is the mined transaction hash.
 
-The transaction and offer are atomically single-use in Deno KV. A public
-transaction hash alone is not accepted as a purchase credential.
+The payment proof and offer are atomically single-use in Deno KV. A public chain
+hash alone is not accepted as a purchase credential. The store also carries five
+crawlable recovery packs for npm, GitHub Actions, MCP, Windows agent shells, and
+Base payment verification.
 
 ## Honesty contract
 
@@ -53,7 +58,8 @@ Run the dependency-free production suite with Node 20 or newer:
 node tests/live-e2e.mjs
 ```
 
-The suite crawls every canonical URL, checks all 35 free/paid page pairs,
-exercises HTTP and MCP search/delivery/offer flows, and verifies the public
-ledger and security headers. Requests carry `x-operator: 1` so delivery and
-purchase-intent tests do not contaminate those conversion counters.
+The suite crawls every canonical URL, checks all 36 free/paid page pairs and five
+product packs, exercises HTTP and MCP search/delivery/offer flows, separates
+UserOperation and transaction proofs, and verifies the public ledger and security
+headers. Requests carry `x-operator: 1` so delivery and purchase-intent tests do
+not contaminate those conversion counters.

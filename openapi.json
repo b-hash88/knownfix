@@ -3,7 +3,7 @@
   "info": {
     "title": "KnownFix",
     "version": "0.3.0",
-    "description": "36 cataloged fixes: 34 verified in production, 2 documented; 11 free in full. Paid delivery requires a signed, product-bound bearer offer plus a Base-mainnet transaction.",
+    "description": "36 cataloged fixes: 33 verified in production, 3 documented; 11 free in full. Paid delivery accepts signed Base USDC/Base Pay or exact-ETH offers plus a verified Base-mainnet transaction.",
     "contact": {
       "url": "https://b-hash88.github.io/knownfix/"
     }
@@ -48,7 +48,7 @@
     },
     "/offer": {
       "post": {
-        "summary": "Issue a one-hour signed offer for one paid fix or skill",
+        "summary": "Issue a one-hour signed USDC or ETH offer for one paid product",
         "requestBody": {
           "required": true,
           "content": {
@@ -64,18 +64,28 @@
                     "type": "string",
                     "enum": [
                       "fix",
-                      "skill"
+                      "skill",
+                      "audit"
                     ]
                   },
                   "productId": {
                     "type": "string",
                     "pattern": "^[a-z0-9-]{1,120}$"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "enum": [
+                      "USDC",
+                      "ETH"
+                    ],
+                    "default": "ETH"
                   }
                 }
               },
               "example": {
                 "productType": "fix",
-                "productId": "npm-install-silent-failure"
+                "productId": "npm-install-silent-failure",
+                "currency": "USDC"
               }
             }
           }
@@ -263,24 +273,35 @@
           "spec",
           "productType",
           "productId",
+          "currency",
           "token",
-          "priceWei",
           "payTo",
           "chainId",
           "expiresAt"
         ],
         "properties": {
           "spec": {
-            "const": "knownfix-payment-offer/1.0"
+            "const": "knownfix-payment-offer/2.0"
           },
           "productType": {
             "type": "string",
             "enum": [
               "fix",
-              "skill"
+              "skill",
+              "audit"
             ]
           },
           "productId": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "USDC",
+              "ETH"
+            ]
+          },
+          "priceUsd": {
             "type": "string"
           },
           "token": {
@@ -298,6 +319,17 @@
           },
           "priceEth": {
             "type": "string"
+          },
+          "amountUsdcAtomic": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "amountUsdc": {
+            "type": "string"
+          },
+          "basePay": {
+            "type": "object",
+            "additionalProperties": true
           },
           "payTo": {
             "type": "string",

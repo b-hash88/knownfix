@@ -4,9 +4,11 @@
   "tagline": "Verified fixes, priced below the tokens it takes to re-derive them.",
   "pricing": {
     "perFix": {
+      "usd": "$0.05",
+      "usdcAtomic": "50000",
       "wei": "20000000000000",
-      "display": "0.00002 ETH on Base (~$0.049)",
-      "note": "Base mainnet. USD at ETH=$2450, 2026-08-24; the wei amount is the price, USD drifts."
+      "display": "$0.05 USDC on Base, or exact signed ETH equivalent",
+      "note": "USDC is dollar-denominated. The ETH amount uses an offer-specific exact wei join key and its USD value drifts."
     }
   },
   "provenance": "Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here.",
@@ -251,7 +253,7 @@
         "2fa",
         "tokens"
       ],
-      "confidence": "verified-in-production",
+      "confidence": "documented",
       "sample": false,
       "page": "https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md"
     },

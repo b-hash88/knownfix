@@ -122,8 +122,9 @@ Tags: github, gh-cli, auth, agents | Confidence: verified-in-production
 Cause and remedy are paid. Buy id "gh-cli-second-account-device-flow" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/gh-cli-second-account-device-flow
 Page: https://b-hash88.github.io/knownfix/fixes/gh-cli-second-account-device-flow.html
 
-## npm publish 403: two-factor authentication or bypass-2fa token required  [PAID]
+## npm publish EOTP/403: one-time password or authorized publishing path required  [PAID]
 Signature: 403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages
+Also matches: npm ERR! code EOTP | This operation requires a one-time password from your authenticator. | You can provide a one-time password by passing --otp=<code> to the command you ran.
 Tags: npm, publish, 2fa, tokens | Confidence: documented
 Cause and remedy are paid. Buy id "npm-publish-2fa-403" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/npm-publish-2fa-403
 Page: https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html

@@ -250,7 +250,27 @@ await check("npm Trusted Publishing fix exposes authoritative citations", async 
   assert.match(mdResult.body, /Reviewed: 2026-08-27/);
   assert.doesNotMatch(htmlResult.body, /<h2>Cause<\/h2>/);
   assert.doesNotMatch(mdResult.body, /## Cause/);
-  return "documented confidence, two primary-source links, reviewed date, and paid body boundary";
+
+  const eotpId = "npm-publish-2fa-403";
+  const eotpEntry = catalog.entries.find((item) => item.id === eotpId);
+  assert.deepEqual(eotpEntry.aliases, [
+    "npm ERR! code EOTP",
+    "This operation requires a one-time password from your authenticator.",
+    "You can provide a one-time password by passing --otp=<code> to the command you ran.",
+  ]);
+  const [eotpHtml, eotpMd] = await Promise.all([
+    text(new URL("fixes/" + eotpId + ".html", STORE)),
+    text(new URL("fixes/" + eotpId + ".md", STORE)),
+  ]);
+  assert.match(eotpHtml.body, /npm ERR! code EOTP/);
+  assert.match(eotpHtml.body, /This operation requires a one-time password from your authenticator\./);
+  assert.match(eotpHtml.body, /--otp=&lt;code&gt;/);
+  assert.match(eotpHtml.body, /npm CLI EOTP error contract/);
+  assert.match(eotpMd.body, /## Also matches/);
+  assert.match(eotpMd.body, /--otp=<code>/);
+  assert.doesNotMatch(eotpHtml.body, /<h2>Cause<\/h2>/);
+  assert.doesNotMatch(eotpMd.body, /## Cause/);
+  return "current npm primary sources, EOTP aliases, reviewed date, and paid body boundary";
 });
 
 await check("robots, agent docs, offer document, and OpenAPI", async () => {
@@ -268,7 +288,7 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
   assert.equal(fareboxResult.data.offer.inventory, 37);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
-  assert.equal(openapiResult.data.info.version, "0.3.8");
+  assert.equal(openapiResult.data.info.version, "0.3.9");
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
@@ -485,7 +505,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.8");
+  assert.equal(initialized.result.serverInfo.version, "0.3.9");
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 12);
   const names = listed.result.tools.map((tool) => tool.name);
@@ -504,6 +524,17 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
   }));
   assert.equal(searched.matches[0].id, "oz5-mcopy-cancun");
   assert(searched.fix?.fix, "free top match did not include its body");
+  const eotpSearch = parseToolText(await mcp(8, "tools/call", {
+    name: "search_fixes",
+    arguments: { query: "npm ERR! code EOTP" },
+  }));
+  assert.equal(eotpSearch.matches[0].id, "npm-publish-2fa-403");
+  assert.equal(eotpSearch.matches[0].match, 1);
+  assert.equal(eotpSearch.topMatchTier, "paid");
+  assert.equal(eotpSearch.purchase.checkout, "ready");
+  assert.equal(eotpSearch.purchase.price.usd, "$0.05");
+  assert.equal(eotpSearch.purchase.nextAction.action, "pay-and-redeem");
+  assert.equal(eotpSearch.purchase.relatedBundle.id, "npm-publishing-recovery-pack");
   const freeFix = parseToolText(await mcp(4, "tools/call", {
     name: "get_fix",
     arguments: { id: "oz5-mcopy-cancun" },
@@ -529,7 +560,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     arguments: { submissionId: "not-a-submission-id" },
   }));
   assert.equal(invalidSubmission.error, "invalid-submission-id");
-  return "12 tools; search, free delivery, signed offer, and stocked-request gate work over MCP";
+  return "12 tools; free and EOTP purchase-ready search, signed offer, and stocked-request gate work over MCP";
 });
 
 const passed = results.filter((result) => result.ok);

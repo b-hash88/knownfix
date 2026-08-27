@@ -8,7 +8,7 @@ const OPERATOR_HEADERS = {
   "x-operator": "1",
 };
 const DISCOVERY_DESCRIPTION =
-  "Search 37 npm publish/EOTP, GitHub Actions, MCP, Windows and Base fixes; 11 free, USDC/ETH packs.";
+  "Search 38 npm publish/EOTP, GitHub Actions, MCP, Windows and Base fixes; 12 free, USDC/ETH packs.";
 const results = [];
 
 async function check(name, fn) {
@@ -102,19 +102,19 @@ await check("storefront metadata and truthful inventory", async () => {
   const { response, body } = await text(STORE);
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") || "", /text\/html/);
-  assert.match(body, /33 verified/);
+  assert.match(body, /34 verified/);
   assert.match(body, /4 documented/);
-  assert.match(body, /11 free in full/);
+  assert.match(body, /12 free in full/);
   assert.match(body, /rel="canonical" href="https:\/\/b-hash88\.github\.io\/knownfix\/"/);
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);
   assert(body.includes(`<meta name="description" content="${DISCOVERY_DESCRIPTION}">`));
-  assert.equal(catalog.entries.length, 37);
-  assert.equal(catalog.entries.filter((entry) => entry.sample).length, 11);
-  assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 33);
+  assert.equal(catalog.entries.length, 38);
+  assert.equal(catalog.entries.filter((entry) => entry.sample).length, 12);
+  assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 4);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
-  return "37 entries; 33 verified, 4 documented, 11 free";
+  return "38 entries; 34 verified, 4 documented, 12 free";
 });
 
 await check("homepage search is purchase-ready and credential-safe", async () => {
@@ -305,7 +305,7 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.equal(serverCardResult.data.authentication.required, false);
   assert.equal(serverCardResult.data.tools.length, 12);
   assert(serverCardResult.data.tools.every((tool) => tool.inputSchema && tool.outputSchema && tool.annotations));
-  assert.equal(openapiResult.data.info.version, "0.3.13");
+  assert.equal(openapiResult.data.info.version, "0.3.14");
   assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
   assert.match(openapiResult.data.paths["/fix/{id}"].get.responses["402"].description, /signed USDC and ETH checkout/);
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
@@ -346,19 +346,23 @@ await check("backend health, security headers, and CORS preflight", async () => 
   return "KV and checkout enabled; security headers present";
 });
 
-await check("catalog, strong match, and honest miss", async () => {
-  const [catalogResult, matchResult, missResult] = await Promise.all([
+await check("catalog, strong matches, and honest miss", async () => {
+  const [catalogResult, matchResult, localBinResult, missResult] = await Promise.all([
     json(API + "/catalog"),
     json(API + "/match?q=" + encodeURIComponent('DeclarationError: Function "mcopy" not found')),
+    json(API + "/match?q=" + encodeURIComponent("'knownfix' is not recognized as an internal or external command")),
     json(API + "/match?q=" + encodeURIComponent("quasar-lantern-9842 impossible frobnication")),
   ]);
   assert.equal(catalogResult.response.status, 200);
-  assert.equal(catalogResult.data.entries.length, 37);
+  assert.equal(catalogResult.data.entries.length, 38);
   assert(catalogResult.data.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
   assert.equal(matchResult.data.matches[0].id, "oz5-mcopy-cancun");
+  assert.equal(localBinResult.data.matches[0].id, "npm-exec-local-bin-not-found");
+  assert.equal(localBinResult.data.topMatchTier, "free-sample");
+  assert(localBinResult.data.fix?.fix, "new npm exec match did not include its free body");
   assert.deepEqual(missResult.data.matches, []);
   assert.equal(missResult.data.next, "no match");
-  return "strong match ranks first; unrelated query stays empty";
+  return "mcopy and npm exec failures rank first; unrelated query stays empty";
 });
 
 await check("free delivery and paid denial do not cross the boundary", async () => {
@@ -561,7 +565,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.13");
+  assert.equal(initialized.result.serverInfo.version, "0.3.14");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 12);

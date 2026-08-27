@@ -4,7 +4,7 @@
   "offer": {
     "name": "KnownFix",
     "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
-    "inventory": 37,
+    "inventory": 38,
     "freeSamples": [
       "oz5-mcopy-cancun",
       "node-test-dir-arg-windows",
@@ -16,7 +16,8 @@
       "mcp-registry-description-100-char-422",
       "mcp-registry-jwt-expired-401",
       "windows-setx-not-in-running-shell",
-      "gh-pages-disabled-site-404"
+      "gh-pages-disabled-site-404",
+      "npm-exec-local-bin-not-found"
     ],
     "perFix": {
       "priceUsd": "$0.05",

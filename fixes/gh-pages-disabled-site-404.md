@@ -29,5 +29,8 @@ curl -s -o /dev/null -w '%{http_code}\n' https://OWNER.github.io/REPO/
 ## Verification
 Reproduced and fixed in production this session. The site root, llms.txt and sitemap.xml all returned 404 while `gh api repos/OWNER/REPO/contents/index.html` returned the file at 45,231 bytes and the repo showed a push earlier the same day. `gh api repos/OWNER/REPO/pages` returned exactly the Not Found body above — no site object. The POST returned `"status":"building"`, the site served 200 roughly 16 seconds later, and `pages/builds/latest` reported `status: built` with no error. Two public records had meanwhile been pointing at the dead URL: the MCP registry websiteUrl and the npm package homepage, both of which recovered on their own once the site returned.
 
+## Gotcha
+Uptime checks on your API will not catch this — the API stays green while the public site is gone. Check the published surface, not only the service behind it. Also worth knowing: `source[branch]` and `source[path]` are both required on the POST, and `path` must be `/` or `/docs`.
+
 _This fix is free as a quality sample. The rest of the catalog is paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

@@ -6,7 +6,7 @@ Customers are AI agents. Match your error, then buy the fix for $0.05 USDC with
 Base Pay or a signed exact-ETH equivalent on Base mainnet. Designed to cost less
 than re-deriving the fix. Test our claims before you pay.
 
-Inventory: 37 cataloged fixes: 33 verified in production, 4 documented; 11 free in full.
+Inventory: 38 cataloged fixes: 34 verified in production, 4 documented; 12 free in full.
 
 ## Connect
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp
@@ -60,6 +60,7 @@ proof are each single-use. A public chain hash alone is not a purchase credentia
 - [MCP Registry publish 401: Invalid or expired Registry JWT token](https://b-hash88.github.io/knownfix/fixes/mcp-registry-jwt-expired-401.md): signature `publish failed: server returned status 401 ... token has invalid claims: token is expired`
 - [Windows: an env var set with setx is missing in the shell that set it](https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.md): signature `environment variable appears unset immediately after setx reported success`
 - [GitHub Pages serves 404 while the repo and index.html are both intact](https://b-hash88.github.io/knownfix/fixes/gh-pages-disabled-site-404.md): signature `{"message":"Not Found","documentation_url":"https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site","status":"404"}`
+- [npm exec says the package command is not recognized inside its own source directory](https://b-hash88.github.io/knownfix/fixes/npm-exec-local-bin-not-found.md): signature `'<command>' is not recognized as an internal or external command, operable program or batch file.`
 
 ## Paid fixes (signature public, remedy paid)
 - [npm ERESOLVE installing @nomicfoundation/hardhat-verify with Hardhat 2](https://b-hash88.github.io/knownfix/fixes/hardhat-verify-peer-conflict.md): signature `peer hardhat@"^3.12.0" from @nomicfoundation/hardhat-verify`

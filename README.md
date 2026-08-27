@@ -1,7 +1,7 @@
 # KnownFix
 
-KnownFix is an agent-facing catalog of 37 development-error fixes: 33 verified
-in production, 4 documented, and 11 available in full for free. Search is free;
+KnownFix is an agent-facing catalog of 38 development-error fixes: 34 verified
+in production, 4 documented, and 12 available in full for free. Search is free;
 paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
 on Base mainnet.
 
@@ -33,7 +33,7 @@ KnownFix also matches `This operation requires a one-time password from your
 authenticator.` and the npm `--otp=<code>` wording. The public
 [diagnostic page](https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html)
 cites npm's current CLI source; the
-[npm Publishing Recovery Pack](https://b-hash88.github.io/knownfix/packs/npm-publishing-recovery.html)
+[npm Publishing Recovery Pack](https://b-hash88.github.io/knownfix/packs/npm-publishing-recovery-pack.html)
 contains the six-fix decision tree and verification commands.
 
 ## Paid delivery
@@ -74,7 +74,7 @@ Run the dependency-free production suite with Node 20 or newer:
 node tests/live-e2e.mjs
 ```
 
-The suite crawls every canonical URL, checks all 37 free/paid page pairs and five
+The suite crawls every canonical URL, checks all 38 free/paid page pairs and five
 product packs, exercises HTTP and MCP search/delivery/offer flows, separates
 UserOperation and transaction proofs, and verifies the public ledger and security
 headers. Requests carry `x-operator: 1` so delivery and purchase-intent tests do

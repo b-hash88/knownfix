@@ -33,5 +33,8 @@ A successful local node invocation proves the source entry point works; a succes
 ## Authoritative sources
 - [npm exec command documentation](https://docs.npmjs.com/cli/v11/commands/npm-exec)
 
+## Technical discussion
+[Why npm exec misses a published CLI inside its matching source tree](https://github.com/b-hash88/knownfix/discussions/2)
+
 _This fix is free as a quality sample. The rest of the catalog is paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

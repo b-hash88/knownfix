@@ -357,6 +357,13 @@ await check("catalog, strong matches, and honest miss", async () => {
   assert.equal(catalogResult.response.status, 200);
   assert.equal(catalogResult.data.entries.length, 38);
   assert(catalogResult.data.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
+  assert.deepEqual(
+    catalogResult.data.entries.find((entry) => entry.id === "npm-exec-local-bin-not-found")?.discussion,
+    {
+      title: "Why npm exec misses a published CLI inside its matching source tree",
+      url: "https://github.com/b-hash88/knownfix/discussions/2",
+    },
+  );
   assert.equal(matchResult.data.matches[0].id, "oz5-mcopy-cancun");
   assert.equal(localBinResult.data.matches[0].id, "npm-exec-local-bin-not-found");
   assert.equal(localBinResult.data.matches[0].sample, true);

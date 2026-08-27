@@ -548,7 +548,11 @@
       ],
       "confidence": "verified-in-production",
       "sample": true,
-      "page": "https://b-hash88.github.io/knownfix/fixes/npm-exec-local-bin-not-found.md"
+      "page": "https://b-hash88.github.io/knownfix/fixes/npm-exec-local-bin-not-found.md",
+      "discussion": {
+        "title": "Why npm exec misses a published CLI inside its matching source tree",
+        "url": "https://github.com/b-hash88/knownfix/discussions/2"
+      }
     }
   ]
 }

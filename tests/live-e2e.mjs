@@ -300,7 +300,7 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.equal(staticMcpResult.data.servers[0].description, DISCOVERY_DESCRIPTION);
   assert(staticMcpResult.data.servers[0].description.length <= 100);
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
-  assert.equal(fareboxResult.data.offer.inventory, 37);
+  assert.equal(fareboxResult.data.offer.inventory, catalog.entries.length);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
   assert.equal(serverCardResult.data.authentication.required, false);
   assert.equal(serverCardResult.data.tools.length, 12);
@@ -318,7 +318,7 @@ await check("backend health, security headers, and CORS preflight", async () => 
   const { response, data } = await json(API + "/health");
   assert.equal(response.status, 200);
   assert.equal(data.ok, true);
-  assert.equal(data.inventory, 37);
+  assert.equal(data.inventory, catalog.entries.length);
   assert.equal(data.chainId, 8453);
   assert.equal(data.kv, true);
   assert.equal(data.checkoutEnabled, true);
@@ -347,10 +347,11 @@ await check("backend health, security headers, and CORS preflight", async () => 
 });
 
 await check("catalog, strong matches, and honest miss", async () => {
-  const [catalogResult, matchResult, localBinResult, missResult] = await Promise.all([
+  const [catalogResult, matchResult, localBinResult, localBinFixResult, missResult] = await Promise.all([
     json(API + "/catalog"),
     json(API + "/match?q=" + encodeURIComponent('DeclarationError: Function "mcopy" not found')),
     json(API + "/match?q=" + encodeURIComponent("'knownfix' is not recognized as an internal or external command")),
+    json(API + "/fix/npm-exec-local-bin-not-found"),
     json(API + "/match?q=" + encodeURIComponent("quasar-lantern-9842 impossible frobnication")),
   ]);
   assert.equal(catalogResult.response.status, 200);
@@ -358,8 +359,11 @@ await check("catalog, strong matches, and honest miss", async () => {
   assert(catalogResult.data.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
   assert.equal(matchResult.data.matches[0].id, "oz5-mcopy-cancun");
   assert.equal(localBinResult.data.matches[0].id, "npm-exec-local-bin-not-found");
-  assert.equal(localBinResult.data.topMatchTier, "free-sample");
-  assert(localBinResult.data.fix?.fix, "new npm exec match did not include its free body");
+  assert.equal(localBinResult.data.matches[0].sample, true);
+  assert.equal(localBinResult.data.next, "GET /fix/npm-exec-local-bin-not-found");
+  assert.equal(localBinFixResult.response.status, 200);
+  assert.equal(localBinFixResult.data.tier, "free-sample");
+  assert(localBinFixResult.data.fix, "new npm exec fix endpoint did not include its free body");
   assert.deepEqual(missResult.data.matches, []);
   assert.equal(missResult.data.next, "no match");
   return "mcopy and npm exec failures rank first; unrelated query stays empty";

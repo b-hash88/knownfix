@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "KnownFix",
-    "version": "0.3.10",
+    "version": "0.3.11",
     "description": "37 cataloged fixes: 33 verified in production, 4 documented; 11 free in full. Paid delivery accepts signed Base USDC/Base Pay or exact-ETH offers plus the matching verified Base-mainnet proof.",
     "contact": {
       "url": "https://b-hash88.github.io/knownfix/"

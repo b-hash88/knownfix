@@ -8,7 +8,7 @@ const OPERATOR_HEADERS = {
   "x-operator": "1",
 };
 const DISCOVERY_DESCRIPTION =
-  "Search 37 npm publish, GitHub Actions, MCP, Windows and Base fixes; 11 free, paid USDC/ETH packs.";
+  "Search 37 npm publish/EOTP, GitHub Actions, MCP, Windows and Base fixes; 11 free, USDC/ETH packs.";
 const results = [];
 
 async function check(name, fn) {
@@ -294,7 +294,7 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
   assert.equal(fareboxResult.data.offer.inventory, 37);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
-  assert.equal(openapiResult.data.info.version, "0.3.10");
+  assert.equal(openapiResult.data.info.version, "0.3.11");
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
@@ -511,7 +511,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.10");
+  assert.equal(initialized.result.serverInfo.version, "0.3.11");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 12);

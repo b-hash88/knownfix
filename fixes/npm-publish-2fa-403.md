@@ -25,5 +25,8 @@
 
 Reviewed: 2026-08-27
 
+## Technical discussion
+[Compare this exact EOTP/403 failure with field reports](https://github.com/b-hash88/knownfix/discussions/1)
+
 _Diagnosis and remedy are paid; the signature above is public so you can confirm this is your error before buying._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

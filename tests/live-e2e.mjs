@@ -261,6 +261,10 @@ await check("npm Trusted Publishing fix exposes authoritative citations", async 
     "This operation requires a one-time password from your authenticator.",
     "You can provide a one-time password by passing --otp=<code> to the command you ran.",
   ]);
+  assert.deepEqual(eotpEntry.discussion, {
+    title: "Compare this exact EOTP/403 failure with field reports",
+    url: "https://github.com/b-hash88/knownfix/discussions/1",
+  });
   const [eotpHtml, eotpMd] = await Promise.all([
     text(new URL("fixes/" + eotpId + ".html", STORE)),
     text(new URL("fixes/" + eotpId + ".md", STORE)),
@@ -269,11 +273,14 @@ await check("npm Trusted Publishing fix exposes authoritative citations", async 
   assert.match(eotpHtml.body, /This operation requires a one-time password from your authenticator\./);
   assert.match(eotpHtml.body, /--otp=&lt;code&gt;/);
   assert.match(eotpHtml.body, /npm CLI EOTP error contract/);
+  assert.match(eotpHtml.body, /github\.com\/b-hash88\/knownfix\/discussions\/1/);
   assert.match(eotpMd.body, /## Also matches/);
   assert.match(eotpMd.body, /--otp=<code>/);
+  assert.match(eotpMd.body, /## Technical discussion/);
+  assert.match(eotpMd.body, /github\.com\/b-hash88\/knownfix\/discussions\/1/);
   assert.doesNotMatch(eotpHtml.body, /<h2>Cause<\/h2>/);
   assert.doesNotMatch(eotpMd.body, /## Cause/);
-  return "current npm primary sources, EOTP aliases, reviewed date, and paid body boundary";
+  return "current npm primary sources, EOTP aliases, technical discussion, reviewed date, and paid body boundary";
 });
 
 await check("robots, agent docs, offer document, and OpenAPI", async () => {

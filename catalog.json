@@ -260,7 +260,11 @@
       ],
       "confidence": "documented",
       "sample": false,
-      "page": "https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md"
+      "page": "https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md",
+      "discussion": {
+        "title": "Compare this exact EOTP/403 failure with field reports",
+        "url": "https://github.com/b-hash88/knownfix/discussions/1"
+      }
     },
     {
       "id": "npm-trusted-publishing-eneedauth",

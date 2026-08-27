@@ -190,10 +190,11 @@ Page: https://b-hash88.github.io/knownfix/fixes/mcp-registry-description-100-cha
 
 ## MCP Registry publish 401: Invalid or expired Registry JWT token  [FREE SAMPLE — full body]
 Signature: publish failed: server returned status 401 ... token has invalid claims: token is expired
-Tags: mcp, mcp-registry, auth | Confidence: verified-in-production
-Cause: The Registry JWT issued after `mcp-publisher login` is short-lived. If time passes between login and publish, the token expires and the official registry returns 401 even when `server.json` is otherwise valid.
-Fix: Validate first, then run `mcp-publisher login <provider>` immediately before `mcp-publisher publish`. Treat the Registry JWT as a secret and do not print, copy into an agent prompt, or persist it in the repository.
-Verified: Reproduced again on 2026-08-27: the official publisher validated the same server.json, then publish returned 401 with 'token is expired'. This isolates authentication freshness from manifest validity.
+Also matches: Invalid or expired Registry JWT token | failed to parse token: token has invalid claims: token is expired | mcp-publisher publish failed 401 Unauthorized
+Tags: mcp, mcp-registry, auth, github-actions, oidc | Confidence: verified-in-production
+Cause: The Registry JWT cached after `mcp-publisher login github` is short-lived. `mcp-publisher validate` checks manifest and package validity but does not refresh or prove that publish credential, so validation can pass immediately before publication returns 401. GitHub CLI authentication is a separate credential boundary and does not refresh the Registry JWT.
+Fix: For a one-off release, validate, run `mcp-publisher login github`, and publish immediately. For recurring GitHub-hosted releases, give only the publication job `contents: read` and `id-token: write`, then use `mcp-publisher login github-oidc` immediately before publish; no long-lived Registry token is needed. Pin the official publisher release and verify its checksum before execution.
+Verified: Reproduced on 2026-08-27: the official publisher validated the same server.json, then publish returned 401 with 'token is expired'. KnownFix moved publication to a checksum-pinned GitHub OIDC workflow; run 33091436542 authenticated with github-oidc, published version 0.3.15, and the public Registry API returned that exact version, remote endpoint, icon, and unchanged npm bridge.
 Page: https://b-hash88.github.io/knownfix/fixes/mcp-registry-jwt-expired-401.html
 
 ## Windows: an env var set with setx is missing in the shell that set it  [FREE SAMPLE — full body]

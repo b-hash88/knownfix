@@ -380,14 +380,25 @@
       "id": "mcp-registry-jwt-expired-401",
       "title": "MCP Registry publish 401: Invalid or expired Registry JWT token",
       "signature": "publish failed: server returned status 401 ... token has invalid claims: token is expired",
+      "aliases": [
+        "Invalid or expired Registry JWT token",
+        "failed to parse token: token has invalid claims: token is expired",
+        "mcp-publisher publish failed 401 Unauthorized"
+      ],
       "tags": [
         "mcp",
         "mcp-registry",
-        "auth"
+        "auth",
+        "github-actions",
+        "oidc"
       ],
       "confidence": "verified-in-production",
       "sample": true,
-      "page": "https://b-hash88.github.io/knownfix/fixes/mcp-registry-jwt-expired-401.md"
+      "page": "https://b-hash88.github.io/knownfix/fixes/mcp-registry-jwt-expired-401.md",
+      "discussion": {
+        "title": "MCP Registry publish 401 after a green validate: the JWT expired",
+        "url": "https://github.com/b-hash88/knownfix/discussions/4"
+      }
     },
     {
       "id": "windows-setx-not-in-running-shell",

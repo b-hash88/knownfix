@@ -195,13 +195,16 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <p class="sub">38 cataloged fixes: 34 verified in production, 4 documented; 12 free in full. Each entry leads with the literal error string, because that is the text you actually have. Paid delivery adds the cause, the remedy, and how it was verified.</p>
 <input id="q" type="search" placeholder="filter by error text, tag, or title…" aria-label="Filter fixes">
 <p class="filter-status" id="filter-status" aria-live="polite">Showing all 38 fixes</p>
-<section class="cat"><h2>GitHub &amp; CI <small>(9)</small></h2>
+<section class="cat"><h2>GitHub &amp; CI <small>(10)</small></h2>
 <article class="fix"><h3><a href="./fixes/npm-install-silent-failure.html">npm install 'succeeded' but the package is not there</a></h3>
 <pre><code>Cannot find module 'X' immediately after npm i X appeared to succeed</code></pre>
 <p><small>npm · dependencies · ci — verified-in-production</small></p></article>
 <article class="fix"><h3><a href="./fixes/gh-pages-deploy-lag.html">File 404s on GitHub Pages for a minute or two after a successful push</a></h3>
 <pre><code>fresh push visible in repo but 404 on the pages URL</code></pre>
 <p><small>github-pages · deploy · ci — verified-in-production</small></p></article>
+<article class="fix"><h3><a href="./fixes/mcp-registry-jwt-expired-401.html">MCP Registry publish 401: Invalid or expired Registry JWT token</a> <span class="badge">free sample</span></h3>
+<pre><code>publish failed: server returned status 401 ... token has invalid claims: token is expired</code></pre>
+<p><small>mcp · mcp-registry · auth · github-actions · oidc — verified-in-production — FREE</small></p></article>
 <article class="fix"><h3><a href="./fixes/gh-push-workflow-scope-rejected.html">git push rejected: OAuth App cannot create/update workflow without workflow scope</a></h3>
 <pre><code>! [remote rejected] main -&gt; main (refusing to allow an OAuth App to create or update workflow `.github/workflows/x.yml` without `workflow` scope)</code></pre>
 <p><small>github · git · gh-cli · github-actions · auth — verified-in-production</small></p></article>
@@ -281,7 +284,7 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <pre><code>nonce has already been used</code></pre>
 <p><small>ethers · nonce · transactions — verified-in-production</small></p></article>
 </section>
-<section class="cat"><h2>MCP &amp; agents <small>(5)</small></h2>
+<section class="cat"><h2>MCP &amp; agents <small>(4)</small></h2>
 <article class="fix"><h3><a href="./fixes/mcp-stdio-env-not-inherited.html">Env var set for an MCP stdio server never arrives</a></h3>
 <pre><code>MCP server ignores environment variable set in parent shell</code></pre>
 <p><small>mcp · stdio · environment · secrets — verified-in-production</small></p></article>
@@ -291,9 +294,6 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <article class="fix"><h3><a href="./fixes/mcp-registry-description-100-char-422.html">MCP Registry publish fails 422: description exceeds 100 characters</a> <span class="badge">free sample</span></h3>
 <pre><code>validation failed: expected length &lt;= 100, location body.description</code></pre>
 <p><small>mcp · mcp-registry · publishing — verified-in-production — FREE</small></p></article>
-<article class="fix"><h3><a href="./fixes/mcp-registry-jwt-expired-401.html">MCP Registry publish 401: Invalid or expired Registry JWT token</a> <span class="badge">free sample</span></h3>
-<pre><code>publish failed: server returned status 401 ... token has invalid claims: token is expired</code></pre>
-<p><small>mcp · mcp-registry · auth — verified-in-production — FREE</small></p></article>
 <article class="fix"><h3><a href="./fixes/mcp-tool-search-batching.html">Loading deferred MCP tools one at a time wastes a round-trip per tool</a></h3>
 <pre><code>repeated ToolSearch select: calls for tools from the same server</code></pre>
 <p><small>mcp · agents · performance — documented</small></p></article>

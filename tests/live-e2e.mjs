@@ -189,6 +189,9 @@ await check("five recovery-pack pages expose price and proof contracts", async (
     assert.match(htmlResult.body, /transaction-hash/);
     assert.match(htmlResult.body, /Base Pay did not return a UserOperation hash/);
     assert.doesNotMatch(htmlResult.body, /Base Pay did not return a transaction hash/i);
+    assert.match(htmlResult.body, /script\[data-base-pay-sdk\]/);
+    assert.match(htmlResult.body, /Base Pay SDK timed out while loading/);
+    assert.match(htmlResult.body, /script\.remove\(\)/);
     assert.doesNotMatch(htmlResult.body, /id="payment-offer"/);
     assert(mdResult.body.includes("**Price:** $" + price + " USDC"));
     if (id === "npm-publishing-recovery-pack") {
@@ -223,6 +226,9 @@ await check("all fix pages preserve the free and paid boundary", async () => {
         assert.doesNotMatch(htmlResult.body, /<h2>Cause<\/h2>/);
         assert.match(htmlResult.body, /id="pay-usdc"/);
         assert.match(htmlResult.body, /Base Pay UserOperation hash/);
+        assert.match(htmlResult.body, /script\[data-base-pay-sdk\]/);
+        assert.match(htmlResult.body, /Base Pay SDK timed out while loading/);
+        assert.match(htmlResult.body, /script\.remove\(\)/);
         assert.match(htmlResult.body, /private offer token stays in this page's memory/);
         assert(
           htmlResult.body.includes(

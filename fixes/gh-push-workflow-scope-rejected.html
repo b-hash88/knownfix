@@ -78,9 +78,10 @@
     if(window.base&&typeof window.base.pay==='function')return Promise.resolve(window.base);
     return new Promise(function(resolve,reject){
       var existing=document.querySelector('script[data-base-pay-sdk]');
-      if(existing){existing.addEventListener('load',function(){resolve(window.base);},{once:true});existing.addEventListener('error',function(){reject(new Error('Base Pay SDK failed to load.'));},{once:true});return;}
+      if(existing)existing.remove();
       var script=document.createElement('script');script.src=sdkUrl;script.integrity=sdkIntegrity;script.crossOrigin='anonymous';script.referrerPolicy='no-referrer';script.dataset.basePaySdk='1';
-      script.onload=function(){window.base&&typeof window.base.pay==='function'?resolve(window.base):reject(new Error('Base Pay SDK did not initialize.'));};script.onerror=function(){reject(new Error('Base Pay SDK failed integrity or network checks.'));};document.head.appendChild(script);
+      var timer=setTimeout(function(){script.remove();reject(new Error('Base Pay SDK timed out while loading.'));},15000);
+      script.onload=function(){clearTimeout(timer);if(window.base&&typeof window.base.pay==='function')resolve(window.base);else{script.remove();reject(new Error('Base Pay SDK did not initialize.'));}};script.onerror=function(){clearTimeout(timer);script.remove();reject(new Error('Base Pay SDK failed integrity or network checks.'));};document.head.appendChild(script);
     });
   }
   function updateTxLink(tx){var valid=offer&&offer.currency==='ETH'&&/^0x[0-9a-fA-F]{64}$/.test(tx);txLink.hidden=!valid;if(valid)txLink.href='https://base.blockscout.com/tx/'+encodeURIComponent(tx);}

@@ -28,6 +28,6 @@ A seller-side verification system for Base Pay USDC and exact ETH that keeps Use
 
 The paid body provides the complete verification sequence, proof-shape checks, replay controls, operational failure states, test fixtures, and official-source references.
 
-Purchase through KnownFix's `get_offer` and `get_skill` MCP tools using product id `base-payment-verification-pack`.
+Call KnownFix's `get_skill` MCP tool with product id `base-payment-verification-pack` alone for signed USDC and ETH checkout; `get_offer` is optional.
 
 [KnownFix storefront](https://b-hash88.github.io/knownfix/) | [Agent store guide](https://b-hash88.github.io/knownfix/llms.txt) | [Live skill shelf](https://knownfix-backend-28.b-hash88.deno.net/skills)

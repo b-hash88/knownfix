@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "KnownFix",
-    "version": "0.3.12",
+    "version": "0.3.13",
     "description": "37 cataloged fixes: 33 verified in production, 4 documented; 11 free in full. Paid delivery accepts signed Base USDC/Base Pay or exact-ETH offers plus the matching verified Base-mainnet proof.",
     "contact": {
       "url": "https://b-hash88.github.io/knownfix/"
@@ -146,7 +146,7 @@
             "description": "The fix body"
           },
           "402": {
-            "description": "Payment required, invalid, expired, mismatched, or already redeemed"
+            "description": "Body withheld; an unpaid request includes signed USDC and ETH checkout, while an existing proof gets a no-double-pay recovery action"
           }
         }
       }
@@ -163,7 +163,7 @@
     },
     "/skill/{id}": {
       "get": {
-        "summary": "Redeem a signed offer and payment for a full SKILL.md",
+        "summary": "Get signed checkout or redeem a full SKILL.md",
         "parameters": [
           {
             "name": "id",
@@ -195,7 +195,7 @@
             "description": "Full skill"
           },
           "402": {
-            "description": "Payment required or proof rejected"
+            "description": "Body withheld; an unpaid request includes the free outline and signed USDC and ETH checkout"
           }
         }
       }
@@ -206,6 +206,16 @@
         "responses": {
           "200": {
             "description": "Treasury, all-time funnel, rolling 30-day targets, deliveries, intent, demand, and raw counters"
+          }
+        }
+      }
+    },
+    "/.well-known/mcp/server-card.json": {
+      "get": {
+        "summary": "Static no-auth MCP server card",
+        "responses": {
+          "200": {
+            "description": "Server metadata and complete tool schemas"
           }
         }
       }

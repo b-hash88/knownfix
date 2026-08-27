@@ -283,13 +283,14 @@ await check("npm Trusted Publishing fix exposes authoritative citations", async 
   return "current npm primary sources, EOTP aliases, technical discussion, reviewed date, and paid body boundary";
 });
 
-await check("robots, agent docs, offer document, and OpenAPI", async () => {
-  const [robots, llms, llmsFull, staticMcpResult, fareboxResult, openapiResult] = await Promise.all([
+await check("robots, agent docs, offer document, server card, and OpenAPI", async () => {
+  const [robots, llms, llmsFull, staticMcpResult, fareboxResult, serverCardResult, openapiResult] = await Promise.all([
     text(new URL("robots.txt", STORE)),
     text(new URL("llms.txt", STORE)),
     text(new URL("llms-full.txt", STORE)),
     json(new URL(".well-known/mcp.json", STORE)),
     json(new URL(".well-known/farebox.json", STORE)),
+    json(API + "/.well-known/mcp/server-card.json"),
     json(new URL("openapi.json", STORE)),
   ]);
   assert.match(robots.body, /Sitemap: https:\/\/b-hash88\.github\.io\/knownfix\/sitemap\.xml/);
@@ -301,9 +302,13 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
   assert.equal(fareboxResult.data.offer.inventory, 37);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
-  assert.equal(openapiResult.data.info.version, "0.3.12");
+  assert.equal(serverCardResult.data.authentication.required, false);
+  assert.equal(serverCardResult.data.tools.length, 12);
+  assert(serverCardResult.data.tools.every((tool) => tool.inputSchema && tool.outputSchema && tool.annotations));
+  assert.equal(openapiResult.data.info.version, "0.3.13");
   assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
-  for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books"]) {
+  assert.match(openapiResult.data.paths["/fix/{id}"].get.responses["402"].description, /signed USDC and ETH checkout/);
+  for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
   return "discovery and machine contracts agree";
@@ -364,9 +369,18 @@ await check("free delivery and paid denial do not cross the boundary", async () 
   const paidResult = await json(API + "/fix/windows-libuv-assert-on-exit");
   assert.equal(paidResult.response.status, 402);
   assert.equal(paidResult.data.error, "payment_required");
+  assert.equal(paidResult.response.headers.get("cache-control"), "no-store");
+  assert.equal(paidResult.data.purchase.checkout, "ready");
+  assert.equal(paidResult.data.purchase.price.usd, "$0.05");
+  assert.equal(paidResult.data.purchase.signedPurchaseOffer.currency, "USDC");
+  assert.match(paidResult.data.purchase.signedPurchaseOffer.token, /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/);
+  assert.equal(paidResult.data.purchase.payment.alternative.signedPurchaseOffer.currency, "ETH");
+  assert.match(paidResult.data.purchase.payment.alternative.walletUri, /^ethereum:/);
+  assert.equal(paidResult.data.nextAction.action, "pay-and-redeem");
+  assert.equal(paidResult.data.nextAction.redemption.tool, "get_fix");
   assert(!("cause" in paidResult.data) && !("fix" in paidResult.data));
   assert.match(paidResult.response.headers.get("www-authenticate") || "", /Farebox/);
-  return "free body delivered; paid body withheld with 402";
+  return "free body delivered; paid body withheld with purchase-ready 402";
 });
 
 await check("signed offer issuance, validation, and product binding", async () => {
@@ -393,6 +407,9 @@ await check("signed offer issuance, validation, and product binding", async () =
   });
   assert.equal(wrongProduct.response.status, 402);
   assert(wrongProduct.data.denied.includes("offer-product-mismatch"));
+  assert(!("purchase" in wrongProduct.data));
+  assert.equal(wrongProduct.data.nextAction.action, "resolve-existing-payment");
+  assert.match(wrongProduct.data.nextAction.instruction, /Do not pay again/);
   assert(!("cause" in wrongProduct.data) && !("fix" in wrongProduct.data));
   const badRequest = await json(API + "/offer", {
     method: "POST",
@@ -405,6 +422,17 @@ await check("signed offer issuance, validation, and product binding", async () =
 });
 
 await check("USDC UserOperation and ETH transaction proofs stay separate", async () => {
+  const unpaidBundle = await json(API + "/skill/npm-publishing-recovery-pack");
+  assert.equal(unpaidBundle.response.status, 402);
+  assert.equal(unpaidBundle.data.purchase.checkout, "ready");
+  assert.equal(unpaidBundle.data.purchase.product.kind, "bundle");
+  assert.equal(unpaidBundle.data.purchase.price.usd, "$4.00");
+  assert.equal(unpaidBundle.data.purchase.signedPurchaseOffer.currency, "USDC");
+  assert.equal(unpaidBundle.data.purchase.payment.alternative.signedPurchaseOffer.currency, "ETH");
+  assert.match(unpaidBundle.data.purchase.payment.alternative.walletUri, /^ethereum:/);
+  assert.equal(unpaidBundle.data.nextAction.redemption.tool, "get_skill");
+  assert(!("skillMd" in unpaidBundle.data));
+
   const [usdcOffer, ethOffer] = await Promise.all([
     json(API + "/offer", {
       method: "POST",
@@ -484,7 +512,7 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
   assert.match(htmlResult.body, /Current bottleneck:/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.8");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.9");
   assert.deepEqual(
     jsonResult.data.conversionFunnel.map((stage) => stage.key),
     ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
@@ -502,6 +530,8 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
   assert.equal(jsonResult.data.measurementWindow.targets.externalSales.target, 5);
   assert.match(jsonResult.data.measurementWindow.note, /Raw HTTP requests include automated and operator traffic/);
   assert(!JSON.stringify(jsonResult.data.measurementWindow).includes("paymentOffer"));
+  assert.equal(typeof jsonResult.data.offers.purchaseReadyByFix, "object");
+  assert.equal(typeof jsonResult.data.offers.purchaseReadyBySkill, "object");
   assert.equal(typeof jsonResult.data.salesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.externalSalesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.operatorPaymentTests, "number");
@@ -531,7 +561,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.12");
+  assert.equal(initialized.result.serverInfo.version, "0.3.13");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 12);
@@ -545,6 +575,8 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
       assert.equal(typeof tool.annotations?.[hint], "boolean", tool.name + " is missing " + hint);
     }
   }
+  assert.match(listed.result.tools.find((tool) => tool.name === "get_fix").description, /id alone/);
+  assert.match(listed.result.tools.find((tool) => tool.name === "get_skill").description, /id alone/);
   const searched = parseToolText(await mcp(3, "tools/call", {
     name: "search_fixes",
     arguments: { query: 'DeclarationError: Function "mcopy" not found' },
@@ -568,6 +600,25 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
   }));
   assert.equal(freeFix.tier, "free-sample");
   assert(freeFix.cause && freeFix.fix);
+  const directPaidFix = parseToolText(await mcp(9, "tools/call", {
+    name: "get_fix",
+    arguments: { id: "windows-libuv-assert-on-exit" },
+  }));
+  assert.equal(directPaidFix.error, "payment_required");
+  assert.equal(directPaidFix.purchase.checkout, "ready");
+  assert.equal(directPaidFix.purchase.signedPurchaseOffer.currency, "USDC");
+  assert.equal(directPaidFix.nextAction.redemption.tool, "get_fix");
+  assert(!("cause" in directPaidFix) && !("fix" in directPaidFix));
+  const directBundle = parseToolText(await mcp(10, "tools/call", {
+    name: "get_skill",
+    arguments: { id: "npm-publishing-recovery-pack" },
+  }));
+  assert.equal(directBundle.error, "payment_required");
+  assert.equal(directBundle.purchase.checkout, "ready");
+  assert.equal(directBundle.purchase.product.kind, "bundle");
+  assert.equal(directBundle.purchase.price.usd, "$4.00");
+  assert.equal(directBundle.nextAction.redemption.tool, "get_skill");
+  assert(!("skillMd" in directBundle));
   const offer = parseToolText(await mcp(5, "tools/call", {
     name: "get_offer",
     arguments: { productType: "fix", productId: "windows-libuv-assert-on-exit" },
@@ -587,7 +638,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     arguments: { submissionId: "not-a-submission-id" },
   }));
   assert.equal(invalidSubmission.error, "invalid-submission-id");
-  return "12 tools; free and EOTP purchase-ready search, signed offer, and stocked-request gate work over MCP";
+  return "12 tools; search, direct fix, and direct bundle checkout plus signed offer and request gate work over MCP";
 });
 
 const passed = results.filter((result) => result.ok);

@@ -26,6 +26,6 @@ A shell-layer decision system for Windows agents that need to distinguish PowerS
 
 The paid body supplies exact commands, version branches, failure-layer checks, secret-handling constraints, and verification procedures for all six cases.
 
-Purchase through KnownFix's `get_offer` and `get_skill` MCP tools using product id `windows-agent-shell-pack`.
+Call KnownFix's `get_skill` MCP tool with product id `windows-agent-shell-pack` alone for signed USDC and ETH checkout; `get_offer` is optional.
 
 [KnownFix storefront](https://b-hash88.github.io/knownfix/) | [Agent store guide](https://b-hash88.github.io/knownfix/llms.txt) | [Live skill shelf](https://knownfix-backend-28.b-hash88.deno.net/skills)

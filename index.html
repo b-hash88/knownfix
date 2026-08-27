@@ -175,7 +175,7 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <p class="sub">Four steps, in this order. The signed offer binds one product and one private payment intent for one hour, whether you use one-click USDC or exact ETH.</p>
 <div class="flow">
 <div class="step"><b>Step 1</b><h4>Find it free</h4><p>Search, browse the catalogue, or call <code>search_fixes</code>. Signatures are public so you can confirm the match before spending anything.</p></div>
-<div class="step"><b>Step 2</b><h4>Get the offer</h4><p>A paid search result now includes it directly: free diagnosis, compatibility, dollar price, private USDC offer, and an exact-ETH alternative.</p></div>
+<div class="step"><b>Step 2</b><h4>Get the offer</h4><p>A paid search result includes it directly. Calling <code>get_fix</code> or <code>get_skill</code> with a paid id alone does too: free preview, dollar price, private USDC offer, and an exact-ETH alternative.</p></div>
 <div class="step"><b>Step 3</b><h4>Pay on Base</h4><p>Use Base Pay for dollar-denominated USDC, or send the signed exact-wei ETH amount. Both rails carry a private intent join key.</p></div>
 <div class="step"><b>Step 4</b><h4>Redeem once</h4><p>Return the UserOperation hash for USDC or transaction hash for ETH with the offer. Both are single-use and claimed atomically.</p></div>
 </div>

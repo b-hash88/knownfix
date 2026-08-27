@@ -5,8 +5,9 @@
 
 Price: $0.05 USDC on Base, or the signed exact-ETH equivalent, to 0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49.
 Remote MCP: https://knownfix-backend-28.b-hash88.deno.net/mcp   HTTP: https://knownfix-backend-28.b-hash88.deno.net
-Buy: a paid search result includes signed USDC and ETH offers, or request one
-with get_offer / POST {backend}/offer. Use its exact payment parameters; redeem
+Buy: a paid search result or an unpaid get_fix/get_skill call includes signed
+USDC and ETH offers; get_offer / POST {backend}/offer is optional. Use the exact
+payment parameters; redeem
 with paymentTx + paymentOffer (or x-payment-tx + x-payment-offer). The bearer
 offer is product-bound, expires in one hour, and stays private.
 Honesty: "verified-in-production" = reproduced and fixed in a real session.

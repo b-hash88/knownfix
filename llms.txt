@@ -15,8 +15,10 @@ Inventory: 37 cataloged fixes: 33 verified in production, 4 documented; 11 free 
 ## Buy a paid fix or skill
 1. For a paid fix, search_fixes already returns the diagnosis preview,
    compatibility, dollar price, signed USDC offer, Base Pay parameters, exact-ETH
-   alternative, and one recommended redemption action. Or call get_offer with
-   productType, productId, and currency (USDC or ETH).
+   alternative, and one recommended redemption action. Calling get_fix with a
+   paid id alone returns the same checkout. For a skill or bundle, call get_skill
+   with its id alone. get_offer remains available only when a fresh single-rail
+   offer is needed.
 2. Keep paymentOffer private. Use the exact signed Base Pay parameters or exact
    priceWei on Base mainnet (chain 8453) before expiresAt.
 3. Redeem with both paymentTx and paymentOffer using get_fix/get_skill, or send

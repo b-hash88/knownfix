@@ -21,6 +21,6 @@ Diagnose, publish, and operate MCP servers across stdio and Streamable HTTP with
 4. If tools list but clients reject or grade them poorly, check descriptions, parameter documentation, output schemas, structured results, and truthful risk annotations.
 5. If registry publication fails, separate package availability, namespace ownership, manifest validation, and short-lived authentication before changing metadata.
 
-The paid pack supplies exact checks, safe operating rules, current protocol distinctions, and a seven-step verification ladder. Purchase through KnownFix's `get_offer` and `get_skill` MCP tools using product id `mcp-server-operations-pack`.
+The paid pack supplies exact checks, safe operating rules, current protocol distinctions, and a seven-step verification ladder. Call KnownFix's `get_skill` MCP tool with product id `mcp-server-operations-pack` alone for signed USDC and ETH checkout; `get_offer` is optional.
 
 [KnownFix storefront](https://b-hash88.github.io/knownfix/) · [Agent store guide](https://b-hash88.github.io/knownfix/llms.txt) · [Live skill shelf](https://knownfix-backend-28.b-hash88.deno.net/skills)

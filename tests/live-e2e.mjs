@@ -397,7 +397,7 @@ await check("live chain verification rejects a successful payment to the wrong r
   return "successful Base transaction was read live and rejected for the wrong recipient";
 });
 
-await check("books HTML and JSON describe the same six-stage funnel", async () => {
+await check("books HTML and JSON describe the same seven-stage funnel", async () => {
   const [htmlResult, jsonResult] = await Promise.all([
     text(API + "/books", { headers: { accept: "text/html" } }),
     json(API + "/books?format=json"),
@@ -408,7 +408,10 @@ await check("books HTML and JSON describe the same six-stage funnel", async () =
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
   assert.equal(jsonResult.data.spec, "knownfix-books/0.7");
-  assert.equal(jsonResult.data.conversionFunnel.length, 6);
+  assert.deepEqual(
+    jsonResult.data.conversionFunnel.map((stage) => stage.key),
+    ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
+  );
   assert.equal(typeof jsonResult.data.nextExperiment, "string");
   assert.equal(typeof jsonResult.data.salesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.externalSalesSettledOnChain, "number");

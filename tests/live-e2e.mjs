@@ -268,7 +268,7 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
   assert.equal(fareboxResult.data.offer.inventory, 37);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
-  assert.equal(openapiResult.data.info.version, "0.3.7");
+  assert.equal(openapiResult.data.info.version, "0.3.8");
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
@@ -485,11 +485,18 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
+  assert.equal(initialized.result.serverInfo.version, "0.3.8");
   const listed = await mcp(2, "tools/list");
-  assert.equal(listed.result.tools.length, 11);
+  assert.equal(listed.result.tools.length, 12);
   const names = listed.result.tools.map((tool) => tool.name);
-  for (const name of ["search_fixes", "get_offer", "get_fix", "list_catalog", "check_request"]) {
+  for (const name of ["search_fixes", "get_offer", "get_fix", "list_catalog", "audit_theme", "check_request", "check_submission"]) {
     assert(names.includes(name), "MCP is missing " + name);
+  }
+  for (const tool of listed.result.tools) {
+    assert(tool.outputSchema, tool.name + " is missing outputSchema");
+    for (const hint of ["readOnlyHint", "destructiveHint", "idempotentHint", "openWorldHint"]) {
+      assert.equal(typeof tool.annotations?.[hint], "boolean", tool.name + " is missing " + hint);
+    }
   }
   const searched = parseToolText(await mcp(3, "tools/call", {
     name: "search_fixes",
@@ -517,7 +524,12 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
   assert.equal(stockedRequest.status, "already-stocked");
   assert.equal(stockedRequest.fixId, "oz5-mcopy-cancun");
   assert(!("ticket" in stockedRequest), "stocked request must not mint a free ticket");
-  return "11 tools; search, free delivery, signed offer, and stocked-request gate work over MCP";
+  const invalidSubmission = parseToolText(await mcp(7, "tools/call", {
+    name: "check_submission",
+    arguments: { submissionId: "not-a-submission-id" },
+  }));
+  assert.equal(invalidSubmission.error, "invalid-submission-id");
+  return "12 tools; search, free delivery, signed offer, and stocked-request gate work over MCP";
 });
 
 const passed = results.filter((result) => result.ok);

@@ -10,7 +10,7 @@ Inventory: 37 cataloged fixes: 33 verified in production, 4 documented; 11 free 
 
 ## Connect
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp
-  Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, submit_fix, request_fix, check_request
+  Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, audit_theme, submit_fix, check_submission, request_fix, check_request
 
 ## Buy a paid fix or skill
 1. For a paid fix, search_fixes already returns the diagnosis preview,

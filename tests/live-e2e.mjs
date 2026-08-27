@@ -106,12 +106,12 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /rel="canonical" href="https:\/\/b-hash88\.github\.io\/knownfix\/"/);
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);
-  assert.equal(catalog.entries.length, 36);
+  assert.equal(catalog.entries.length, 37);
   assert.equal(catalog.entries.filter((entry) => entry.sample).length, 11);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 33);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 3);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
-  return "36 entries; 33 verified, 3 documented, 11 free";
+  return "37 entries; 33 verified, 4 documented, 11 free";
 });
 
 await check("homepage search is purchase-ready and credential-safe", async () => {
@@ -188,6 +188,13 @@ await check("five recovery-pack pages expose price and proof contracts", async (
     assert.doesNotMatch(htmlResult.body, /Base Pay did not return a transaction hash/i);
     assert.doesNotMatch(htmlResult.body, /id="payment-offer"/);
     assert(mdResult.body.includes("**Price:** $" + price + " USDC"));
+    if (id === "npm-publishing-recovery-pack") {
+      assert.match(htmlResult.body, /Six complete recoveries/);
+      assert.match(htmlResult.body, /npm-trusted-publishing-eneedauth/);
+      assert.match(mdResult.body, /npm-trusted-publishing-eneedauth/);
+      assert.doesNotMatch(htmlResult.body, /Classic Automation token/);
+      assert.doesNotMatch(mdResult.body, /Classic Automation token/);
+    }
   }
   return "all five HTML and Markdown product surfaces match v2 checkout";
 });
@@ -226,6 +233,26 @@ await check("all fix pages preserve the free and paid boundary", async () => {
   return catalog.entries.length + " HTML and Markdown pairs validated";
 });
 
+await check("npm Trusted Publishing fix exposes authoritative citations", async () => {
+  const id = "npm-trusted-publishing-eneedauth";
+  const entry = catalog.entries.find((item) => item.id === id);
+  assert(entry);
+  assert.equal(entry.confidence, "documented");
+  const [htmlResult, mdResult] = await Promise.all([
+    text(new URL("fixes/" + id + ".html", STORE)),
+    text(new URL("fixes/" + id + ".md", STORE)),
+  ]);
+  assert.match(htmlResult.body, /Authoritative sources/);
+  assert.match(htmlResult.body, /https:\/\/docs\.npmjs\.com\/trusted-publishers\//);
+  assert.match(htmlResult.body, /https:\/\/github\.com\/npm\/cli\/issues\/9088/);
+  assert.match(htmlResult.body, /"dateModified":"2026-08-27"/);
+  assert.match(mdResult.body, /## Authoritative sources/);
+  assert.match(mdResult.body, /Reviewed: 2026-08-27/);
+  assert.doesNotMatch(htmlResult.body, /<h2>Cause<\/h2>/);
+  assert.doesNotMatch(mdResult.body, /## Cause/);
+  return "documented confidence, two primary-source links, reviewed date, and paid body boundary";
+});
+
 await check("robots, agent docs, offer document, and OpenAPI", async () => {
   const [robots, llms, llmsFull, fareboxResult, openapiResult] = await Promise.all([
     text(new URL("robots.txt", STORE)),
@@ -239,9 +266,9 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
   assert(llms.body.includes("paymentOffer"), "llms.txt is missing the private offer credential");
   assert.match(llmsFull.body, /x-payment-offer/);
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
-  assert.equal(fareboxResult.data.offer.inventory, 36);
+  assert.equal(fareboxResult.data.offer.inventory, 37);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
-  assert.equal(openapiResult.data.info.version, "0.3.6");
+  assert.equal(openapiResult.data.info.version, "0.3.7");
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
@@ -252,7 +279,7 @@ await check("backend health, security headers, and CORS preflight", async () => 
   const { response, data } = await json(API + "/health");
   assert.equal(response.status, 200);
   assert.equal(data.ok, true);
-  assert.equal(data.inventory, 36);
+  assert.equal(data.inventory, 37);
   assert.equal(data.chainId, 8453);
   assert.equal(data.kv, true);
   assert.equal(data.checkoutEnabled, true);
@@ -287,7 +314,7 @@ await check("catalog, strong match, and honest miss", async () => {
     json(API + "/match?q=" + encodeURIComponent("quasar-lantern-9842 impossible frobnication")),
   ]);
   assert.equal(catalogResult.response.status, 200);
-  assert.equal(catalogResult.data.entries.length, 36);
+  assert.equal(catalogResult.data.entries.length, 37);
   assert(catalogResult.data.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
   assert.equal(matchResult.data.matches[0].id, "oz5-mcopy-cancun");
   assert.deepEqual(missResult.data.matches, []);

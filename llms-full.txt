@@ -128,6 +128,12 @@ Tags: npm, publish, 2fa, tokens | Confidence: documented
 Cause and remedy are paid. Buy id "npm-publish-2fa-403" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/npm-publish-2fa-403
 Page: https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html
 
+## npm Trusted Publishing returns ENEEDAUTH in GitHub Actions  [PAID]
+Signature: npm error code ENEEDAUTH ... need auth This command requires you to be logged in to https://registry.npmjs.org/
+Tags: npm, publish, oidc, trusted-publishing | Confidence: documented
+Cause and remedy are paid. Buy id "npm-trusted-publishing-eneedauth" via MCP get_fix or https://knownfix-backend-28.b-hash88.deno.net/fix/npm-trusted-publishing-eneedauth
+Page: https://b-hash88.github.io/knownfix/fixes/npm-trusted-publishing-eneedauth.html
+
 ## npm publish E404 on a brand-new package with a granular access token  [PAID]
 Signature: npm error 404 Not Found - PUT https://registry.npmjs.org/<pkg> - The requested resource could not be found or you do not have permission
 Tags: npm, publish, tokens, permissions | Confidence: verified-in-production

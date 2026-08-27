@@ -1,10 +1,10 @@
-# npm publish 403: two-factor authentication or bypass-2fa token required
+# npm Trusted Publishing returns ENEEDAUTH in GitHub Actions
 
 ```
-403 Forbidden - PUT https://registry.npmjs.org/... Two-factor authentication or granular access token with bypass 2fa enabled is required to publish packages
+npm error code ENEEDAUTH ... need auth This command requires you to be logged in to https://registry.npmjs.org/
 ```
 
-**Tags:** npm, publish, 2fa, tokens · **Confidence:** documented · **Price:** $0.05 USDC on Base, or signed exact ETH
+**Tags:** npm, publish, oidc, trusted-publishing · **Confidence:** documented · **Price:** $0.05 USDC on Base, or signed exact ETH
 
 ## Get the fix
 
@@ -13,9 +13,8 @@
 - Price: **$0.05 USDC on Base**, or the signed exact-ETH equivalent, to `0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49`. One payment proof and one private offer, one fix.
 
 ## Authoritative sources
-- [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/)
-- [npm 2FA publishing requirements](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification/)
-- [npm access tokens](https://docs.npmjs.com/about-access-tokens/)
+- [npm Trusted Publishing requirements and troubleshooting](https://docs.npmjs.com/trusted-publishers/)
+- [npm/cli #9088: misleading E404 and ENEEDAUTH during Trusted Publishing](https://github.com/npm/cli/issues/9088)
 
 Reviewed: 2026-08-27
 

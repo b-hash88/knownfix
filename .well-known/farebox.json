@@ -4,7 +4,7 @@
   "offer": {
     "name": "KnownFix",
     "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
-    "inventory": 36,
+    "inventory": 37,
     "freeSamples": [
       "oz5-mcopy-cancun",
       "node-test-dir-arg-windows",

@@ -258,6 +258,20 @@
       "page": "https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.md"
     },
     {
+      "id": "npm-trusted-publishing-eneedauth",
+      "title": "npm Trusted Publishing returns ENEEDAUTH in GitHub Actions",
+      "signature": "npm error code ENEEDAUTH ... need auth This command requires you to be logged in to https://registry.npmjs.org/",
+      "tags": [
+        "npm",
+        "publish",
+        "oidc",
+        "trusted-publishing"
+      ],
+      "confidence": "documented",
+      "sample": false,
+      "page": "https://b-hash88.github.io/knownfix/fixes/npm-trusted-publishing-eneedauth.md"
+    },
+    {
       "id": "npm-granular-token-new-package-404",
       "title": "npm publish E404 on a brand-new package with a granular access token",
       "signature": "npm error 404 Not Found - PUT https://registry.npmjs.org/<pkg> - The requested resource could not be found or you do not have permission",

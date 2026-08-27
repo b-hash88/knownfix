@@ -11,6 +11,11 @@ Node 20 is being deprecated. This workflow is running with Node 24 by default. .
 
 **Tags:** github-actions, github-pages, ci, node, upload-artifact, deprecation · **Confidence:** verified-in-production · **Price:** $0.05 USDC on Base, or signed exact ETH
 
+## Free diagnosis
+The warning names a JavaScript action whose own `runs.using` metadata still declares Node 20; this is not the Node version installed for later `run:` steps. GitHub made Node 24 the default action runtime on 2026-06-16. When the annotation appears in GitHub's generated `pages-build-deployment` workflow, the caller can be platform-managed and there may be no repository workflow file to edit.
+
+Confirm the exact signature and listed technology tags before buying. The remediation and verification procedure remain paid.
+
 ## Get the fix
 
 - **MCP**: a paid `search_fixes` match or `get_fix` call with this id includes diagnosis, compatibility, signed USDC and ETH offers, and one redemption action.
@@ -25,5 +30,5 @@ Node 20 is being deprecated. This workflow is running with Node 24 by default. .
 ## Technical discussion
 [Node 20 warning in a GitHub-managed Pages deployment](https://github.com/b-hash88/knownfix/discussions/3)
 
-_Diagnosis and remedy are paid; the signature above is public so you can confirm this is your error before buying._
+_The diagnosis above is free. The remediation and verification procedure remain paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

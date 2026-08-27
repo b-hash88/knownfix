@@ -6,6 +6,11 @@ npm error 404 Not Found - PUT https://registry.npmjs.org/<pkg> - The requested r
 
 **Tags:** npm, publish, tokens, permissions · **Confidence:** verified-in-production · **Price:** $0.05 USDC on Base, or signed exact ETH
 
+## Free diagnosis
+A granular token scoped to 'Only select packages' cannot create a package that does not exist yet — the new name is not in the selectable list, so the PUT is treated as unauthorized and surfaces as 404, not 403.
+
+Confirm the exact signature and listed technology tags before buying. The remediation and verification procedure remain paid.
+
 ## Get the fix
 
 - **MCP**: a paid `search_fixes` match or `get_fix` call with this id includes diagnosis, compatibility, signed USDC and ETH offers, and one redemption action.
@@ -18,5 +23,5 @@ npm error 404 Not Found - PUT https://registry.npmjs.org/<pkg> - The requested r
 
 Reviewed: 2026-08-27
 
-_Diagnosis and remedy are paid; the signature above is public so you can confirm this is your error before buying._
+_The diagnosis above is free. The remediation and verification procedure remain paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

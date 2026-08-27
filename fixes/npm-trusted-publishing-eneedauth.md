@@ -6,6 +6,11 @@ npm error code ENEEDAUTH ... need auth This command requires you to be logged in
 
 **Tags:** npm, publish, oidc, trusted-publishing · **Confidence:** documented · **Price:** $0.05 USDC on Base, or signed exact ETH
 
+## Free diagnosis
+The intended OIDC publish path did not activate. npm Trusted Publishing requires npm CLI 11.5.1 or later, Node 22.14.0 or later, a supported cloud-hosted runner, the provider's ID-token permission, and an exact case-sensitive match for the configured publisher, repository, workflow filename, and optional environment. When a prerequisite fails, npm can surface generic ENEEDAUTH or E404 output that incorrectly points toward manual login or package existence.
+
+Confirm the exact signature and listed technology tags before buying. The remediation and verification procedure remain paid.
+
 ## Get the fix
 
 - **MCP**: a paid `search_fixes` match or `get_fix` call with this id includes diagnosis, compatibility, signed USDC and ETH offers, and one redemption action.
@@ -18,5 +23,5 @@ npm error code ENEEDAUTH ... need auth This command requires you to be logged in
 
 Reviewed: 2026-08-27
 
-_Diagnosis and remedy are paid; the signature above is public so you can confirm this is your error before buying._
+_The diagnosis above is free. The remediation and verification procedure remain paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

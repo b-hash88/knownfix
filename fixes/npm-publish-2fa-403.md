@@ -11,6 +11,11 @@
 
 **Tags:** npm, publish, 2fa, tokens · **Confidence:** documented · **Price:** $0.05 USDC on Base, or signed exact ETH
 
+## Free diagnosis
+npm CLI reports EOTP when an interactive publish needs a current one-time password; non-interactive publishing can instead surface the registry's 403 requirement for 2FA or an authorized bypass path. Classic npm tokens were permanently revoked in December 2025, so older advice to create a Classic Automation token can no longer work.
+
+Confirm the exact signature and listed technology tags before buying. The remediation and verification procedure remain paid.
+
 ## Get the fix
 
 - **MCP**: a paid `search_fixes` match or `get_fix` call with this id includes diagnosis, compatibility, signed USDC and ETH offers, and one redemption action.
@@ -28,5 +33,5 @@ Reviewed: 2026-08-27
 ## Technical discussion
 [Compare this exact EOTP/403 failure with field reports](https://github.com/b-hash88/knownfix/discussions/1)
 
-_Diagnosis and remedy are paid; the signature above is public so you can confirm this is your error before buying._
+_The diagnosis above is free. The remediation and verification procedure remain paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

@@ -1,7 +1,7 @@
 # KnownFix
 
-KnownFix is an agent-facing catalog of 36 development-error fixes: 33 verified
-in production, 3 documented, and 11 available in full for free. Search is free;
+KnownFix is an agent-facing catalog of 37 development-error fixes: 33 verified
+in production, 4 documented, and 11 available in full for free. Search is free;
 paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
 on Base mainnet.
 
@@ -23,12 +23,28 @@ The live registry exposes search, catalog, signed offers, fix and skill
 delivery, endpoint audit, submissions, fix requests, and request redemption.
 `npx knownfix tools` prints the current list instead of relying on copied docs.
 
+For the current npm Trusted Publishing failure, search the exact CLI signature:
+
+```bash
+npx knownfix search "npm ERR! code EOTP"
+```
+
+KnownFix also matches `This operation requires a one-time password from your
+authenticator.` and the npm `--otp=<code>` wording. The public
+[diagnostic page](https://b-hash88.github.io/knownfix/fixes/npm-publish-2fa-403.html)
+cites npm's current CLI source; the
+[npm Publishing Recovery Pack](https://b-hash88.github.io/knownfix/packs/npm-publishing-recovery.html)
+contains the six-fix decision tree and verification commands.
+
 ## Paid delivery
 
-Free fixes return immediately. Paid delivery uses a private one-hour signed
-offer bound to one product, one currency, and one payment intent:
+Free fixes return immediately. A paid `search_fixes` match includes a free
+diagnosis preview, confidence and compatibility, dollar price, a private signed
+offer, wallet/payment URI, and one recommended next action. Each one-hour offer
+is bound to one product, one currency, and one payment intent:
 
-1. Request a USDC or ETH offer with MCP `get_offer` or `POST /offer`.
+1. Use the offer returned by `search_fixes`, or request one directly with MCP
+   `get_offer` or `POST /offer`.
 2. Keep the bearer token private. Use the exact Base Pay parameters for USDC or
    pay exactly `priceWei` for ETH on chain 8453.
 3. Redeem with `paymentTx` plus `paymentOffer`, or the corresponding HTTP
@@ -58,7 +74,7 @@ Run the dependency-free production suite with Node 20 or newer:
 node tests/live-e2e.mjs
 ```
 
-The suite crawls every canonical URL, checks all 36 free/paid page pairs and five
+The suite crawls every canonical URL, checks all 37 free/paid page pairs and five
 product packs, exercises HTTP and MCP search/delivery/offer flows, separates
 UserOperation and transaction proofs, and verifies the public ledger and security
 headers. Requests carry `x-operator: 1` so delivery and purchase-intent tests do

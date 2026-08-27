@@ -294,7 +294,8 @@ await check("robots, agent docs, offer document, and OpenAPI", async () => {
   assert.equal(fareboxResult.data.backend.checkoutEnabled, true);
   assert.equal(fareboxResult.data.offer.inventory, 37);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
-  assert.equal(openapiResult.data.info.version, "0.3.11");
+  assert.equal(openapiResult.data.info.version, "0.3.12");
+  assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
@@ -476,12 +477,24 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
   assert.match(htmlResult.body, /Current bottleneck:/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.7");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.8");
   assert.deepEqual(
     jsonResult.data.conversionFunnel.map((stage) => stage.key),
     ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
   );
   assert.equal(typeof jsonResult.data.nextExperiment, "string");
+  assert.equal(jsonResult.data.measurementWindow.spec, "knownfix-target-window/0.1");
+  assert.equal(jsonResult.data.measurementWindow.days, 30);
+  assert.equal(typeof jsonResult.data.measurementWindow.historyStartsOnOrBeforeWindow, "boolean");
+  assert.deepEqual(
+    jsonResult.data.measurementWindow.funnel.map((stage) => stage.key),
+    ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
+  );
+  assert.equal(jsonResult.data.measurementWindow.targets.meaningfulToolUse.targetRate, 0.01);
+  assert.equal(jsonResult.data.measurementWindow.targets.paywallToOffer.targetRate, 0.30);
+  assert.equal(jsonResult.data.measurementWindow.targets.externalSales.target, 5);
+  assert.match(jsonResult.data.measurementWindow.note, /Raw HTTP requests include automated and operator traffic/);
+  assert(!JSON.stringify(jsonResult.data.measurementWindow).includes("paymentOffer"));
   assert.equal(typeof jsonResult.data.salesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.externalSalesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.operatorPaymentTests, "number");
@@ -511,7 +524,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.11");
+  assert.equal(initialized.result.serverInfo.version, "0.3.12");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 12);

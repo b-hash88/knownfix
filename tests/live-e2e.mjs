@@ -109,7 +109,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(catalog.entries.length, 37);
   assert.equal(catalog.entries.filter((entry) => entry.sample).length, 11);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 33);
-  assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 3);
+  assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 4);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
   return "37 entries; 33 verified, 4 documented, 11 free";
 });

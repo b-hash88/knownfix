@@ -101,7 +101,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") || "", /text\/html/);
   assert.match(body, /33 verified/);
-  assert.match(body, /3 documented/);
+  assert.match(body, /4 documented/);
   assert.match(body, /11 free in full/);
   assert.match(body, /rel="canonical" href="https:\/\/b-hash88\.github\.io\/knownfix\/"/);
   assert.match(body, /property="og:title"/);

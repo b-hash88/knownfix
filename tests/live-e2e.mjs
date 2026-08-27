@@ -361,11 +361,12 @@ await check("backend health, security headers, and CORS preflight", async () => 
 });
 
 await check("catalog, strong matches, and honest miss", async () => {
-  const [catalogResult, matchResult, localBinResult, localBinFixResult, missResult] = await Promise.all([
+  const [catalogResult, matchResult, localBinResult, localBinFixResult, node20Result, missResult] = await Promise.all([
     json(API + "/catalog"),
     json(API + "/match?q=" + encodeURIComponent('DeclarationError: Function "mcopy" not found')),
     json(API + "/match?q=" + encodeURIComponent("'knownfix' is not recognized as an internal or external command")),
     json(API + "/fix/npm-exec-local-bin-not-found"),
+    json(API + "/match?q=" + encodeURIComponent("Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24")),
     json(API + "/match?q=" + encodeURIComponent("quasar-lantern-9842 impossible frobnication")),
   ]);
   assert.equal(catalogResult.response.status, 200);
@@ -378,6 +379,13 @@ await check("catalog, strong matches, and honest miss", async () => {
       url: "https://github.com/b-hash88/knownfix/discussions/2",
     },
   );
+  assert.deepEqual(
+    catalogResult.data.entries.find((entry) => entry.id === "gh-actions-node20-deprecation-runner")?.discussion,
+    {
+      title: "Node 20 warning in a GitHub-managed Pages deployment",
+      url: "https://github.com/b-hash88/knownfix/discussions/3",
+    },
+  );
   assert.equal(matchResult.data.matches[0].id, "oz5-mcopy-cancun");
   assert.equal(localBinResult.data.matches[0].id, "npm-exec-local-bin-not-found");
   assert.equal(localBinResult.data.matches[0].sample, true);
@@ -385,9 +393,10 @@ await check("catalog, strong matches, and honest miss", async () => {
   assert.equal(localBinFixResult.response.status, 200);
   assert.equal(localBinFixResult.data.tier, "free-sample");
   assert(localBinFixResult.data.fix, "new npm exec fix endpoint did not include its free body");
+  assert.equal(node20Result.data.matches[0].id, "gh-actions-node20-deprecation-runner");
   assert.deepEqual(missResult.data.matches, []);
   assert.equal(missResult.data.next, "no match");
-  return "mcopy and npm exec failures rank first; unrelated query stays empty";
+  return "mcopy, npm exec, and current Node 20 warnings rank first; unrelated query stays empty";
 });
 
 await check("free delivery and paid denial do not cross the boundary", async () => {

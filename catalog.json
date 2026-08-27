@@ -464,16 +464,26 @@
       "id": "gh-actions-node20-deprecation-runner",
       "title": "GitHub Actions warns Node 20 is deprecated, running with Node 24 by default",
       "signature": "Node 20 is being deprecated. This workflow is running with Node 24 by default. ... ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true",
+      "aliases": [
+        "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24",
+        "actions/upload-artifact@v4 Node.js 20 is deprecated",
+        "pages-build-deployment Node 20 is deprecated"
+      ],
       "tags": [
         "github-actions",
+        "github-pages",
         "ci",
         "node",
-        "setup-node",
+        "upload-artifact",
         "deprecation"
       ],
       "confidence": "verified-in-production",
       "sample": false,
-      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-node20-deprecation-runner.md"
+      "page": "https://b-hash88.github.io/knownfix/fixes/gh-actions-node20-deprecation-runner.md",
+      "discussion": {
+        "title": "Node 20 warning in a GitHub-managed Pages deployment",
+        "url": "https://github.com/b-hash88/knownfix/discussions/3"
+      }
     },
     {
       "id": "gh-actions-skip-ci-no-run",

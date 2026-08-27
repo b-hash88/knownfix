@@ -114,6 +114,22 @@ await check("storefront metadata and truthful inventory", async () => {
   return "36 entries; 33 verified, 3 documented, 11 free";
 });
 
+await check("homepage search is purchase-ready and credential-safe", async () => {
+  const { response, body } = await text(STORE);
+  assert.equal(response.status, 200);
+  assert.match(body, /id="match-form"[^>]*action="[^"]+\/match"/);
+  assert.match(body, /callTool\('search_fixes'/);
+  assert.match(body, /diagnosisPreview/);
+  assert.match(body, /compatibility/);
+  assert.match(body, /relatedBundle/);
+  assert.match(body, /Open secure checkout/);
+  assert.match(body, /Open free fix/);
+  assert.doesNotMatch(body, /fetch\(backend\+'\/match\?q='/);
+  assert.doesNotMatch(body, /paymentOffer/);
+  assert.doesNotMatch(body, /(?:local|session)Storage/);
+  return "MCP search renders diagnosis, compatibility, price, bundle, and one safe next action";
+});
+
 await check("public request UI keeps privacy opt-in", async () => {
   const { response, body } = await text(STORE);
   assert.equal(response.status, 200);

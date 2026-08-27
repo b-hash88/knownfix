@@ -117,6 +117,15 @@ label{display:block}
 .match-result{border-top:1px solid var(--rule-soft);padding:.6rem 0}
 .match-result a{font-family:Archivo,sans-serif;font-weight:600;text-decoration:none}
 .result-meta{display:block;font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--muted);margin-top:.2rem}
+.match-primary{border:1px solid var(--rule);background:var(--card);border-radius:3px;padding:1rem 1.1rem}
+.match-primary h3{margin:0 0 .35rem}
+.match-primary>p{max-width:var(--measure);margin:.55rem 0;color:var(--muted)}
+.match-facts{display:grid;grid-template-columns:minmax(7rem,auto) 1fr;gap:.35rem .85rem;
+  margin:.85rem 0;font-size:.88rem}
+.match-facts dt{font-family:"JetBrains Mono",monospace;font-size:.68rem;text-transform:uppercase;color:var(--muted)}
+.match-facts dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.match-cta{display:inline-block;border:1px solid var(--accent);background:var(--accent);color:var(--paper);
+  border-radius:3px;padding:.48rem .85rem;margin-top:.2rem}
 .filter-status,.request-status{font-family:"JetBrains Mono",monospace;font-size:.72rem;color:var(--muted);margin:.4rem 0}
 .request-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:1.6rem;margin:1.2rem 0}
 .request-panel{min-width:0;border:1px solid var(--rule);background:var(--card);border-radius:3px;padding:1.1rem 1.15rem}
@@ -132,7 +141,7 @@ ul.checks li{padding:.65rem 0;border-bottom:1px solid var(--rule-soft);font-size
 ul.checks strong{font-family:Archivo,sans-serif;color:var(--ink);font-weight:600}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
-@media(max-width:34rem){.match-row{grid-template-columns:1fr}.match-row button{width:100%}}
+@media(max-width:34rem){.match-row{grid-template-columns:1fr}.match-row button{width:100%}.match-facts{grid-template-columns:1fr}.match-facts dd{margin-bottom:.35rem}.match-cta{display:block;text-align:center}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head><body>
@@ -402,10 +411,13 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
   document.getElementById('copy-config').addEventListener('click',async function(){await navigator.clipboard.writeText(document.getElementById('cfg').innerText);document.getElementById('copy-status').textContent='MCP configuration copied';this.textContent='Copied';});
   var q=document.getElementById('q'), filterStatus=document.getElementById('filter-status');
   q.addEventListener('input',function(){var v=q.value.toLowerCase(),visible=0;document.querySelectorAll('article.fix').forEach(function(a){var show=a.textContent.toLowerCase().indexOf(v)>-1;a.style.display=show?'':'none';if(show)visible++;});document.querySelectorAll('section.cat').forEach(function(s){var any=Array.from(s.querySelectorAll('article.fix')).some(function(a){return a.style.display!=='none'});s.style.display=any?'':'none';});filterStatus.textContent=visible?'Showing '+visible+' fix'+(visible===1?'':'es'):'No catalog fixes match this filter';});
-  document.getElementById('match-form').addEventListener('submit',async function(event){event.preventDefault();var input=document.getElementById('match-query'),out=document.getElementById('match-results'),query=input.value.trim();if(!query)return;out.textContent='Searching…';
-    try{var response=await fetch(backend+'/match?q='+encodeURIComponent(query));var data=await response.json();out.replaceChildren();if(!response.ok)throw new Error(data.error||('HTTP '+response.status));if(!data.matches||!data.matches.length){out.textContent='No confident match. KnownFix will not pretend; request the missing fix below.';return;}data.matches.forEach(function(match){var row=document.createElement('div');row.className='match-result';var link=document.createElement('a');link.href='./fixes/'+encodeURIComponent(match.id)+'.html';link.textContent=match.title||match.id;var meta=document.createElement('small');meta.className='result-meta';meta.textContent=(match.confidence||'')+(match.sample?' · free in full':' · paid body');row.append(link,meta);out.append(row);});}
-    catch(error){out.textContent='Search unavailable: '+error.message;}
-  });
+  function validFixId(value){return typeof value==='string'&&/^[a-z0-9-]{1,120}$/.test(value)}
+  function addFact(list,label,value){if(value===undefined||value===null||value==='')return;var term=document.createElement('dt'),detail=document.createElement('dd');term.textContent=label;detail.textContent=String(value);list.append(term,detail)}
+  function addCheckoutLink(card,match,label){var action=document.createElement('a');action.className='match-cta';action.href='./fixes/'+encodeURIComponent(match.id)+'.html';action.textContent=label;card.append(action)}
+  function renderSearchResult(data,out){out.replaceChildren();if(!data||!Array.isArray(data.matches)||!data.matches.length){out.textContent='No confident match. KnownFix will not pretend; request the missing fix below.';return}var match=data.matches[0];if(!validFixId(match.id)){throw new Error('service returned an invalid fix id')}var card=document.createElement('article');card.className='match-result match-primary';var heading=document.createElement('h3'),link=document.createElement('a');link.href='./fixes/'+encodeURIComponent(match.id)+'.html';link.textContent=match.title||match.id;heading.append(link);card.append(heading);var meta=document.createElement('small');meta.className='result-meta';meta.textContent=(match.confidence||'confidence unavailable')+(data.topMatchTier==='free-sample'?' · free in full':' · paid body');card.append(meta);
+    if(data.topMatchTier==='paid'&&data.purchase&&data.purchase.checkout==='ready'){var purchase=data.purchase,diagnosis=purchase.diagnosisPreview||{},compatibility=purchase.compatibility||{},price=purchase.price||{},bundle=purchase.relatedBundle||{};if(typeof diagnosis.likelyCause==='string'){var cause=document.createElement('p');cause.textContent=diagnosis.likelyCause;card.append(cause)}if(typeof diagnosis.freeTriage==='string'){var triage=document.createElement('p');triage.textContent=diagnosis.freeTriage;card.append(triage)}var facts=document.createElement('dl');facts.className='match-facts';addFact(facts,'Confidence',purchase.confidence);addFact(facts,'Compatibility',Array.isArray(compatibility.technologies)?compatibility.technologies.join(', '):'');addFact(facts,'Verification',compatibility.verificationScope);addFact(facts,'Price',price.usd);addFact(facts,'Recovery pack',bundle.title&&bundle.priceUsd?bundle.title+' · '+bundle.priceUsd:'');card.append(facts);addCheckoutLink(card,match,'Open secure checkout')}
+    else{addCheckoutLink(card,match,data.topMatchTier==='free-sample'?'Open free fix':'Open matched fix')}out.append(card)}
+  document.getElementById('match-form').addEventListener('submit',async function(event){event.preventDefault();var input=document.getElementById('match-query'),out=document.getElementById('match-results'),query=input.value.trim(),submit=this.querySelector('button[type="submit"]');if(!query)return;submit.disabled=true;out.textContent='Searching…';try{var data=await callTool('search_fixes',{query:query});renderSearchResult(data,out);data=null}catch(error){out.textContent='Search unavailable: '+error.message}finally{submit.disabled=false}});
   var rpcId=100,privateTicket='',deliveryText='';
   var requestForm=document.getElementById('request-form'),requestSubmit=document.getElementById('request-submit'),requestStatus=document.getElementById('request-status'),ticketResult=document.getElementById('request-ticket-result'),ticketValue=document.getElementById('request-ticket-value'),stockedLink=document.getElementById('request-stocked-link');
   var checkForm=document.getElementById('check-request-form'),checkInput=document.getElementById('request-ticket'),checkSubmit=document.getElementById('check-request-submit'),checkStatus=document.getElementById('check-request-status'),delivery=document.getElementById('request-delivery'),deliveryBody=document.getElementById('request-delivery-body');

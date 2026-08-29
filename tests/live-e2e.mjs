@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 
-const STORE = (process.env.KNOWNFIX_STORE || "https://b-hash88.github.io/knownfix/").replace(/\/?$/, "/");
+const storeValue = process.env.KNOWNFIX_STORE;
+if (!storeValue) {
+  throw new Error("Set KNOWNFIX_STORE to the intended public storefront URL. The retired GitHub Pages host has no fallback.");
+}
+const STORE = storeValue.replace(/\/?$/, "/");
 const API = (process.env.KNOWNFIX_API || "https://knownfix-backend-28.b-hash88.deno.net").replace(/\/$/, "");
 const BASE_RPC = process.env.KNOWNFIX_BASE_RPC || "https://mainnet.base.org";
 const OPERATOR_HEADERS = {
@@ -105,7 +109,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /34 verified/);
   assert.match(body, /4 documented/);
   assert.match(body, /12 free in full/);
-  assert.match(body, /rel="canonical" href="https:\/\/b-hash88\.github\.io\/knownfix\/"/);
+  assert(body.includes(`<link rel="canonical" href="${STORE}">`));
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);
   assert(body.includes(`<meta name="description" content="${DISCOVERY_DESCRIPTION}">`));
@@ -229,17 +233,20 @@ await check("all fix pages preserve the free and paid boundary", async () => {
         assert.match(htmlResult.body, /script\[data-base-pay-sdk\]/);
         assert.match(htmlResult.body, /Base Pay SDK timed out while loading/);
         assert.match(htmlResult.body, /script\.remove\(\)/);
+        assert.match(htmlResult.body, /id="wallet-link"/);
+        assert.match(htmlResult.body, /id="offer-countdown"/);
+        assert.match(htmlResult.body, /ethereum:/);
+        assert.match(htmlResult.body, /payment-offer-expired/);
         assert.match(htmlResult.body, /private offer token stays in this page's memory/);
         assert(
-          htmlResult.body.includes(
-            "call <code>get_fix</code> with <code>" + entry.id + "</code> alone to receive signed USDC and ETH checkout",
-          ),
+          htmlResult.body.includes("call <code>get_fix</code> with <code>" + entry.id + "</code> alone"),
           "paid page is missing its direct get_fix checkout route",
         );
         assert.match(htmlResult.body, /After payment, call <code>get_fix<\/code> again/);
         assert.doesNotMatch(htmlResult.body, /call <code>get_offer<\/code>, then <code>get_fix<\/code>/);
         assert.doesNotMatch(htmlResult.body, /paymentOffer\s*[:=]\s*["'][A-Za-z0-9_-]+\./);
-        assert(mdResult.body.includes("Diagnosis and remedy are paid"), "paid Markdown is missing its gate statement");
+        assert.match(mdResult.body, /## Free diagnosis/);
+        assert.match(mdResult.body, /remediation and verification procedure remain paid/i);
         assert.doesNotMatch(mdResult.body, /## Cause/);
       }
     } catch (error) {
@@ -319,7 +326,8 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.equal(serverCardResult.data.authentication.required, false);
   assert.equal(serverCardResult.data.tools.length, 12);
   assert(serverCardResult.data.tools.every((tool) => tool.inputSchema && tool.outputSchema && tool.annotations));
-  assert.equal(openapiResult.data.info.version, "0.3.14");
+  assert.equal(fareboxResult.data.backend.acceptingPayments, true);
+  assert.equal(openapiResult.data.info.version, "0.3.19");
   assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
   assert.match(openapiResult.data.paths["/fix/{id}"].get.responses["402"].description, /signed USDC and ETH checkout/);
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
@@ -341,6 +349,8 @@ await check("backend health, security headers, and CORS preflight", async () => 
   assert.equal(data.acceptingPayments, true);
   assert.equal(data.paymentRailReadiness.USDC.ready, true);
   assert.equal(data.paymentRailReadiness.ETH.ready, true);
+  assert.equal(data.paymentStatus, "ready");
+  assert.equal(response.headers.get("cache-control"), "no-store");
   assert(response.headers.has("content-security-policy"));
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
   assert(response.headers.has("x-frame-options"));
@@ -547,16 +557,16 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
   ]);
   assert.equal(htmlResult.response.status, 200);
   assert.match(htmlResult.body, /Conversion funnel/i);
-  assert.match(htmlResult.body, /Current bottleneck:/);
+  assert.match(htmlResult.body, /id="nextExperiment"/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.9");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.10");
   assert.deepEqual(
     jsonResult.data.conversionFunnel.map((stage) => stage.key),
     ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
   );
   assert.equal(typeof jsonResult.data.nextExperiment, "string");
-  assert.equal(jsonResult.data.measurementWindow.spec, "knownfix-target-window/0.1");
+  assert.equal(jsonResult.data.measurementWindow.spec, "knownfix-target-window/0.2");
   assert.equal(jsonResult.data.measurementWindow.days, 30);
   assert.equal(typeof jsonResult.data.measurementWindow.historyStartsOnOrBeforeWindow, "boolean");
   assert.deepEqual(
@@ -566,6 +576,9 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
   assert.equal(jsonResult.data.measurementWindow.targets.meaningfulToolUse.targetRate, 0.01);
   assert.equal(jsonResult.data.measurementWindow.targets.paywallToOffer.targetRate, 0.30);
   assert.equal(jsonResult.data.measurementWindow.targets.externalSales.target, 5);
+  assert.equal(jsonResult.data.measurementWindow.experiments.purchaseReady.id, "purchase-ready-v1");
+  assert.equal(jsonResult.data.measurementWindow.experiments.purchaseReady.targetRate, 0.30);
+  assert.equal(typeof jsonResult.data.measurementWindow.experiments.purchaseReady.checkoutShown, "number");
   assert.match(jsonResult.data.measurementWindow.note, /Raw HTTP requests include automated and operator traffic/);
   assert(!JSON.stringify(jsonResult.data.measurementWindow).includes("paymentOffer"));
   assert.equal(typeof jsonResult.data.offers.purchaseReadyByFix, "object");
@@ -599,7 +612,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.14");
+  assert.equal(initialized.result.serverInfo.version, "0.3.19");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 12);
@@ -629,9 +642,13 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
   assert.equal(eotpSearch.matches[0].match, 1);
   assert.equal(eotpSearch.topMatchTier, "paid");
   assert.equal(eotpSearch.purchase.checkout, "ready");
-  assert.equal(eotpSearch.purchase.price.usd, "$0.05");
+  assert.equal(eotpSearch.purchase.product.kind, "bundle");
+  assert.equal(eotpSearch.purchase.product.id, "npm-publishing-recovery-pack");
+  assert.equal(eotpSearch.purchase.price.usd, "$4.00");
   assert.equal(eotpSearch.purchase.nextAction.action, "pay-and-redeem");
-  assert.equal(eotpSearch.purchase.relatedBundle.id, "npm-publishing-recovery-pack");
+  assert.equal(eotpSearch.purchase.nextAction.redemption.tool, "get_skill");
+  assert.equal(eotpSearch.purchase.singleFixAlternative.price.usd, "$0.05");
+  assert.equal(eotpSearch.purchase.singleFixAlternative.nextAction.redemption.tool, "get_fix");
   const freeFix = parseToolText(await mcp(4, "tools/call", {
     name: "get_fix",
     arguments: { id: "oz5-mcopy-cancun" },

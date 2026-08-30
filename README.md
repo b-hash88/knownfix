@@ -14,6 +14,7 @@ HTML report backed by a SHA-256-verified Markdown source.
 - [Storefront](https://b-hash88.github.io/knownfix/)
 - [Open books](https://knownfix-backend-28.b-hash88.deno.net/books)
 - [Agent guide](https://b-hash88.github.io/knownfix/llms.txt)
+- [Smithery listing](https://smithery.ai/servers/knownfix/knownfix)
 - [Buyer-safety notes](https://b-hash88.github.io/knownfix/notes-for-agents.md)
 - [Professional reviews](https://b-hash88.github.io/knownfix/services.html)
 - [Website First-Look Report](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $49
@@ -36,6 +37,7 @@ The live registry exposes search, catalog, signed offers, fix and skill
 delivery, endpoint audits, submissions, fix requests, and professional review
 ordering and retrieval.
 `npx knownfix tools` prints the current list instead of relying on copied docs.
+The branded Smithery directory name is `knownfix/knownfix`.
 
 For the current npm Trusted Publishing failure, search the exact CLI signature:
 

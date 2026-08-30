@@ -25,7 +25,7 @@
       "ethWei": "20000000000000",
       "display": "$0.05 USDC on Base, or signed exact ETH",
       "note": "USDC is dollar-denominated; the ETH equivalent drifts.",
-      "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49"
+      "payTo": "0x064d15003e84eb6604a4c7f3745a135a588b6328"
     }
   },
   "mcp": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
@@ -42,7 +42,7 @@
     "chainId": 8453,
     "network": "Base mainnet",
     "rpc": "server-side Base RPC with failover",
-    "payTo": "0xdaEe7Ba303B48E522FB6a0a4D3dc746b37187a49",
+    "payTo": "0x064d15003e84eb6604a4c7f3745a135a588b6328",
     "perFixBaseWei": "20000000000000",
     "perFixUsdcAtomic": "50000",
     "usdcContract": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",

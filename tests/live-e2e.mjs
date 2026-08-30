@@ -7,6 +7,7 @@ if (!storeValue) {
 const STORE = storeValue.replace(/\/?$/, "/");
 const API = (process.env.KNOWNFIX_API || "https://knownfix-backend-28.b-hash88.deno.net").replace(/\/$/, "");
 const BASE_RPC = process.env.KNOWNFIX_BASE_RPC || "https://mainnet.base.org";
+const TREASURY = "0x064d15003e84eb6604a4c7f3745a135a588b6328";
 const SERVICE_ORDER_TARGET = process.env.KNOWNFIX_SERVICE_ORDER_TARGET || "";
 const OPERATOR_HEADERS = {
   "user-agent": "KnownFix-Live-E2E/1.0",
@@ -357,6 +358,8 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.equal(serverCardResult.data.tools.length, 16);
   assert(serverCardResult.data.tools.every((tool) => tool.inputSchema && tool.outputSchema && tool.annotations));
   assert.equal(fareboxResult.data.backend.acceptingPayments, true);
+  assert.equal(fareboxResult.data.offer.perFix.payTo.toLowerCase(), TREASURY);
+  assert.equal(fareboxResult.data.settlement.payTo.toLowerCase(), TREASURY);
   assert.equal(openapiResult.data.info.version, "0.4.0");
   assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
   assert.match(openapiResult.data.paths["/fix/{id}"].get.responses["402"].description, /signed USDC and ETH checkout/);
@@ -474,6 +477,7 @@ await check("signed offer issuance, validation, and product binding", async () =
   assert.equal(offerResult.data.currency, "ETH");
   assert.equal(offerResult.data.redemption.proofType, "transaction-hash");
   assert.equal(offerResult.data.productId, "windows-libuv-assert-on-exit");
+  assert.equal(offerResult.data.payTo.toLowerCase(), TREASURY);
   assert(BigInt(offerResult.data.priceWei) > BigInt(offerResult.data.basePriceWei));
   assert.match(offerResult.data.token, /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/);
   const expiry = Date.parse(offerResult.data.expiresAt);
@@ -528,6 +532,8 @@ await check("USDC UserOperation and ETH transaction proofs stay separate", async
   assert.equal(ethOffer.response.status, 201);
   assert.equal(usdcOffer.data.priceUsd, "$49.00");
   assert.equal(usdcOffer.data.amountUsdcAtomic, "49000000");
+  assert.equal(usdcOffer.data.payTo.toLowerCase(), TREASURY);
+  assert.equal(ethOffer.data.payTo.toLowerCase(), TREASURY);
   assert.equal(usdcOffer.data.redemption.proofType, "erc-4337-user-operation-hash");
   assert.match(usdcOffer.data.basePay.params.dataSuffix, /^0x[0-9a-f]{32}$/);
   assert.equal(ethOffer.data.priceUsd, "$49.00");

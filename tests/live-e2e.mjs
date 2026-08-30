@@ -140,6 +140,8 @@ await check("professional service page is private, structured, and checkout-read
   assert.match(body, /knownfix-payment-offer\/2\.0/);
   assert.match(body, /@base-org\/account@2\.5\.10/);
   assert.match(body, /Start with the \$49 review/);
+  assert.match(body, /services\/website-first-look\.html/);
+  assert.match(body, /new URLSearchParams\(location\.search\)/);
   assert.match(body, /id="report-preview"[^>]+sandbox=""/);
   assert.match(body, /crypto\.subtle\.digest\('SHA-256'/);
   assert.match(body, /renderReportDocument/);
@@ -150,6 +152,20 @@ await check("professional service page is private, structured, and checkout-read
   const structured = JSON.parse(body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   assert.equal(structured.numberOfItems, 5);
   assert.equal(structured.itemListElement.length, 5);
+  for (const service of serviceCatalog.services) {
+    const detail = await text(new URL("services/" + service.id + ".html", STORE));
+    assert.equal(detail.response.status, 200);
+    assert(detail.body.includes("<h1>" + service.title + "</h1>"));
+    assert.match(detail.body, /name="robots" content="index,follow,max-image-preview:large/);
+    assert(detail.body.includes("services.html?service=" + service.id + "#order"));
+    assert((detail.body.match(/<details>/g) || []).length >= 5);
+    const schema = JSON.parse(detail.body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+    const types = schema["@graph"].map((item) => item["@type"]);
+    assert(types.includes("Service"));
+    assert(types.includes("BreadcrumbList"));
+    assert(types.includes("FAQPage"));
+    assert.doesNotMatch(detail.body, /aggregateRating|reviewCount/);
+  }
   const sampleName = "KnownFix_20260829_Website-First-Look-Sample_RPT";
   const [sampleHtml, sampleMarkdown] = await Promise.all([
     text(new URL("reports/" + sampleName + ".html", STORE)),
@@ -160,8 +176,10 @@ await check("professional service page is private, structured, and checkout-read
   const digest = createHash("sha256").update(sampleMarkdown.body).digest("hex");
   assert.match(sampleHtml.body, new RegExp(digest));
   assert.match(sampleHtml.body, /default-src 'none'/);
-  assert.doesNotMatch(sampleHtml.body, /<script/i);
-  return "five fixed-scope offers; sample and private reports use verified portable delivery";
+  assert.match(sampleHtml.body, /content="index,follow,max-image-preview:large/);
+  const sampleSchema = JSON.parse(sampleHtml.body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(sampleSchema["@type"], "Report");
+  return "five intent-specific service pages; indexable sample; private reports stay verified";
 });
 
 await check("homepage search is purchase-ready and credential-safe", async () => {
@@ -201,6 +219,9 @@ await check("sitemap and every canonical public URL", async () => {
   const urls = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   assert.equal(urls.filter((url) => /\/fixes\/[^/]+\.html$/.test(url)).length, catalog.entries.length);
   assert.equal(urls.filter((url) => /\/fixes\/[^/]+\.md$/.test(url)).length, 0);
+  assert.equal(urls.filter((url) => /\/services\/[^/]+\.html$/.test(url)).length, serviceCatalog.services.length);
+  assert.equal(urls.filter((url) => /\.(?:md|json|txt)$/.test(url)).length, 0);
+  assert.doesNotMatch(body, /<lastmod>/);
   const probes = await Promise.all(
     urls.map(async (url) => ({ url, response: await request(url, { method: "HEAD" }) })),
   );

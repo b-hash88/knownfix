@@ -15,11 +15,11 @@ Honesty: "verified-in-production" = reproduced and fixed in a real session.
 rather than pretending.
 
 ## Professional reviews
-- Website First-Look Report: $49.00 USDC; 2 business days; One public website: the homepage plus up to two key journey pages.
-- Website Growth Audit: $149.00 USDC; 3 business days; One public website and up to 12 representative pages.
-- Codebase Review: $249.00 USDC; 4 business days; One public GitHub repository up to 50,000 source lines. Larger or private repositories require a scoped quote.
-- Agent Commerce Audit: $199.00 USDC; 3 business days; One public agent-facing service, API, MCP server, or paid endpoint.
-- Release Pipeline Review: $129.00 USDC; 2 business days; One public GitHub repository and its checked-in CI/release configuration.
+- [Website First-Look Report](https://b-hash88.github.io/knownfix/services/website-first-look.html): $49.00 USDC; 2 business days; One public website: the homepage plus up to two key journey pages.
+- [Website Growth Audit](https://b-hash88.github.io/knownfix/services/website-growth-audit.html): $149.00 USDC; 3 business days; One public website and up to 12 representative pages.
+- [Codebase Review](https://b-hash88.github.io/knownfix/services/codebase-review.html): $249.00 USDC; 4 business days; One public GitHub repository up to 50,000 source lines. Larger or private repositories require a scoped quote.
+- [Agent Commerce Audit](https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html): $199.00 USDC; 3 business days; One public agent-facing service, API, MCP server, or paid endpoint.
+- [Release Pipeline Review](https://b-hash88.github.io/knownfix/services/release-pipeline-review.html): $129.00 USDC; 2 business days; One public GitHub repository and its checked-in CI/release configuration.
 Order and private ticket checkout: https://b-hash88.github.io/knownfix/services.html
 Agent API: https://knownfix-backend-28.b-hash88.deno.net/services
 

@@ -16,6 +16,12 @@ HTML report backed by a SHA-256-verified Markdown source.
 - [Agent guide](https://b-hash88.github.io/knownfix/llms.txt)
 - [Buyer-safety notes](https://b-hash88.github.io/knownfix/notes-for-agents.md)
 - [Professional reviews](https://b-hash88.github.io/knownfix/services.html)
+- [Website First-Look Report](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $49
+- [Website SEO, AEO and growth audit](https://b-hash88.github.io/knownfix/services/website-growth-audit.html) - $149
+- [Public GitHub codebase review](https://b-hash88.github.io/knownfix/services/codebase-review.html) - $249
+- [AI agent-commerce and MCP checkout audit](https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html) - $199
+- [GitHub Actions and release-pipeline review](https://b-hash88.github.io/knownfix/services/release-pipeline-review.html) - $129
+- [Public first-look sample report](https://b-hash88.github.io/knownfix/reports/KnownFix_20260829_Website-First-Look-Sample_RPT.html)
 
 ## Connect an agent
 

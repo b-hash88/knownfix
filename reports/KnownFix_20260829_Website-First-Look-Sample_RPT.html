@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>KnownFix Website First-Look Report</title><link rel="canonical" href="https://b-hash88.github.io/knownfix/reports/KnownFix_20260829_Website-First-Look-Sample_RPT.html"><style>
+:root{color-scheme:light dark;--paper:#f2f4f1;--surface:#fafbf9;--ink:#151912;--muted:#5c6458;--rule:#cfd6cb;--soft:#e4e9e1;--accent:#12564e;--flag:#9a5b12;--danger:#8f3127}
+@media(prefers-color-scheme:dark){:root{--paper:#12150f;--surface:#181c15;--ink:#e3e8de;--muted:#98a292;--rule:#343c30;--soft:#222820;--accent:#6fc3b0;--flag:#d9a353;--danger:#f08a78}}
+*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 ui-serif,Georgia,Cambria,"Times New Roman",serif}header,main,footer{width:min(100% - 2rem,54rem);margin-inline:auto}header{padding:3.2rem 0 2rem;border-bottom:3px solid var(--ink)}.register{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 2.2rem;color:var(--muted);font:700 .72rem/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;text-transform:uppercase}.register strong{color:var(--accent)}h1,h2,h3{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0}h1{max-width:18ch;margin:0;font-size:clamp(2.2rem,8vw,4.4rem);line-height:1}h2{margin:2.8rem 0 .8rem;padding-bottom:.42rem;border-bottom:1px solid var(--rule);font-size:1.55rem;line-height:1.2}h3{margin:2rem 0 .45rem;font-size:1.08rem;line-height:1.3}.summary{max-width:48rem;margin:1.2rem 0 0;color:var(--muted);font-size:1.16rem}.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:2rem 0 0}.meta div{padding-top:.55rem;border-top:1px solid var(--rule)}.meta dt{color:var(--muted);font:700 .66rem/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;text-transform:uppercase}.meta dd{margin:.2rem 0 0;overflow-wrap:anywhere;font:600 .82rem/1.45 ui-sans-serif,system-ui,sans-serif}main{padding:1rem 0 3rem}p,li{max-width:48rem}strong{font-weight:700}a{color:var(--accent)}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{padding:.08rem .26rem;border-radius:3px;background:var(--soft);font-size:.86em}pre{overflow:auto;padding:1rem;border:1px solid var(--rule);border-radius:4px;background:var(--surface);font-size:.78rem;line-height:1.55}pre code{padding:0;background:none}blockquote{margin:1.4rem 0;padding:.15rem 1rem;border-left:4px solid var(--flag);color:var(--muted);font-size:1.08rem}ul,ol{padding-left:1.35rem}li{margin:.35rem 0}hr{border:0;border-top:1px solid var(--rule);margin:2.5rem 0}details{margin:2rem 0 0;border-top:1px solid var(--rule);padding-top:1rem}summary{cursor:pointer;color:var(--accent);font:700 .78rem ui-sans-serif,system-ui,sans-serif}footer{padding:1.5rem 0 3rem;border-top:2px solid var(--ink);color:var(--muted);font-size:.82rem}.digest{overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+@media(max-width:38rem){header{padding-top:2rem}.meta{grid-template-columns:1fr}.register{display:block}.register span{display:block;margin-top:.35rem}}
+@media print{:root{color-scheme:light;--paper:#fff;--surface:#fff;--ink:#000;--muted:#333;--rule:#bbb;--soft:#eee;--accent:#0d5148;--flag:#80500f}body{font-size:11pt}header,main,footer{width:100%}header{padding-top:0}details{display:none}h2,h3{break-after:avoid}pre,blockquote,li{break-inside:avoid}}
+</style></head><body><header><p class="register"><strong>KnownFix evidence report</strong><span>Public self-audit sample</span></p><h1>Website First-Look Report</h1><p class="summary">A candid review of KnownFix&#39;s first impression, offer, trust, technical visibility, and path to purchase.</p><dl class="meta"><div><dt>Completed</dt><dd>2026-08-29</dd></div><div><dt>Format</dt><dd>Portable HTML + Markdown source</dd></div><div><dt>Integrity</dt><dd>SHA-256 verified</dd></div></dl></header><main><blockquote>Public self-audit sample. This report demonstrates the customer deliverable and records uncomfortable findings rather than manufacturing praise.</blockquote>
+<h2>Executive verdict</h2>
+<p>KnownFix is technically ready for founding-pilot traffic: its offer contracts, private service tickets, machine discovery surfaces, and public books are unusually inspectable. It is not ready for broad paid acquisition. The largest remaining risks are human payment friction and the absence of external customer evidence.</p>
+<p><strong>Recommended decision:</strong> recruit three founding customers directly before buying advertising.</p>
+<h2>Scope and method</h2>
+<ul><li>Public homepage: <code>https://b-hash88.github.io/knownfix/</code></li><li>Professional services: <code>https://b-hash88.github.io/knownfix/services.html</code></li><li>Public ledger: <code>https://knownfix-backend-28.b-hash88.deno.net/books</code></li><li>Review type: first impression, offer, trust, mobile contract, technical visibility, and path to action</li><li>Excluded: authenticated systems, destructive testing, full WCAG conformance, penetration testing, ranking forecasts, and private analytics</li></ul>
+<h2>Five priority findings</h2>
+<h3>KF-01: The first paid service was too large a commitment</h3>
+<p><strong>Priority:</strong> High | <strong>Status:</strong> Resolved in this release</p>
+<p><strong>Evidence:</strong> Before this review, the professional-service catalog started at <code>$129</code> for a Release Pipeline Review and <code>$149</code> for a Website Growth Audit. A new visitor had no small, bounded way to experience the report quality.</p>
+<p><strong>Impact:</strong> An unproven seller was asking the buyer to accept service, payment, and delivery risk in one large first step.</p>
+<p><strong>Remediation completed:</strong> Added the <code>$49</code> Website First-Look Report for one homepage and up to two journey pages, with a two-business-day delivery target and this public sample.</p>
+<p><strong>Verify:</strong> Open <code>services.html</code>; the first service must be <code>Website First-Look Report</code>, priced at <code>$49 USDC</code>, with a sample-report link and explicit limitations.</p>
+<h3>KF-02: Human checkout still assumes a Base-capable buyer</h3>
+<p><strong>Priority:</strong> High | <strong>Status:</strong> Open</p>
+<p><strong>Evidence:</strong> The service checkout offers Base Pay USDC and exact ETH on Base. It does not offer a hosted card checkout.</p>
+<p><strong>Impact:</strong> The agent and crypto-native audience can pay, but a conventional business buyer may stop before creating a funded Base wallet.</p>
+<p><strong>Recommended remediation:</strong> Keep Base as the agent-native rail and add a hosted card checkout that feeds the same private order and fulfillment workflow. Do not collect card details directly.</p>
+<p><strong>Verify:</strong> A buyer without cryptocurrency can complete payment, receive a receipt, retain the same private report boundary, and retrieve the report without exposing the target publicly.</p>
+<h3>KF-03: Technical proof is strong; customer proof is absent</h3>
+<p><strong>Priority:</strong> High | <strong>Status:</strong> Partially addressed</p>
+<p><strong>Evidence:</strong> KnownFix publishes its inventory, checkout state, funnel counts, and zero external sales. Before this document, it had no public sample report, external case study, or verified customer review.</p>
+<p><strong>Impact:</strong> Buyers can inspect the machinery but cannot yet judge the usefulness of a completed engagement.</p>
+<p><strong>Recommended remediation:</strong> Use this self-audit as format evidence, then complete three founding engagements and publish only customer-approved redacted reports and verified reviews. Preserve criticism.</p>
+<p><strong>Verify:</strong> The service page links to at least one real external case study and names how each review was verified.</p>
+<h3>KF-04: The public experience is split across infrastructure domains</h3>
+<p><strong>Priority:</strong> Medium | <strong>Status:</strong> Open</p>
+<p><strong>Evidence:</strong> The storefront is hosted at <code>b-hash88.github.io</code>; books, order APIs, and MCP are hosted at <code>knownfix-backend-28.b-hash88.deno.net</code>.</p>
+<p><strong>Impact:</strong> Both hosts are legitimate, but the split makes a young service look more experimental and makes the trust relationship harder to explain.</p>
+<p><strong>Recommended remediation:</strong> Move the public front door to a short custom domain while keeping the existing hosts as verified infrastructure. Publish canonical URLs and redirect deliberately.</p>
+<p><strong>Verify:</strong> Storefront, reports, and documentation use the custom domain as canonical; API calls still fail closed if redirected unexpectedly.</p>
+<h3>KF-05: Privacy is excellent, but ticket loss has no recovery path</h3>
+<p><strong>Priority:</strong> Medium | <strong>Status:</strong> Open by design</p>
+<p><strong>Evidence:</strong> The order page states that the private <code>svc_</code> ticket is kept in page memory, is not emailed, and cannot be recovered. That minimizes personal data and creates a sharp usability cost.</p>
+<p><strong>Impact:</strong> A buyer who closes the page before saving the ticket can lose access to a paid report.</p>
+<p><strong>Recommended remediation:</strong> Preserve ticket-only mode for agents. For human checkout, offer an optional email receipt or downloadable order receipt containing the ticket, with explicit consent and a minimal retention policy.</p>
+<p><strong>Verify:</strong> A privacy-maximizing buyer can still proceed without email; an opting-in human can recover the order without exposing the target or report publicly.</p>
+<h2>What is already working</h2>
+<ul><li>Prices, currencies, recipient, chain, and offer expiry are explicit before payment.</li><li>Payment proof and signed offer are product-bound and atomically single-use.</li><li>Service targets and notes are private unless the buyer opts into publication.</li><li>The public books distinguish automated requests from meaningful tool calls and external sales.</li><li><code>llms.txt</code>, OpenAPI, MCP Registry metadata, structured data, sitemap, and agent resources are present.</li><li>The storefront refuses to fabricate a fix when search confidence is insufficient.</li></ul>
+<h2>Fourteen-day action plan</h2>
+<ol><li>Complete one real low-value Base purchase from a separate funded buyer wallet.</li><li>Recruit three founding Website First-Look customers through direct outreach.</li><li>Deliver each report using this evidence and verification structure.</li><li>Publish the first customer-approved case study and verified review.</li><li>Add a hosted card option only after the service intake and delivery loop has been exercised.</li><li>Start custom-domain migration planning without breaking existing agent endpoints.</li></ol>
+<h2>Report limitations</h2>
+<p>This is a self-audit of public, observable surfaces. It is not independent customer proof. No private analytics, authenticated flows, assistive-technology sessions, payment settlement, or destructive test was performed for this sample. Passing observations do not certify accessibility, security, legal compliance, search rankings, or commercial outcomes.</p>
+<h2>Verification record</h2>
+<ul><li>Prepared by: KnownFix operator agent</li><li>Review date: 2026-08-29 America/Vancouver</li><li>Publication status: Public self-audit sample</li><li>Source policy: Every finding names observable evidence, a remediation, and a re-test condition</li></ul><details><summary>View immutable Markdown source</summary><pre><code># KnownFix Website First-Look Report
+
+&gt; Public self-audit sample. This report demonstrates the customer deliverable and records uncomfortable findings rather than manufacturing praise.
+
+## Executive verdict
+
+KnownFix is technically ready for founding-pilot traffic: its offer contracts, private service tickets, machine discovery surfaces, and public books are unusually inspectable. It is not ready for broad paid acquisition. The largest remaining risks are human payment friction and the absence of external customer evidence.
+
+**Recommended decision:** recruit three founding customers directly before buying advertising.
+
+## Scope and method
+
+- Public homepage: `https://b-hash88.github.io/knownfix/`
+- Professional services: `https://b-hash88.github.io/knownfix/services.html`
+- Public ledger: `https://knownfix-backend-28.b-hash88.deno.net/books`
+- Review type: first impression, offer, trust, mobile contract, technical visibility, and path to action
+- Excluded: authenticated systems, destructive testing, full WCAG conformance, penetration testing, ranking forecasts, and private analytics
+
+## Five priority findings
+
+### KF-01: The first paid service was too large a commitment
+
+**Priority:** High | **Status:** Resolved in this release
+
+**Evidence:** Before this review, the professional-service catalog started at `$129` for a Release Pipeline Review and `$149` for a Website Growth Audit. A new visitor had no small, bounded way to experience the report quality.
+
+**Impact:** An unproven seller was asking the buyer to accept service, payment, and delivery risk in one large first step.
+
+**Remediation completed:** Added the `$49` Website First-Look Report for one homepage and up to two journey pages, with a two-business-day delivery target and this public sample.
+
+**Verify:** Open `services.html`; the first service must be `Website First-Look Report`, priced at `$49 USDC`, with a sample-report link and explicit limitations.
+
+### KF-02: Human checkout still assumes a Base-capable buyer
+
+**Priority:** High | **Status:** Open
+
+**Evidence:** The service checkout offers Base Pay USDC and exact ETH on Base. It does not offer a hosted card checkout.
+
+**Impact:** The agent and crypto-native audience can pay, but a conventional business buyer may stop before creating a funded Base wallet.
+
+**Recommended remediation:** Keep Base as the agent-native rail and add a hosted card checkout that feeds the same private order and fulfillment workflow. Do not collect card details directly.
+
+**Verify:** A buyer without cryptocurrency can complete payment, receive a receipt, retain the same private report boundary, and retrieve the report without exposing the target publicly.
+
+### KF-03: Technical proof is strong; customer proof is absent
+
+**Priority:** High | **Status:** Partially addressed
+
+**Evidence:** KnownFix publishes its inventory, checkout state, funnel counts, and zero external sales. Before this document, it had no public sample report, external case study, or verified customer review.
+
+**Impact:** Buyers can inspect the machinery but cannot yet judge the usefulness of a completed engagement.
+
+**Recommended remediation:** Use this self-audit as format evidence, then complete three founding engagements and publish only customer-approved redacted reports and verified reviews. Preserve criticism.
+
+**Verify:** The service page links to at least one real external case study and names how each review was verified.
+
+### KF-04: The public experience is split across infrastructure domains
+
+**Priority:** Medium | **Status:** Open
+
+**Evidence:** The storefront is hosted at `b-hash88.github.io`; books, order APIs, and MCP are hosted at `knownfix-backend-28.b-hash88.deno.net`.
+
+**Impact:** Both hosts are legitimate, but the split makes a young service look more experimental and makes the trust relationship harder to explain.
+
+**Recommended remediation:** Move the public front door to a short custom domain while keeping the existing hosts as verified infrastructure. Publish canonical URLs and redirect deliberately.
+
+**Verify:** Storefront, reports, and documentation use the custom domain as canonical; API calls still fail closed if redirected unexpectedly.
+
+### KF-05: Privacy is excellent, but ticket loss has no recovery path
+
+**Priority:** Medium | **Status:** Open by design
+
+**Evidence:** The order page states that the private `svc_` ticket is kept in page memory, is not emailed, and cannot be recovered. That minimizes personal data and creates a sharp usability cost.
+
+**Impact:** A buyer who closes the page before saving the ticket can lose access to a paid report.
+
+**Recommended remediation:** Preserve ticket-only mode for agents. For human checkout, offer an optional email receipt or downloadable order receipt containing the ticket, with explicit consent and a minimal retention policy.
+
+**Verify:** A privacy-maximizing buyer can still proceed without email; an opting-in human can recover the order without exposing the target or report publicly.
+
+## What is already working
+
+- Prices, currencies, recipient, chain, and offer expiry are explicit before payment.
+- Payment proof and signed offer are product-bound and atomically single-use.
+- Service targets and notes are private unless the buyer opts into publication.
+- The public books distinguish automated requests from meaningful tool calls and external sales.
+- `llms.txt`, OpenAPI, MCP Registry metadata, structured data, sitemap, and agent resources are present.
+- The storefront refuses to fabricate a fix when search confidence is insufficient.
+
+## Fourteen-day action plan
+
+1. Complete one real low-value Base purchase from a separate funded buyer wallet.
+2. Recruit three founding Website First-Look customers through direct outreach.
+3. Deliver each report using this evidence and verification structure.
+4. Publish the first customer-approved case study and verified review.
+5. Add a hosted card option only after the service intake and delivery loop has been exercised.
+6. Start custom-domain migration planning without breaking existing agent endpoints.
+
+## Report limitations
+
+This is a self-audit of public, observable surfaces. It is not independent customer proof. No private analytics, authenticated flows, assistive-technology sessions, payment settlement, or destructive test was performed for this sample. Passing observations do not certify accessibility, security, legal compliance, search rankings, or commercial outcomes.
+
+## Verification record
+
+- Prepared by: KnownFix operator agent
+- Review date: 2026-08-29 America/Vancouver
+- Publication status: Public self-audit sample
+- Source policy: Every finding names observable evidence, a remediation, and a re-test condition
+</code></pre></details></main><footer><p>KnownFix reports describe observed evidence within a published scope. They do not guarantee rankings, revenue, security, legal compliance, or the absence of undiscovered defects.</p><p class="digest">Markdown SHA-256: 03f0316918b7b1eb77bed4c926000298107f14a3f8f4ea42085d014b1e5fa9bb</p></footer></body></html>

@@ -3,6 +3,28 @@
   "currency": "USD-equivalent USDC on Base mainnet",
   "services": [
     {
+      "id": "website-first-look",
+      "title": "Website First-Look Report",
+      "tagline": "A focused review of the first impression, offer, trust, mobile experience, and path to action.",
+      "priceUsdCents": 4900,
+      "priceWei": "20000000000000000",
+      "deliveryBusinessDays": 2,
+      "targetKind": "website",
+      "entryOffer": true,
+      "sampleReportUrl": "https://b-hash88.github.io/knownfix/reports/KnownFix_20260829_Website-First-Look-Sample_RPT.html",
+      "scope": "One public website: the homepage plus up to two key journey pages.",
+      "deliverables": [
+        "Executive verdict and five highest-priority actions",
+        "Desktop and mobile first-impression review",
+        "Offer, copy, trust, and conversion-path review",
+        "Technical visibility and social-preview spot checks",
+        "Evidence tied to exact pages and reproducible observations",
+        "A practical 14-day improvement plan",
+        "Self-contained HTML report plus SHA-256-verified Markdown source"
+      ],
+      "limitations": "This is a focused first-look review, not a full-site crawl, WCAG conformance evaluation, penetration test, or comprehensive SEO audit. No traffic, ranking, revenue, or conversion outcome is guaranteed."
+    },
+    {
       "id": "website-growth-audit",
       "title": "Website Growth Audit",
       "tagline": "Design, SEO, AEO/GEO, conversion, performance, and accessibility reviewed as one growth system.",

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 
 const storeValue = process.env.KNOWNFIX_STORE;
 if (!storeValue) {
@@ -114,7 +115,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /34 verified/);
   assert.match(body, /4 documented/);
   assert.match(body, /12 free in full/);
-  assert.match(body, /<b>4<\/b> professional reviews/);
+  assert.match(body, /<b>5<\/b> professional reviews/);
   assert.match(body, /Book a professional review/);
   assert(body.includes(`<link rel="canonical" href="${STORE}">`));
   assert.match(body, /property="og:title"/);
@@ -125,8 +126,8 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 4);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
-  assert.equal(serviceCatalog.services.length, 4);
-  return "38 entries; 34 verified, 4 documented, 12 free, 4 professional reviews";
+  assert.equal(serviceCatalog.services.length, 5);
+  return "38 entries; 34 verified, 4 documented, 12 free, 5 professional reviews";
 });
 
 await check("professional service page is private, structured, and checkout-ready", async () => {
@@ -138,13 +139,29 @@ await check("professional service page is private, structured, and checkout-read
   assert.match(body, /publishTarget/);
   assert.match(body, /knownfix-payment-offer\/2\.0/);
   assert.match(body, /@base-org\/account@2\.5\.10/);
-  assert.match(body, /textContent=data\.reportMarkdown/);
+  assert.match(body, /Start with the \$49 review/);
+  assert.match(body, /id="report-preview"[^>]+sandbox=""/);
+  assert.match(body, /crypto\.subtle\.digest\('SHA-256'/);
+  assert.match(body, /renderReportDocument/);
+  assert.match(body, /Download HTML/);
+  assert.match(body, /Download Markdown/);
   assert.match(body, /held in this page's memory only/);
   assert.doesNotMatch(body, /(?:local|session)Storage|innerHTML\s*=/);
   const structured = JSON.parse(body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-  assert.equal(structured.numberOfItems, 4);
-  assert.equal(structured.itemListElement.length, 4);
-  return "four fixed-scope offers; tickets and reports stay out of URLs and browser storage";
+  assert.equal(structured.numberOfItems, 5);
+  assert.equal(structured.itemListElement.length, 5);
+  const sampleName = "KnownFix_20260829_Website-First-Look-Sample_RPT";
+  const [sampleHtml, sampleMarkdown] = await Promise.all([
+    text(new URL("reports/" + sampleName + ".html", STORE)),
+    text(new URL("reports/" + sampleName + ".md", STORE)),
+  ]);
+  assert.equal(sampleHtml.response.status, 200);
+  assert.equal(sampleMarkdown.response.status, 200);
+  const digest = createHash("sha256").update(sampleMarkdown.body).digest("hex");
+  assert.match(sampleHtml.body, new RegExp(digest));
+  assert.match(sampleHtml.body, /default-src 'none'/);
+  assert.doesNotMatch(sampleHtml.body, /<script/i);
+  return "five fixed-scope offers; sample and private reports use verified portable delivery";
 });
 
 await check("homepage search is purchase-ready and credential-safe", async () => {
@@ -374,7 +391,7 @@ await check("backend health, security headers, and CORS preflight", async () => 
   assert.equal(response.status, 200);
   assert.equal(data.ok, true);
   assert.equal(data.inventory, catalog.entries.length);
-  assert.equal(data.services, 4);
+  assert.equal(data.services, 5);
   assert.equal(data.chainId, 8453);
   assert.equal(data.kv, true);
   assert.equal(data.checkoutEnabled, true);
@@ -647,7 +664,7 @@ await check("professional service API preserves private order boundaries", async
   const serviceResult = await json(API + "/services");
   assert.equal(serviceResult.response.status, 200);
   assert.equal(serviceResult.data.spec, "knownfix-services/1.0");
-  assert.equal(serviceResult.data.services.length, 4);
+  assert.equal(serviceResult.data.services.length, 5);
   assert(serviceResult.data.services.every((service) => service.priceUsd && service.deliverables.length >= 5));
   assert.doesNotMatch(JSON.stringify(serviceResult.data.publicWork), /"ticket"\s*:/i);
 
@@ -655,7 +672,7 @@ await check("professional service API preserves private order boundaries", async
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      serviceId: "website-growth-audit",
+      serviceId: "website-first-look",
       targetUrl: "https://localhost:3000",
       authorizationConfirmed: true,
     }),
@@ -670,7 +687,7 @@ await check("professional service API preserves private order boundaries", async
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      serviceId: "website-growth-audit",
+      serviceId: "website-first-look",
       targetUrl: SERVICE_ORDER_TARGET,
       notes: "Declared live E2E operator order. No payment will be sent.",
       publishTarget: false,
@@ -681,7 +698,7 @@ await check("professional service API preserves private order boundaries", async
   assert.match(created.data.ticket, /^svc_[0-9a-f]{32}$/);
   assert.equal(created.data.purchase.checkout, "ready");
   assert.equal(created.data.purchase.signedOffers.USDC.productType, "service");
-  assert.equal(created.data.purchase.signedOffers.USDC.amountUsdc, "149.00");
+  assert.equal(created.data.purchase.signedOffers.USDC.amountUsdc, "49.00");
   assert.equal(created.data.purchase.signedOffers.USDC.redemption.proofType, "erc-4337-user-operation-hash");
   assert.equal(created.data.purchase.signedOffers.ETH.redemption.proofType, "transaction-hash");
   assert.equal(created.data.purchase.signedOffers.USDC.productId, created.data.purchase.signedOffers.ETH.productId);
@@ -722,7 +739,8 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     name: "list_services",
     arguments: {},
   }));
-  assert.equal(serviceList.services.length, 4);
+  assert.equal(serviceList.services.length, 5);
+  assert.equal(serviceList.services.find((service) => service.id === "website-first-look").priceUsd, "$49.00");
   assert.equal(serviceList.services.find((service) => service.id === "codebase-review").priceUsd, "$249.00");
   const searched = parseToolText(await mcp(3, "tools/call", {
     name: "search_fixes",

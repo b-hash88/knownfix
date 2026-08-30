@@ -5,10 +5,11 @@ in production, 4 documented, and 12 available in full for free. Search is free;
 paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
 on Base mainnet.
 
-KnownFix also sells four fixed-scope professional reviews: website growth and
-SEO/AEO ($149), release pipelines ($129), agent commerce ($199), and public
-codebases ($249). Each order is private by default, paid on Base, and delivered
-through an unguessable ticket with a SHA-256-verified Markdown report.
+KnownFix also sells five fixed-scope professional reviews: a website first-look
+report ($49), website growth and SEO/AEO ($149), release pipelines ($129), agent
+commerce ($199), and public codebases ($249). Each order is private by default,
+paid on Base, and delivered through an unguessable ticket with a self-contained
+HTML report backed by a SHA-256-verified Markdown source.
 
 - [Storefront](https://b-hash88.github.io/knownfix/)
 - [Open books](https://knownfix-backend-28.b-hash88.deno.net/books)
@@ -82,7 +83,7 @@ node tests/live-e2e.mjs
 ```
 
 The suite crawls every canonical URL, checks all 38 free/paid page pairs, five
-product packs, four services, HTTP and MCP search/delivery/offer flows, distinct
+product packs, five services, HTTP and MCP search/delivery/offer flows, distinct
 UserOperation and transaction proofs, the public ledger, and security headers.
 Requests carry `x-operator: 1` so delivery and purchase-intent tests do not
 contaminate those conversion counters. Set `KNOWNFIX_SERVICE_ORDER_TARGET` to an

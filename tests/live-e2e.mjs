@@ -7,12 +7,13 @@ if (!storeValue) {
 const STORE = storeValue.replace(/\/?$/, "/");
 const API = (process.env.KNOWNFIX_API || "https://knownfix-backend-28.b-hash88.deno.net").replace(/\/$/, "");
 const BASE_RPC = process.env.KNOWNFIX_BASE_RPC || "https://mainnet.base.org";
+const SERVICE_ORDER_TARGET = process.env.KNOWNFIX_SERVICE_ORDER_TARGET || "";
 const OPERATOR_HEADERS = {
   "user-agent": "KnownFix-Live-E2E/1.0",
   "x-operator": "1",
 };
 const DISCOVERY_DESCRIPTION =
-  "Search 38 npm publish/EOTP, GitHub Actions, MCP, Windows and Base fixes; 12 free, USDC/ETH packs.";
+  "Fixes plus paid website, code, agent-commerce, and release reviews over MCP.";
 const results = [];
 
 async function check(name, fn) {
@@ -101,6 +102,9 @@ async function baseRpc(method, params) {
 const staticCatalogResult = await json(new URL("catalog.json", STORE));
 assert.equal(staticCatalogResult.response.status, 200, "static catalog unavailable");
 const catalog = staticCatalogResult.data;
+const staticServicesResult = await json(new URL("services.json", STORE));
+assert.equal(staticServicesResult.response.status, 200, "static service catalog unavailable");
+const serviceCatalog = staticServicesResult.data;
 
 await check("storefront metadata and truthful inventory", async () => {
   const { response, body } = await text(STORE);
@@ -109,6 +113,8 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /34 verified/);
   assert.match(body, /4 documented/);
   assert.match(body, /12 free in full/);
+  assert.match(body, /<b>4<\/b> professional reviews/);
+  assert.match(body, /Book a professional review/);
   assert(body.includes(`<link rel="canonical" href="${STORE}">`));
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);
@@ -118,7 +124,26 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 4);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
-  return "38 entries; 34 verified, 4 documented, 12 free";
+  assert.equal(serviceCatalog.services.length, 4);
+  return "38 entries; 34 verified, 4 documented, 12 free, 4 professional reviews";
+});
+
+await check("professional service page is private, structured, and checkout-ready", async () => {
+  const { response, body } = await text(new URL("services.html", STORE));
+  assert.equal(response.status, 200);
+  assert.match(body, /Reviews built to survive scrutiny/);
+  assert.match(body, /id="order-form"/);
+  assert.match(body, /authorizationConfirmed/);
+  assert.match(body, /publishTarget/);
+  assert.match(body, /knownfix-payment-offer\/2\.0/);
+  assert.match(body, /@base-org\/account@2\.5\.10/);
+  assert.match(body, /textContent=data\.reportMarkdown/);
+  assert.match(body, /held in this page's memory only/);
+  assert.doesNotMatch(body, /(?:local|session)Storage|innerHTML\s*=/);
+  const structured = JSON.parse(body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(structured.numberOfItems, 4);
+  assert.equal(structured.itemListElement.length, 4);
+  return "four fixed-scope offers; tickets and reports stay out of URLs and browser storage";
 });
 
 await check("homepage search is purchase-ready and credential-safe", async () => {
@@ -158,7 +183,9 @@ await check("sitemap and every canonical public URL", async () => {
   const urls = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
   assert.equal(urls.filter((url) => /\/fixes\/[^/]+\.html$/.test(url)).length, catalog.entries.length);
   assert.equal(urls.filter((url) => /\/fixes\/[^/]+\.md$/.test(url)).length, 0);
-  const probes = await Promise.all(urls.map(async (url) => ({ url, response: await request(url) })));
+  const probes = await Promise.all(
+    urls.map(async (url) => ({ url, response: await request(url, { method: "HEAD" }) })),
+  );
   const failures = probes.filter(({ response: item }) => item.status !== 200);
   assert.deepEqual(failures.map(({ url, response: item }) => item.status + " " + url), []);
   return urls.length + " sitemap URLs returned 200";
@@ -167,7 +194,9 @@ await check("sitemap and every canonical public URL", async () => {
 await check("homepage internal links", async () => {
   const { body } = await text(STORE);
   const links = [...new Set(internalLinks(body, STORE))];
-  const probes = await Promise.all(links.map(async (url) => ({ url, response: await request(url) })));
+  const probes = await Promise.all(
+    links.map(async (url) => ({ url, response: await request(url, { method: "HEAD" }) })),
+  );
   const failures = probes.filter(({ response: item }) => item.status !== 200);
   assert.deepEqual(failures.map(({ url, response: item }) => item.status + " " + url), []);
   return links.length + " internal links returned 200";
@@ -316,6 +345,7 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   ]);
   assert.match(robots.body, /Sitemap: https:\/\/b-hash88\.github\.io\/knownfix\/sitemap\.xml/);
   assert(llms.body.includes("get_offer"), "llms.txt is missing get_offer");
+  assert(llms.body.includes("order_service"), "llms.txt is missing service ordering");
   assert(llms.body.includes("paymentOffer"), "llms.txt is missing the private offer credential");
   assert.match(llmsFull.body, /x-payment-offer/);
   assert.equal(staticMcpResult.data.servers[0].description, DISCOVERY_DESCRIPTION);
@@ -324,13 +354,13 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.equal(fareboxResult.data.offer.inventory, catalog.entries.length);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
   assert.equal(serverCardResult.data.authentication.required, false);
-  assert.equal(serverCardResult.data.tools.length, 12);
+  assert.equal(serverCardResult.data.tools.length, 16);
   assert(serverCardResult.data.tools.every((tool) => tool.inputSchema && tool.outputSchema && tool.annotations));
   assert.equal(fareboxResult.data.backend.acceptingPayments, true);
-  assert.equal(openapiResult.data.info.version, "0.3.19");
+  assert.equal(openapiResult.data.info.version, "0.4.0");
   assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
   assert.match(openapiResult.data.paths["/fix/{id}"].get.responses["402"].description, /signed USDC and ETH checkout/);
-  for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
+  for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/services", "/service-orders", "/service-orders/status", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
   return "discovery and machine contracts agree";
@@ -341,6 +371,7 @@ await check("backend health, security headers, and CORS preflight", async () => 
   assert.equal(response.status, 200);
   assert.equal(data.ok, true);
   assert.equal(data.inventory, catalog.entries.length);
+  assert.equal(data.services, 4);
   assert.equal(data.chainId, 8453);
   assert.equal(data.kv, true);
   assert.equal(data.checkoutEnabled, true);
@@ -583,6 +614,7 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
   assert(!JSON.stringify(jsonResult.data.measurementWindow).includes("paymentOffer"));
   assert.equal(typeof jsonResult.data.offers.purchaseReadyByFix, "object");
   assert.equal(typeof jsonResult.data.offers.purchaseReadyBySkill, "object");
+  assert.equal(typeof jsonResult.data.offers.purchaseReadyByService, "object");
   assert.equal(typeof jsonResult.data.salesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.externalSalesSettledOnChain, "number");
   assert.equal(typeof jsonResult.data.operatorPaymentTests, "number");
@@ -605,6 +637,58 @@ await check("public request board preserves ticket privacy", async () => {
   return "no tickets or redemption keys exposed";
 });
 
+await check("professional service API preserves private order boundaries", async () => {
+  const serviceResult = await json(API + "/services");
+  assert.equal(serviceResult.response.status, 200);
+  assert.equal(serviceResult.data.spec, "knownfix-services/1.0");
+  assert.equal(serviceResult.data.services.length, 4);
+  assert(serviceResult.data.services.every((service) => service.priceUsd && service.deliverables.length >= 5));
+  assert.doesNotMatch(JSON.stringify(serviceResult.data.publicWork), /"ticket"\s*:/i);
+
+  const invalid = await json(API + "/service-orders", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      serviceId: "website-growth-audit",
+      targetUrl: "https://localhost:3000",
+      authorizationConfirmed: true,
+    }),
+  });
+  assert.equal(invalid.response.status, 400);
+  assert.equal(invalid.data.error, "invalid-target");
+
+  if (!SERVICE_ORDER_TARGET) {
+    return "catalog live; private targets rejected; valid order creation skipped unless explicitly requested";
+  }
+  const created = await json(API + "/service-orders", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      serviceId: "website-growth-audit",
+      targetUrl: SERVICE_ORDER_TARGET,
+      notes: "Declared live E2E operator order. No payment will be sent.",
+      publishTarget: false,
+      authorizationConfirmed: true,
+    }),
+  });
+  assert.equal(created.response.status, 201);
+  assert.match(created.data.ticket, /^svc_[0-9a-f]{32}$/);
+  assert.equal(created.data.purchase.checkout, "ready");
+  assert.equal(created.data.purchase.signedOffers.USDC.productType, "service");
+  assert.equal(created.data.purchase.signedOffers.USDC.amountUsdc, "149.00");
+  assert.equal(created.data.purchase.signedOffers.USDC.redemption.proofType, "erc-4337-user-operation-hash");
+  assert.equal(created.data.purchase.signedOffers.ETH.redemption.proofType, "transaction-hash");
+  assert.equal(created.data.purchase.signedOffers.USDC.productId, created.data.purchase.signedOffers.ETH.productId);
+  const status = await json(API + "/service-orders/status", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ ticket: created.data.ticket }),
+  });
+  assert.equal(status.response.status, 200);
+  assert.equal(status.data.status, "awaiting-payment");
+  return "private operator order created; both rails are order-bound; ticket retrieval works";
+});
+
 await check("MCP initialize, registry, search, free fix, offer, and request gate", async () => {
   const initialized = await mcp(1, "initialize", {
     protocolVersion: "2025-03-26",
@@ -612,12 +696,12 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.3.19");
+  assert.equal(initialized.result.serverInfo.version, "0.4.0");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
-  assert.equal(listed.result.tools.length, 12);
+  assert.equal(listed.result.tools.length, 16);
   const names = listed.result.tools.map((tool) => tool.name);
-  for (const name of ["search_fixes", "get_offer", "get_fix", "list_catalog", "audit_theme", "check_request", "check_submission"]) {
+  for (const name of ["search_fixes", "get_offer", "get_fix", "list_catalog", "audit_theme", "check_request", "check_submission", "list_services", "order_service", "check_service_order"]) {
     assert(names.includes(name), "MCP is missing " + name);
   }
   for (const tool of listed.result.tools) {
@@ -628,6 +712,12 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
   }
   assert.match(listed.result.tools.find((tool) => tool.name === "get_fix").description, /id alone/);
   assert.match(listed.result.tools.find((tool) => tool.name === "get_skill").description, /id alone/);
+  const serviceList = parseToolText(await mcp(11, "tools/call", {
+    name: "list_services",
+    arguments: {},
+  }));
+  assert.equal(serviceList.services.length, 4);
+  assert.equal(serviceList.services.find((service) => service.id === "codebase-review").priceUsd, "$249.00");
   const searched = parseToolText(await mcp(3, "tools/call", {
     name: "search_fixes",
     arguments: { query: 'DeclarationError: Function "mcopy" not found' },
@@ -693,7 +783,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     arguments: { submissionId: "not-a-submission-id" },
   }));
   assert.equal(invalidSubmission.error, "invalid-submission-id");
-  return "12 tools; search, direct fix, and direct bundle checkout plus signed offer and request gate work over MCP";
+  return "16 tools; search, fixes, bundles, services, signed offers, and request gates work over MCP";
 });
 
 const passed = results.filter((result) => result.ok);

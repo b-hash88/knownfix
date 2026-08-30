@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "KnownFix",
-    "version": "0.3.19",
+    "version": "0.4.0",
     "description": "38 cataloged fixes: 34 verified in production, 4 documented; 12 free in full. Paid delivery accepts signed Base USDC/Base Pay or exact-ETH offers plus the matching verified Base-mainnet proof.",
     "contact": {
       "url": "https://b-hash88.github.io/knownfix/"
@@ -65,7 +65,8 @@
                     "enum": [
                       "fix",
                       "skill",
-                      "audit"
+                      "audit",
+                      "service"
                     ]
                   },
                   "productId": {
@@ -200,6 +201,42 @@
         }
       }
     },
+    "/services": {
+      "get": {
+        "summary": "List fixed-scope professional review services",
+        "responses": {
+          "200": {
+            "description": "Scope, price, delivery window, privacy, and order contract"
+          }
+        }
+      }
+    },
+    "/service-orders": {
+      "post": {
+        "summary": "Create a private professional service order",
+        "responses": {
+          "201": {
+            "description": "Private ticket and order-bound USDC/ETH checkout"
+          },
+          "400": {
+            "description": "Invalid, private, or unauthorized target"
+          }
+        }
+      }
+    },
+    "/service-orders/status": {
+      "post": {
+        "summary": "Confirm payment or retrieve a private service order",
+        "responses": {
+          "200": {
+            "description": "Payment state, review progress, or completed report with SHA-256"
+          },
+          "404": {
+            "description": "Unknown private ticket"
+          }
+        }
+      }
+    },
     "/books": {
       "get": {
         "summary": "Server-rendered open ledger or JSON snapshot",
@@ -298,7 +335,8 @@
             "enum": [
               "fix",
               "skill",
-              "audit"
+              "audit",
+              "service"
             ]
           },
           "productId": {

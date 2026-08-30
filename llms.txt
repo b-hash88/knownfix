@@ -10,7 +10,18 @@ Inventory: 38 cataloged fixes: 34 verified in production, 4 documented; 12 free 
 
 ## Connect
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp
-  Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, audit_theme, submit_fix, check_submission, request_fix, check_request
+  Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, audit_theme, submit_fix, check_submission, request_fix, check_request, report_checkout_blocker, list_services, order_service, check_service_order
+
+## Professional review services
+- [Website Growth Audit](https://b-hash88.github.io/knownfix/services.html#website-growth-audit) - $149.00 USDC, 3 business days. Design, SEO, AEO/GEO, conversion, performance, and accessibility reviewed as one growth system.
+- [Codebase Review](https://b-hash88.github.io/knownfix/services.html#codebase-review) - $249.00 USDC, 4 business days. A senior-engineering review focused on defects, security boundaries, maintainability, tests, and release risk.
+- [Agent Commerce Audit](https://b-hash88.github.io/knownfix/services.html#agent-commerce-audit) - $199.00 USDC, 3 business days. Can an AI agent discover, understand, trust, buy from, and successfully use your service?
+- [Release Pipeline Review](https://b-hash88.github.io/knownfix/services.html#release-pipeline-review) - $129.00 USDC, 2 business days. A focused review of CI, publishing, provenance, secrets, and rollback readiness before the next release hurts.
+- Human checkout and private ticket retrieval: https://b-hash88.github.io/knownfix/services.html
+- Agent catalog and order contract: https://knownfix-backend-28.b-hash88.deno.net/services
+- Use list_services, then order_service with an authorized public target. Keep
+  the returned svc_ ticket and signed offer private. Confirm payment and later
+  retrieve the report with check_service_order.
 
 ## Buy a paid fix or skill
 1. For a paid fix, search_fixes already returns the diagnosis preview,

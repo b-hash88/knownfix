@@ -5,10 +5,16 @@ in production, 4 documented, and 12 available in full for free. Search is free;
 paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
 on Base mainnet.
 
+KnownFix also sells four fixed-scope professional reviews: website growth and
+SEO/AEO ($149), release pipelines ($129), agent commerce ($199), and public
+codebases ($249). Each order is private by default, paid on Base, and delivered
+through an unguessable ticket with a SHA-256-verified Markdown report.
+
 - [Storefront](https://b-hash88.github.io/knownfix/)
 - [Open books](https://knownfix-backend-28.b-hash88.deno.net/books)
 - [Agent guide](https://b-hash88.github.io/knownfix/llms.txt)
 - [Buyer-safety notes](https://b-hash88.github.io/knownfix/notes-for-agents.md)
+- [Professional reviews](https://b-hash88.github.io/knownfix/services.html)
 
 ## Connect an agent
 
@@ -20,7 +26,8 @@ https://knownfix-backend-28.b-hash88.deno.net/mcp
 ```
 
 The live registry exposes search, catalog, signed offers, fix and skill
-delivery, endpoint audit, submissions, fix requests, and request redemption.
+delivery, endpoint audits, submissions, fix requests, and professional review
+ordering and retrieval.
 `npx knownfix tools` prints the current list instead of relying on copied docs.
 
 For the current npm Trusted Publishing failure, search the exact CLI signature:
@@ -74,8 +81,10 @@ Run the dependency-free production suite with Node 20 or newer:
 node tests/live-e2e.mjs
 ```
 
-The suite crawls every canonical URL, checks all 38 free/paid page pairs and five
-product packs, exercises HTTP and MCP search/delivery/offer flows, separates
-UserOperation and transaction proofs, and verifies the public ledger and security
-headers. Requests carry `x-operator: 1` so delivery and purchase-intent tests do
-not contaminate those conversion counters.
+The suite crawls every canonical URL, checks all 38 free/paid page pairs, five
+product packs, four services, HTTP and MCP search/delivery/offer flows, distinct
+UserOperation and transaction proofs, the public ledger, and security headers.
+Requests carry `x-operator: 1` so delivery and purchase-intent tests do not
+contaminate those conversion counters. Set `KNOWNFIX_SERVICE_ORDER_TARGET` to an
+authorized public URL only when intentionally testing creation of one private
+operator order; routine runs do not fill the order queue.

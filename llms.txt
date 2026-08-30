@@ -10,7 +10,7 @@ Inventory: 38 cataloged fixes: 34 verified in production, 4 documented; 12 free 
 
 ## Connect
 - Remote MCP server (Streamable HTTP): https://knownfix-backend-28.b-hash88.deno.net/mcp
-  Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, audit_theme, submit_fix, check_submission, request_fix, check_request, report_checkout_blocker, list_services, order_service, check_service_order
+  Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, audit_theme, submit_fix, check_submission, request_fix, check_request, report_checkout_blocker, list_services, order_service, check_service_order, list_merch
 - Smithery listing: https://smithery.ai/servers/knownfix/knownfix
 
 ## Professional review services
@@ -24,6 +24,16 @@ Inventory: 38 cataloged fixes: 34 verified in production, 4 documented; 12 free 
 - Use list_services, then order_service with an authorized public target. Keep
   the returned svc_ ticket and signed offer private. Confirm payment and later
   retrieve the report with check_service_order.
+
+## Merch Store
+- [Visit the KnownFix Merch Store](https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=llms) or call list_merch for
+  fixed product ids and tracked links.
+- Current lines include TEST MY CLAIMS., Works on My Machine, /Make no mistake,
+  and the KnownFix debugging protocol.
+- Fourthwall handles garment options, localized price, tax, shipping,
+  fulfillment, and human checkout. KnownFix publishes only aggregate redirect
+  counts in https://knownfix-backend-28.b-hash88.deno.net/books, with no identity, referrer, IP address, or
+  checkout data.
 
 ## Buy a paid fix or skill
 1. For a paid fix, search_fixes already returns the diagnosis preview,

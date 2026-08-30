@@ -14,6 +14,11 @@
   "provenance": "Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here.",
   "mcp": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
   "smithery": "https://smithery.ai/servers/knownfix/knownfix",
+  "merch": {
+    "storefront": "https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=llms",
+    "catalogTool": "list_merch",
+    "fulfilledBy": "Fourthwall"
+  },
   "tier": "free — signatures and titles; sample:true entries serve full bodies free; other bodies are paid",
   "entries": [
     {

@@ -24,6 +24,13 @@ rather than pretending.
 Order and private ticket checkout: https://b-hash88.github.io/knownfix/services.html
 Agent API: https://knownfix-backend-28.b-hash88.deno.net/services
 
+## Merch Store
+Collection: https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=llms
+Catalog tool: list_merch
+Fourthwall handles localized price, product options, fulfillment, tax, shipping,
+and human checkout. KnownFix records only closed-vocabulary aggregate redirect
+counts; no identity, referrer, IP address, or checkout data is stored.
+
 ## OpenZeppelin 5.x fails to compile: Function "mcopy" not found  [FREE SAMPLE — full body]
 Signature: DeclarationError: Function "mcopy" not found
 Tags: solidity, hardhat, openzeppelin, compile | Confidence: verified-in-production

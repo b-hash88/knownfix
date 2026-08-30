@@ -17,6 +17,7 @@ HTML report backed by a SHA-256-verified Markdown source.
 - [Smithery listing](https://smithery.ai/servers/knownfix/knownfix)
 - [Buyer-safety notes](https://b-hash88.github.io/knownfix/notes-for-agents.md)
 - [Professional reviews](https://b-hash88.github.io/knownfix/services.html)
+- [Merch Store](https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-footer)
 - [Website First-Look Report](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $49
 - [Website SEO, AEO and growth audit](https://b-hash88.github.io/knownfix/services/website-growth-audit.html) - $149
 - [Public GitHub codebase review](https://b-hash88.github.io/knownfix/services/codebase-review.html) - $249
@@ -34,8 +35,8 @@ https://knownfix-backend-28.b-hash88.deno.net/mcp
 ```
 
 The live registry exposes search, catalog, signed offers, fix and skill
-delivery, endpoint audits, submissions, fix requests, and professional review
-ordering and retrieval.
+delivery, endpoint audits, submissions, fix requests, professional review
+ordering and retrieval, and a read-only apparel catalog through `list_merch`.
 `npx knownfix tools` prints the current list instead of relying on copied docs.
 The branded Smithery directory name is `knownfix/knownfix`.
 

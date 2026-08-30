@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "KnownFix",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "description": "38 cataloged fixes: 34 verified in production, 4 documented; 12 free in full. Paid delivery accepts signed Base USDC/Base Pay or exact-ETH offers plus the matching verified Base-mainnet proof.",
     "contact": {
       "url": "https://b-hash88.github.io/knownfix/"
@@ -233,6 +233,34 @@
           },
           "404": {
             "description": "Unknown private ticket"
+          }
+        }
+      }
+    },
+    "/go/merch": {
+      "get": {
+        "summary": "Redirect to the fixed KnownFix Fourthwall apparel store",
+        "parameters": [
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "product",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Fixed allowlisted Fourthwall redirect"
           }
         }
       }

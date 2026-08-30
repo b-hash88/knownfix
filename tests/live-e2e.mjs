@@ -635,7 +635,7 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
   assert.match(htmlResult.body, /id="nextExperiment"/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.12");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.13");
   assert.deepEqual(
     jsonResult.data.conversionFunnel.map((stage) => stage.key),
     ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],

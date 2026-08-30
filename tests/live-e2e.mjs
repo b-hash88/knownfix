@@ -15,7 +15,7 @@ const OPERATOR_HEADERS = {
   "x-operator": "1",
 };
 const DISCOVERY_DESCRIPTION =
-  "Fixes plus paid website, code, agent-commerce, and release reviews over MCP.";
+  "Verified fixes, professional reviews, and evidence-led apparel over MCP.";
 const results = [];
 
 async function check(name, fn) {
@@ -385,6 +385,7 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.match(robots.body, /Sitemap: https:\/\/b-hash88\.github\.io\/knownfix\/sitemap\.xml/);
   assert(llms.body.includes("get_offer"), "llms.txt is missing get_offer");
   assert(llms.body.includes("order_service"), "llms.txt is missing service ordering");
+  assert(llms.body.includes("list_merch"), "llms.txt is missing Merch Store discovery");
   assert(llms.body.includes("paymentOffer"), "llms.txt is missing the private offer credential");
   assert.match(llmsFull.body, /x-payment-offer/);
   assert.equal(staticMcpResult.data.servers[0].description, DISCOVERY_DESCRIPTION);
@@ -393,18 +394,51 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.equal(fareboxResult.data.offer.inventory, catalog.entries.length);
   assert.equal(fareboxResult.data.settlement.scheme, "signed-bearer-offer+base-payment");
   assert.equal(serverCardResult.data.authentication.required, false);
-  assert.equal(serverCardResult.data.tools.length, 16);
+  assert.equal(serverCardResult.data.tools.length, 17);
   assert(serverCardResult.data.tools.every((tool) => tool.inputSchema && tool.outputSchema && tool.annotations));
   assert.equal(fareboxResult.data.backend.acceptingPayments, true);
   assert.equal(fareboxResult.data.offer.perFix.payTo.toLowerCase(), TREASURY);
   assert.equal(fareboxResult.data.settlement.payTo.toLowerCase(), TREASURY);
-  assert.equal(openapiResult.data.info.version, "0.4.0");
+  assert.equal(openapiResult.data.info.version, "0.5.0");
   assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
   assert.match(openapiResult.data.paths["/fix/{id}"].get.responses["402"].description, /signed USDC and ETH checkout/);
-  for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/services", "/service-orders", "/service-orders/status", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
+  for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/services", "/service-orders", "/service-orders/status", "/go/merch", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
     assert(openapiResult.data.paths[path], "OpenAPI is missing " + path);
   }
   return "discovery and machine contracts agree";
+});
+
+await check("Merch Store links and fixed redirects are live", async () => {
+  const homepage = await text(STORE);
+  assert.match(homepage.body, /KnownFix Merch Store/);
+  assert.match(homepage.body, /Visit the Merch Store/);
+  assert.match(homepage.body, /KnownFix_20260829_Test-My-Claims-Campaign_IMG\.png/);
+  assert.match(homepage.body, /go\/merch\?source=site-home/);
+
+  const campaign = await request(new URL("KnownFix_20260829_Test-My-Claims-Campaign_IMG.png", STORE));
+  assert.equal(campaign.status, 200);
+  assert.equal(campaign.headers.get("content-type"), "image/png");
+
+  const redirect = async (path) => await fetch(API + path, {
+    headers: OPERATOR_HEADERS,
+    redirect: "manual",
+    signal: AbortSignal.timeout(20_000),
+  });
+  const [store, product, fallback] = await Promise.all([
+    redirect("/go/merch?source=site-home"),
+    redirect("/go/merch?source=mcp-list&product=test-my-claims-heavyweight-tee"),
+    redirect("/go/merch?source=untrusted&product=https%3A%2F%2Fevil.example"),
+  ]);
+  assert.equal(store.status, 302);
+  assert.equal(store.headers.get("location"), "https://knownfix-shop.fourthwall.com/");
+  assert.equal(product.status, 302);
+  assert.equal(
+    product.headers.get("location"),
+    "https://knownfix-shop.fourthwall.com/products/test-my-claims-knownfix-heavyweight-tee",
+  );
+  assert.equal(fallback.status, 302);
+  assert.equal(fallback.headers.get("location"), "https://knownfix-shop.fourthwall.com/");
+  return "public campaign image and allowlisted Fourthwall destinations verified";
 });
 
 await check("backend health, security headers, and CORS preflight", async () => {
@@ -667,6 +701,11 @@ await check("books HTML and JSON describe the same seven-stage funnel", async ()
     jsonResult.data.externalSalesSettledOnChain + jsonResult.data.operatorPaymentTests,
   );
   assert.equal(typeof jsonResult.data.intent.paywallHits, "number");
+  assert.match(htmlResult.body, /Merch Store redirects/);
+  assert.equal(typeof jsonResult.data.merch.redirects, "number");
+  assert.equal(typeof jsonResult.data.merch.bySource, "object");
+  assert.equal(typeof jsonResult.data.merch.byProduct, "object");
+  assert.match(jsonResult.data.merch.note, /no identity, referrer, IP address/i);
   return "funnel published at " + jsonResult.data.generatedAt;
 });
 
@@ -740,12 +779,12 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.4.0");
+  assert.equal(initialized.result.serverInfo.version, "0.5.0");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
-  assert.equal(listed.result.tools.length, 16);
+  assert.equal(listed.result.tools.length, 17);
   const names = listed.result.tools.map((tool) => tool.name);
-  for (const name of ["search_fixes", "get_offer", "get_fix", "list_catalog", "audit_theme", "check_request", "check_submission", "list_services", "order_service", "check_service_order"]) {
+  for (const name of ["search_fixes", "get_offer", "get_fix", "list_catalog", "audit_theme", "check_request", "check_submission", "list_services", "order_service", "check_service_order", "list_merch"]) {
     assert(names.includes(name), "MCP is missing " + name);
   }
   for (const tool of listed.result.tools) {
@@ -763,6 +802,13 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
   assert.equal(serviceList.services.length, 5);
   assert.equal(serviceList.services.find((service) => service.id === "website-first-look").priceUsd, "$49.00");
   assert.equal(serviceList.services.find((service) => service.id === "codebase-review").priceUsd, "$249.00");
+  const merchList = parseToolText(await mcp(12, "tools/call", {
+    name: "list_merch",
+    arguments: {},
+  }));
+  assert.equal(merchList.store, "KnownFix Merch Store");
+  assert.equal(merchList.products.length, 4);
+  assert(merchList.products.every((product) => product.url.startsWith(API + "/go/merch?source=mcp-list&product=")));
   const searched = parseToolText(await mcp(3, "tools/call", {
     name: "search_fixes",
     arguments: { query: 'DeclarationError: Function "mcopy" not found' },
@@ -828,7 +874,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     arguments: { submissionId: "not-a-submission-id" },
   }));
   assert.equal(invalidSubmission.error, "invalid-submission-id");
-  return "16 tools; search, fixes, bundles, services, signed offers, and request gates work over MCP";
+  return "17 tools; fixes, bundles, services, Merch Store, signed offers, and request gates work over MCP";
 });
 
 const passed = results.filter((result) => result.ok);

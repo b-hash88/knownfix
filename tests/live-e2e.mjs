@@ -710,22 +710,38 @@ await check("live chain verification rejects a successful payment to the wrong r
   return "successful Base transaction was read live and rejected for the wrong recipient";
 });
 
-await check("books HTML and JSON describe the same seven-stage funnel", async () => {
+await check("books HTML and JSON publish the store and Evidence Audit funnels", async () => {
   const [htmlResult, jsonResult] = await Promise.all([
     text(API + "/books", { headers: { accept: "text/html" } }),
     json(API + "/books?format=json"),
   ]);
   assert.equal(htmlResult.response.status, 200);
-  assert.match(htmlResult.body, /Conversion funnel/i);
+  assert.match(htmlResult.body, /Evidence Audit funnel/i);
+  assert.match(htmlResult.body, /Store conversion funnel/i);
+  assert.match(htmlResult.body, /id="service_funnel"/);
   assert.match(htmlResult.body, /id="nextExperiment"/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.13");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.14");
   assert.deepEqual(
     jsonResult.data.conversionFunnel.map((stage) => stage.key),
     ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
   );
   assert.equal(typeof jsonResult.data.nextExperiment, "string");
+  assert.deepEqual(
+    jsonResult.data.serviceFunnel.stages.map((stage) => stage.key),
+    ["qualifiedVisits", "diagnosticCompletions", "ordersCreated", "paymentConfirmed", "reportsDelivered", "implementationStarted"],
+  );
+  assert.equal(jsonResult.data.serviceFunnel.qualifiedVisits, undefined);
+  assert.equal(jsonResult.data.serviceFunnel.stages[0].value, null);
+  assert.equal(jsonResult.data.serviceFunnel.stages[5].value, null);
+  assert.equal(typeof jsonResult.data.serviceFunnel.ordersCreated, "number");
+  assert.equal(typeof jsonResult.data.serviceFunnel.paymentConfirmed, "number");
+  assert.equal(typeof jsonResult.data.serviceFunnel.reportsDelivered, "number");
+  assert.doesNotMatch(
+    JSON.stringify(jsonResult.data.serviceFunnel),
+    /"(?:targetUrl|ticket|paymentHash|buyer)"\s*:/,
+  );
   assert.equal(jsonResult.data.measurementWindow.spec, "knownfix-target-window/0.2");
   assert.equal(jsonResult.data.measurementWindow.days, 30);
   assert.equal(typeof jsonResult.data.measurementWindow.historyStartsOnOrBeforeWindow, "boolean");

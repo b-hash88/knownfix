@@ -1,0 +1,295 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"><meta name="description" content="A candid, reproducible review of KnownFix&#39;s design, SEO/AEO, agent readiness, performance, trust, and conversion path."><meta property="og:type" content="article"><meta property="og:site_name" content="KnownFix"><meta property="og:title" content="KnownFix Evidence Audit: Focused"><meta property="og:description" content="A candid, reproducible review of KnownFix&#39;s design, SEO/AEO, agent readiness, performance, trust, and conversion path."><meta property="og:url" content="https://b-hash88.github.io/knownfix/reports/KnownFix_20260830_Evidence-Audit-Sample_RPT.html"><meta property="og:image" content="https://b-hash88.github.io/knownfix/knownfix-icon.png"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="KnownFix Evidence Audit: Focused"><meta name="twitter:description" content="A candid, reproducible review of KnownFix&#39;s design, SEO/AEO, agent readiness, performance, trust, and conversion path."><meta name="twitter:image" content="https://b-hash88.github.io/knownfix/knownfix-icon.png"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>KnownFix Evidence Audit: Focused</title><link rel="canonical" href="https://b-hash88.github.io/knownfix/reports/KnownFix_20260830_Evidence-Audit-Sample_RPT.html"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Report","headline":"KnownFix Evidence Audit: Focused","name":"KnownFix Evidence Audit: Focused","description":"A candid, reproducible review of KnownFix's design, SEO/AEO, agent readiness, performance, trust, and conversion path.","datePublished":"2026-08-30","dateModified":"2026-08-30","mainEntityOfPage":"https://b-hash88.github.io/knownfix/reports/KnownFix_20260830_Evidence-Audit-Sample_RPT.html","publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"},"image":"https://b-hash88.github.io/knownfix/knownfix-icon.png"}</script><style>
+:root{color-scheme:light dark;--paper:#f2f4f1;--surface:#fafbf9;--ink:#151912;--muted:#5c6458;--rule:#cfd6cb;--soft:#e4e9e1;--accent:#12564e;--flag:#9a5b12;--danger:#8f3127}
+@media(prefers-color-scheme:dark){:root{--paper:#12150f;--surface:#181c15;--ink:#e3e8de;--muted:#98a292;--rule:#343c30;--soft:#222820;--accent:#6fc3b0;--flag:#d9a353;--danger:#f08a78}}
+*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.62 ui-serif,Georgia,Cambria,"Times New Roman",serif}header,main,footer{width:min(100% - 2rem,54rem);margin-inline:auto}header{padding:3.2rem 0 2rem;border-bottom:3px solid var(--ink)}.register{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0 0 2.2rem;color:var(--muted);font:700 .72rem/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;text-transform:uppercase}.register strong{color:var(--accent)}h1,h2,h3{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0}h1{max-width:18ch;margin:0;font-size:clamp(2.2rem,8vw,4.4rem);line-height:1}h2{margin:2.8rem 0 .8rem;padding-bottom:.42rem;border-bottom:1px solid var(--rule);font-size:1.55rem;line-height:1.2}h3{margin:2rem 0 .45rem;font-size:1.08rem;line-height:1.3}.summary{max-width:48rem;margin:1.2rem 0 0;color:var(--muted);font-size:1.16rem}.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:2rem 0 0}.meta div{padding-top:.55rem;border-top:1px solid var(--rule)}.meta dt{color:var(--muted);font:700 .66rem/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;text-transform:uppercase}.meta dd{margin:.2rem 0 0;overflow-wrap:anywhere;font:600 .82rem/1.45 ui-sans-serif,system-ui,sans-serif}main{padding:1rem 0 3rem}p,li{max-width:48rem}strong{font-weight:700}a{color:var(--accent)}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{padding:.08rem .26rem;border-radius:3px;background:var(--soft);font-size:.86em}pre{overflow:auto;padding:1rem;border:1px solid var(--rule);border-radius:4px;background:var(--surface);font-size:.78rem;line-height:1.55}pre code{padding:0;background:none}blockquote{margin:1.4rem 0;padding:.15rem 1rem;border-left:4px solid var(--flag);color:var(--muted);font-size:1.08rem}ul,ol{padding-left:1.35rem}li{margin:.35rem 0}hr{border:0;border-top:1px solid var(--rule);margin:2.5rem 0}details{margin:2rem 0 0;border-top:1px solid var(--rule);padding-top:1rem}summary{cursor:pointer;color:var(--accent);font:700 .78rem ui-sans-serif,system-ui,sans-serif}footer{padding:1.5rem 0 3rem;border-top:2px solid var(--ink);color:var(--muted);font-size:.82rem}.digest{overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+@media(max-width:38rem){header{padding-top:2rem}.meta{grid-template-columns:1fr}.register{display:block}.register span{display:block;margin-top:.35rem}}
+@media print{:root{color-scheme:light;--paper:#fff;--surface:#fff;--ink:#000;--muted:#333;--rule:#bbb;--soft:#eee;--accent:#0d5148;--flag:#80500f}body{font-size:11pt}header,main,footer{width:100%}header{padding-top:0}details{display:none}h2,h3{break-after:avoid}pre,blockquote,li{break-inside:avoid}}
+</style></head><body><header><p class="register"><strong>KnownFix evidence report</strong><span>Public Evidence Audit sample</span></p><h1>KnownFix Evidence Audit: Focused</h1><p class="summary">A candid, reproducible review of KnownFix&#39;s design, SEO/AEO, agent readiness, performance, trust, and conversion path.</p><dl class="meta"><div><dt>Completed</dt><dd>2026-08-30</dd></div><div><dt>Format</dt><dd>Portable HTML + Markdown source</dd></div><div><dt>Integrity</dt><dd>SHA-256 verified</dd></div></dl></header><main><ul><li><strong>Sample target:</strong> <code>https://b-hash88.github.io/knownfix/</code></li><li><strong>Review date:</strong> 2026-08-30</li><li><strong>Scope:</strong> Homepage, service catalog, focused audit detail, public books, and free diagnostic response</li><li><strong>Purpose:</strong> Public self-audit showing the evidence, prioritization, and implementation detail a customer receives</li><li><strong>Important:</strong> This is a demonstration using KnownFix&#39;s own public property. It is not a customer endorsement.</li></ul>
+<h2>Executive Verdict</h2>
+<p>KnownFix has unusually strong machine-readable evidence and transparent transaction boundaries, but its commercial path still asks a human buyer to understand the infrastructure before seeing a conventional way to pay. The launch candidate makes the Evidence Audit the primary offer and publishes a clear <code>$149 -&gt; $399 -&gt; $750+</code> ladder. That resolves offer ambiguity. The highest remaining constraint is checkout: Base USDC and exact ETH are real and verifiable, while card payment still requires a manual request.</p>
+<p><strong>Decision:</strong> The offer is ready for a three-customer founder-rate campaign. Do not buy traffic yet. First close and deliver three audits, publish anonymized outcomes with permission, and measure the complete path from qualified visit to implementation.</p>
+<h2>Scorecard</h2>
+<ul><li><strong>Offer clarity - 8/10:</strong> One named flagship, visible scope ladder, fixed prices, and clear boundaries.</li><li><strong>Design and trust - 7/10:</strong> Distinct evidence-led visual system; little customer proof yet.</li><li><strong>Technical SEO - 8/10:</strong> Canonicals, crawl controls, service URLs, sitemap, and structured service data are present.</li><li><strong>AEO/GEO - 8/10:</strong> Direct answers, machine-readable catalog, <code>llms.txt</code>, and MCP capability surfaces are strong.</li><li><strong>Agent readiness - 9/10:</strong> Public MCP, tool contracts, discovery files, signed offers, and public books are unusually complete.</li><li><strong>Performance - 7/10:</strong> Static delivery is lean; remote font dependencies remain on the critical path.</li><li><strong>Conversion - 5/10:</strong> Focused CTA and sample report are strong; direct human card checkout is not automated.</li></ul>
+<p>Scores summarize the reviewed evidence. They are not ranking predictions or guarantees.</p>
+<h2>Method</h2>
+<ol><li>Load the reviewed public pages at desktop and mobile widths.</li><li>Record the visible promise, primary action, trust evidence, and payment path.</li><li>Inspect titles, descriptions, canonicals, robots directives, headings, structured data, discovery files, and public capability contracts.</li><li>Follow the free diagnostic and paid-order paths without submitting payment.</li><li>Tie each finding to a reproducible observation, then rank it by likely impact, confidence, and effort.</li></ol>
+<p>Excluded: authenticated analytics, private administration, penetration testing, exhaustive crawling, legal compliance certification, and paid transaction settlement.</p>
+<h2>Priority Findings</h2>
+<h3>KF-EA-01 - Human checkout stops at a manual card request</h3>
+<ul><li><strong>Priority:</strong> P0</li><li><strong>Confidence:</strong> High</li><li><strong>Likely impact:</strong> High</li><li><strong>Effort:</strong> Medium</li></ul>
+<p><strong>Observation</strong></p>
+<p>The service catalog creates a private order and generates signed Base USDC and exact-ETH offers. A human who prefers a card is sent to an email request rather than a hosted checkout session.</p>
+<p><strong>Reproduce</strong></p>
+<ol><li>Open <code>/services.html</code>.</li><li>Choose the Focused Evidence Audit.</li><li>Compare the automated Base checkout controls with the card path.</li><li>Confirm that the card path leaves the purchase flow before payment.</li></ol>
+<p><strong>Why it matters</strong></p>
+<p>Human founders are the primary buyer. Every extra step between intent and payment increases abandonment, especially for a first purchase from an unfamiliar provider.</p>
+<p><strong>Recommendation</strong></p>
+<p>Connect a Canadian-supported payment processor and use a product-bound hosted checkout link for each audit tier. On successful payment, create or reconcile the private service order and send the buyer a recoverable receipt. Preserve the existing Base path for agent and crypto-native buyers.</p>
+<p><strong>Verification</strong></p>
+<p>A new browser session can select the <code>$149</code> audit, pay by card, receive a receipt and retrieval path, and appear in the private order system without manual email exchange.</p>
+<h3>KF-EA-02 - Expertise is demonstrated, but customer proof is absent</h3>
+<ul><li><strong>Priority:</strong> P0</li><li><strong>Confidence:</strong> High</li><li><strong>Likely impact:</strong> High</li><li><strong>Effort:</strong> Medium</li></ul>
+<p><strong>Observation</strong></p>
+<p>The site publishes scopes, technical contracts, public books, and this self-audit. It does not yet show a customer-authorized case study, before-and-after result, or attributed buyer statement.</p>
+<p><strong>Reproduce</strong></p>
+<ol><li>Open the homepage and service catalog.</li><li>Search for a customer outcome, case study, or testimonial.</li><li>Confirm that the evidence currently describes KnownFix&#39;s own systems and sample work.</li></ol>
+<p><strong>Why it matters</strong></p>
+<p>Operational transparency answers &quot;is this real?&quot; but not yet &quot;will this help a company like mine?&quot;</p>
+<p><strong>Recommendation</strong></p>
+<p>Sell three founder-rate audits. Ask each buyer for permission to publish an anonymized problem, the highest-value finding, the implemented change, and the verified delta. Never manufacture a quote or imply an outcome that was not measured.</p>
+<p><strong>Verification</strong></p>
+<p>At least one public case study includes a dated baseline, implemented change, after-state evidence, scope limitations, and explicit publication permission.</p>
+<h3>KF-EA-03 - The storefront and operational ledger feel like two products</h3>
+<ul><li><strong>Priority:</strong> P1</li><li><strong>Confidence:</strong> High</li><li><strong>Likely impact:</strong> Medium</li><li><strong>Effort:</strong> Medium</li></ul>
+<p><strong>Observation</strong></p>
+<p>The static storefront is served from GitHub Pages while books, order APIs, redirects, and diagnostics are served from a Deno backend. The architecture is legitimate, but navigation crosses domains and visual contexts.</p>
+<p><strong>Reproduce</strong></p>
+<ol><li>Open the homepage.</li><li>Select <code>Open books</code>.</li><li>Record the hostname and compare the navigation, typography, and return path.</li></ol>
+<p><strong>Why it matters</strong></p>
+<p>Domain and visual continuity are trust signals during a paid decision. The split also makes analytics attribution and recovery paths harder to explain.</p>
+<p><strong>Recommendation</strong></p>
+<p>Keep the services separated internally, but place the public surfaces behind one branded domain when revenue justifies it. Until then, use consistent navigation, styling, entity names, and cross-domain analytics.</p>
+<p><strong>Verification</strong></p>
+<p>A buyer can move from offer to books to checkout and back without losing brand context, source attribution, or a clear route to the order.</p>
+<h3>KF-EA-04 - The free diagnostic is machine-useful but human-unfriendly</h3>
+<ul><li><strong>Priority:</strong> P1</li><li><strong>Confidence:</strong> High</li><li><strong>Likely impact:</strong> Medium</li><li><strong>Effort:</strong> Low</li></ul>
+<p><strong>Observation</strong></p>
+<p>The free agent-readiness diagnostic exposes structured JSON. That is ideal for agents and debugging, but it does not give a human prospect a short verdict, a visual pass/fail summary, or a natural next step.</p>
+<p><strong>Reproduce</strong></p>
+<ol><li>Submit a public URL through the free diagnostic form.</li><li>Observe the raw response document.</li><li>Identify the next action a nontechnical founder is expected to take.</li></ol>
+<p><strong>Recommendation</strong></p>
+<p>Preserve JSON as the canonical response and add an optional human-readable result view. Show only verified checks, explain uncertainty, and connect relevant failures to the Focused Evidence Audit without using an inflated composite score.</p>
+<p><strong>Verification</strong></p>
+<p>The same test URL produces equivalent JSON evidence plus a readable summary with clear pass, fail, unavailable, and next-step states.</p>
+<h3>KF-EA-05 - External fonts add a fragile dependency to an otherwise lean static page</h3>
+<ul><li><strong>Priority:</strong> P2</li><li><strong>Confidence:</strong> High</li><li><strong>Likely impact:</strong> Low to medium</li><li><strong>Effort:</strong> Low</li></ul>
+<p><strong>Observation</strong></p>
+<p>The storefront requests Archivo, JetBrains Mono, and Newsreader from Google Fonts. The page has sensible local fallbacks, but the remote stylesheet and font files add network requests and a third-party availability dependency.</p>
+<p><strong>Reproduce</strong></p>
+<ol><li>Load the homepage with the browser network panel open.</li><li>Filter for <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>.</li><li>Block those domains and confirm that the fallback stack renders.</li></ol>
+<p><strong>Recommendation</strong></p>
+<p>Self-host a small WOFF2 subset or keep the current fallback strategy and document the tradeoff. Re-test layout metrics after any font change.</p>
+<p><strong>Verification</strong></p>
+<p>Critical text renders immediately under a cold load, no third-party font request blocks first paint, and headings and controls do not shift or overflow at mobile widths.</p>
+<h2>What Is Already Strong</h2>
+<ul><li>The offer has explicit scope, exclusions, price, delivery window, and no-guarantee language.</li><li>Each service has a dedicated, indexable URL with direct-answer FAQs and structured service data.</li><li>The MCP catalog exposes the same service definitions used by the browser checkout.</li><li>Payment offers bind product, amount, recipient, chain, expiry, and intent before funds move.</li><li>Private tickets separate order retrieval from public books and public work queues.</li><li>Completed reports include a SHA-256 digest for the Markdown source.</li><li>The public ledger distinguishes operational evidence from marketing claims.</li></ul>
+<h2>14-Day Implementation Plan</h2>
+<ol><li><strong>Day 1 - Publish the audit ladder.</strong> Complete when live pages show <code>$149</code>, <code>$399</code>, and <code>$750+</code> paths consistently.</li><li><strong>Day 2 - Publish this sample report.</strong> Complete when the canonical report URL is indexable and linked from the primary offer.</li><li><strong>Day 3 - Complete the card checkout design.</strong> Document the processor, tax treatment, receipt, refund, and order reconciliation.</li><li><strong>Days 4-6 - Research 20 high-fit developer-tool prospects.</strong> Require one public, reproducible finding and source URL for every record.</li><li><strong>Days 7-10 - Send concise founder outreach.</strong> Every message leads with the finding, not a generic pitch.</li><li><strong>Days 11-14 - Close and schedule three founder-rate audits.</strong> Record payment and delivery dates; never fabricate social proof.</li></ol>
+<h2>Measurement Contract</h2>
+<p>Track the service funnel as discrete events:</p>
+<ol><li><code>qualified_visit</code> - service or sample page viewed from a relevant source.</li><li><code>free_diagnostic_complete</code> - a valid public target produces a result.</li><li><code>service_select</code> - a buyer selects Focused or Comprehensive.</li><li><code>checkout_start</code> - a product-bound payment session or signed offer is opened.</li><li><code>payment_confirmed</code> - settlement is verified and joined to the order.</li><li><code>report_delivered</code> - the buyer retrieves a digest-verified report.</li><li><code>implementation_started</code> - a remediation scope is accepted.</li></ol>
+<p>The business metric is the transition rate and time between these stages, segmented by source. Page views and followers are supporting signals, not the objective.</p>
+<h2>Boundary</h2>
+<p>This report describes public evidence observed on the review date. Search behavior, AI citations, rankings, traffic, and conversion outcomes can change for reasons outside the reviewed site. Recommendations are hypotheses until implemented and measured. Test these claims.</p><details><summary>View immutable Markdown source</summary><pre><code># KnownFix Evidence Audit: Focused
+
+- **Sample target:** `https://b-hash88.github.io/knownfix/`
+- **Review date:** 2026-08-30
+- **Scope:** Homepage, service catalog, focused audit detail, public books, and free diagnostic response
+- **Purpose:** Public self-audit showing the evidence, prioritization, and implementation detail a customer receives
+- **Important:** This is a demonstration using KnownFix&#39;s own public property. It is not a customer endorsement.
+
+## Executive Verdict
+
+KnownFix has unusually strong machine-readable evidence and transparent transaction boundaries, but its commercial path still asks a human buyer to understand the infrastructure before seeing a conventional way to pay. The launch candidate makes the Evidence Audit the primary offer and publishes a clear `$149 -&gt; $399 -&gt; $750+` ladder. That resolves offer ambiguity. The highest remaining constraint is checkout: Base USDC and exact ETH are real and verifiable, while card payment still requires a manual request.
+
+**Decision:** The offer is ready for a three-customer founder-rate campaign. Do not buy traffic yet. First close and deliver three audits, publish anonymized outcomes with permission, and measure the complete path from qualified visit to implementation.
+
+## Scorecard
+
+- **Offer clarity - 8/10:** One named flagship, visible scope ladder, fixed prices, and clear boundaries.
+- **Design and trust - 7/10:** Distinct evidence-led visual system; little customer proof yet.
+- **Technical SEO - 8/10:** Canonicals, crawl controls, service URLs, sitemap, and structured service data are present.
+- **AEO/GEO - 8/10:** Direct answers, machine-readable catalog, `llms.txt`, and MCP capability surfaces are strong.
+- **Agent readiness - 9/10:** Public MCP, tool contracts, discovery files, signed offers, and public books are unusually complete.
+- **Performance - 7/10:** Static delivery is lean; remote font dependencies remain on the critical path.
+- **Conversion - 5/10:** Focused CTA and sample report are strong; direct human card checkout is not automated.
+
+Scores summarize the reviewed evidence. They are not ranking predictions or guarantees.
+
+## Method
+
+1. Load the reviewed public pages at desktop and mobile widths.
+2. Record the visible promise, primary action, trust evidence, and payment path.
+3. Inspect titles, descriptions, canonicals, robots directives, headings, structured data, discovery files, and public capability contracts.
+4. Follow the free diagnostic and paid-order paths without submitting payment.
+5. Tie each finding to a reproducible observation, then rank it by likely impact, confidence, and effort.
+
+Excluded: authenticated analytics, private administration, penetration testing, exhaustive crawling, legal compliance certification, and paid transaction settlement.
+
+## Priority Findings
+
+### KF-EA-01 - Human checkout stops at a manual card request
+
+- **Priority:** P0
+- **Confidence:** High
+- **Likely impact:** High
+- **Effort:** Medium
+
+**Observation**
+
+The service catalog creates a private order and generates signed Base USDC and exact-ETH offers. A human who prefers a card is sent to an email request rather than a hosted checkout session.
+
+**Reproduce**
+
+1. Open `/services.html`.
+2. Choose the Focused Evidence Audit.
+3. Compare the automated Base checkout controls with the card path.
+4. Confirm that the card path leaves the purchase flow before payment.
+
+**Why it matters**
+
+Human founders are the primary buyer. Every extra step between intent and payment increases abandonment, especially for a first purchase from an unfamiliar provider.
+
+**Recommendation**
+
+Connect a Canadian-supported payment processor and use a product-bound hosted checkout link for each audit tier. On successful payment, create or reconcile the private service order and send the buyer a recoverable receipt. Preserve the existing Base path for agent and crypto-native buyers.
+
+**Verification**
+
+A new browser session can select the `$149` audit, pay by card, receive a receipt and retrieval path, and appear in the private order system without manual email exchange.
+
+### KF-EA-02 - Expertise is demonstrated, but customer proof is absent
+
+- **Priority:** P0
+- **Confidence:** High
+- **Likely impact:** High
+- **Effort:** Medium
+
+**Observation**
+
+The site publishes scopes, technical contracts, public books, and this self-audit. It does not yet show a customer-authorized case study, before-and-after result, or attributed buyer statement.
+
+**Reproduce**
+
+1. Open the homepage and service catalog.
+2. Search for a customer outcome, case study, or testimonial.
+3. Confirm that the evidence currently describes KnownFix&#39;s own systems and sample work.
+
+**Why it matters**
+
+Operational transparency answers &quot;is this real?&quot; but not yet &quot;will this help a company like mine?&quot;
+
+**Recommendation**
+
+Sell three founder-rate audits. Ask each buyer for permission to publish an anonymized problem, the highest-value finding, the implemented change, and the verified delta. Never manufacture a quote or imply an outcome that was not measured.
+
+**Verification**
+
+At least one public case study includes a dated baseline, implemented change, after-state evidence, scope limitations, and explicit publication permission.
+
+### KF-EA-03 - The storefront and operational ledger feel like two products
+
+- **Priority:** P1
+- **Confidence:** High
+- **Likely impact:** Medium
+- **Effort:** Medium
+
+**Observation**
+
+The static storefront is served from GitHub Pages while books, order APIs, redirects, and diagnostics are served from a Deno backend. The architecture is legitimate, but navigation crosses domains and visual contexts.
+
+**Reproduce**
+
+1. Open the homepage.
+2. Select `Open books`.
+3. Record the hostname and compare the navigation, typography, and return path.
+
+**Why it matters**
+
+Domain and visual continuity are trust signals during a paid decision. The split also makes analytics attribution and recovery paths harder to explain.
+
+**Recommendation**
+
+Keep the services separated internally, but place the public surfaces behind one branded domain when revenue justifies it. Until then, use consistent navigation, styling, entity names, and cross-domain analytics.
+
+**Verification**
+
+A buyer can move from offer to books to checkout and back without losing brand context, source attribution, or a clear route to the order.
+
+### KF-EA-04 - The free diagnostic is machine-useful but human-unfriendly
+
+- **Priority:** P1
+- **Confidence:** High
+- **Likely impact:** Medium
+- **Effort:** Low
+
+**Observation**
+
+The free agent-readiness diagnostic exposes structured JSON. That is ideal for agents and debugging, but it does not give a human prospect a short verdict, a visual pass/fail summary, or a natural next step.
+
+**Reproduce**
+
+1. Submit a public URL through the free diagnostic form.
+2. Observe the raw response document.
+3. Identify the next action a nontechnical founder is expected to take.
+
+**Recommendation**
+
+Preserve JSON as the canonical response and add an optional human-readable result view. Show only verified checks, explain uncertainty, and connect relevant failures to the Focused Evidence Audit without using an inflated composite score.
+
+**Verification**
+
+The same test URL produces equivalent JSON evidence plus a readable summary with clear pass, fail, unavailable, and next-step states.
+
+### KF-EA-05 - External fonts add a fragile dependency to an otherwise lean static page
+
+- **Priority:** P2
+- **Confidence:** High
+- **Likely impact:** Low to medium
+- **Effort:** Low
+
+**Observation**
+
+The storefront requests Archivo, JetBrains Mono, and Newsreader from Google Fonts. The page has sensible local fallbacks, but the remote stylesheet and font files add network requests and a third-party availability dependency.
+
+**Reproduce**
+
+1. Load the homepage with the browser network panel open.
+2. Filter for `fonts.googleapis.com` and `fonts.gstatic.com`.
+3. Block those domains and confirm that the fallback stack renders.
+
+**Recommendation**
+
+Self-host a small WOFF2 subset or keep the current fallback strategy and document the tradeoff. Re-test layout metrics after any font change.
+
+**Verification**
+
+Critical text renders immediately under a cold load, no third-party font request blocks first paint, and headings and controls do not shift or overflow at mobile widths.
+
+## What Is Already Strong
+
+- The offer has explicit scope, exclusions, price, delivery window, and no-guarantee language.
+- Each service has a dedicated, indexable URL with direct-answer FAQs and structured service data.
+- The MCP catalog exposes the same service definitions used by the browser checkout.
+- Payment offers bind product, amount, recipient, chain, expiry, and intent before funds move.
+- Private tickets separate order retrieval from public books and public work queues.
+- Completed reports include a SHA-256 digest for the Markdown source.
+- The public ledger distinguishes operational evidence from marketing claims.
+
+## 14-Day Implementation Plan
+
+1. **Day 1 - Publish the audit ladder.** Complete when live pages show `$149`, `$399`, and `$750+` paths consistently.
+2. **Day 2 - Publish this sample report.** Complete when the canonical report URL is indexable and linked from the primary offer.
+3. **Day 3 - Complete the card checkout design.** Document the processor, tax treatment, receipt, refund, and order reconciliation.
+4. **Days 4-6 - Research 20 high-fit developer-tool prospects.** Require one public, reproducible finding and source URL for every record.
+5. **Days 7-10 - Send concise founder outreach.** Every message leads with the finding, not a generic pitch.
+6. **Days 11-14 - Close and schedule three founder-rate audits.** Record payment and delivery dates; never fabricate social proof.
+
+## Measurement Contract
+
+Track the service funnel as discrete events:
+
+1. `qualified_visit` - service or sample page viewed from a relevant source.
+2. `free_diagnostic_complete` - a valid public target produces a result.
+3. `service_select` - a buyer selects Focused or Comprehensive.
+4. `checkout_start` - a product-bound payment session or signed offer is opened.
+5. `payment_confirmed` - settlement is verified and joined to the order.
+6. `report_delivered` - the buyer retrieves a digest-verified report.
+7. `implementation_started` - a remediation scope is accepted.
+
+The business metric is the transition rate and time between these stages, segmented by source. Page views and followers are supporting signals, not the objective.
+
+## Boundary
+
+This report describes public evidence observed on the review date. Search behavior, AI citations, rankings, traffic, and conversion outcomes can change for reasons outside the reviewed site. Recommendations are hypotheses until implemented and measured. Test these claims.
+</code></pre></details></main><footer><p>KnownFix reports describe observed evidence within a published scope. They do not guarantee rankings, revenue, security, legal compliance, or the absence of undiscovered defects.</p><p class="digest">Markdown SHA-256: 1d344454d64f17eb39fc996c0bfa461739d40fe747e60c96e15d9fe96c28f7ea</p></footer></body></html>

@@ -14,8 +14,8 @@ Inventory: 38 cataloged fixes: 34 verified in production, 4 documented; 12 free 
 - Smithery listing: https://smithery.ai/servers/knownfix/knownfix
 
 ## Professional review services
-- [Website First-Look Report](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $49.00 USDC, 2 business days. A focused review of the first impression, offer, trust, mobile experience, and path to action.
-- [Website Growth Audit](https://b-hash88.github.io/knownfix/services/website-growth-audit.html) - $149.00 USDC, 3 business days. Design, SEO, AEO/GEO, conversion, performance, and accessibility reviewed as one growth system.
+- [KnownFix Evidence Audit: Focused](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $149.00 USDC, 3 business days. A rigorous, bounded review of the design, trust, SEO/AEO, performance, and conversion evidence that matters first.
+- [KnownFix Evidence Audit: Comprehensive](https://b-hash88.github.io/knownfix/services/website-growth-audit.html) - $399.00 USDC, 5 business days. Design, SEO, AEO/GEO, agent readiness, conversion, performance, and accessibility reviewed as one growth system.
 - [Codebase Review](https://b-hash88.github.io/knownfix/services/codebase-review.html) - $249.00 USDC, 4 business days. A senior-engineering review focused on defects, security boundaries, maintainability, tests, and release risk.
 - [Agent Commerce Audit](https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html) - $199.00 USDC, 3 business days. Can an AI agent discover, understand, trust, buy from, and successfully use your service?
 - [Release Pipeline Review](https://b-hash88.github.io/knownfix/services/release-pipeline-review.html) - $129.00 USDC, 2 business days. A focused review of CI, publishing, provenance, secrets, and rollback readiness before the next release hurts.

@@ -5,9 +5,9 @@ in production, 4 documented, and 12 available in full for free. Search is free;
 paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
 on Base mainnet.
 
-KnownFix also sells five fixed-scope professional reviews: a website first-look
-report ($49), website growth and SEO/AEO ($149), release pipelines ($129), agent
-commerce ($199), and public codebases ($249). Each order is private by default,
+KnownFix also sells five fixed-scope professional reviews, led by the KnownFix
+Evidence Audit: Focused ($149) and Comprehensive ($399), plus release pipelines
+($129), agent commerce ($199), and public codebases ($249). Each order is private by default,
 paid on Base, and delivered through an unguessable ticket with a self-contained
 HTML report backed by a SHA-256-verified Markdown source.
 
@@ -18,12 +18,12 @@ HTML report backed by a SHA-256-verified Markdown source.
 - [Buyer-safety notes](https://b-hash88.github.io/knownfix/notes-for-agents.md)
 - [Professional reviews](https://b-hash88.github.io/knownfix/services.html)
 - [Merch Store](https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-footer)
-- [Website First-Look Report](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $49
-- [Website SEO, AEO and growth audit](https://b-hash88.github.io/knownfix/services/website-growth-audit.html) - $149
+- [Focused Evidence Audit](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $149
+- [Comprehensive Evidence Audit](https://b-hash88.github.io/knownfix/services/website-growth-audit.html) - $399
 - [Public GitHub codebase review](https://b-hash88.github.io/knownfix/services/codebase-review.html) - $249
 - [AI agent-commerce and MCP checkout audit](https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html) - $199
 - [GitHub Actions and release-pipeline review](https://b-hash88.github.io/knownfix/services/release-pipeline-review.html) - $129
-- [Public first-look sample report](https://b-hash88.github.io/knownfix/reports/KnownFix_20260829_Website-First-Look-Sample_RPT.html)
+- [Public Evidence Audit sample](https://b-hash88.github.io/knownfix/reports/KnownFix_20260830_Evidence-Audit-Sample_RPT.html)
 
 ## Connect an agent
 

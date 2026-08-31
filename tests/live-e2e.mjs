@@ -157,13 +157,15 @@ await check("storefront metadata and truthful inventory", async () => {
 await check("professional service page is private, structured, and checkout-ready", async () => {
   const { response, body } = await text(new URL("services.html", STORE));
   assert.equal(response.status, 200);
-  assert.match(body, /Reviews built to survive scrutiny/);
+  assert.match(body, /Evidence before advice/);
   assert.match(body, /id="order-form"/);
   assert.match(body, /authorizationConfirmed/);
   assert.match(body, /publishTarget/);
   assert.match(body, /knownfix-payment-offer\/2\.0/);
   assert.match(body, /@base-org\/account@2\.5\.10/);
-  assert.match(body, /Start with the \$49 review/);
+  assert.match(body, /Book the \$149 focused audit/);
+  assert.match(body, /Request a card checkout link/);
+  assert.match(body, /id="free-diagnostic"/);
   assert.match(body, /services\/website-first-look\.html/);
   assert.match(body, /new URLSearchParams\(location\.search\)/);
   assert.match(body, /id="report-preview"[^>]+sandbox=""/);
@@ -194,7 +196,7 @@ await check("professional service page is private, structured, and checkout-read
     assertAnalyticsBoundary(detail.body, "service detail " + service.id);
     assert(detail.body.includes(`data-knownfix-context="${service.id}"`));
   }
-  const sampleName = "KnownFix_20260829_Website-First-Look-Sample_RPT";
+  const sampleName = "KnownFix_20260830_Evidence-Audit-Sample_RPT";
   const [sampleHtml, sampleMarkdown] = await Promise.all([
     text(new URL("reports/" + sampleName + ".html", STORE)),
     text(new URL("reports/" + sampleName + ".md", STORE)),
@@ -849,7 +851,8 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     arguments: {},
   }));
   assert.equal(serviceList.services.length, 5);
-  assert.equal(serviceList.services.find((service) => service.id === "website-first-look").priceUsd, "$49.00");
+  assert.equal(serviceList.services.find((service) => service.id === "website-first-look").priceUsd, "$149.00");
+  assert.equal(serviceList.services.find((service) => service.id === "website-growth-audit").priceUsd, "$399.00");
   assert.equal(serviceList.services.find((service) => service.id === "codebase-review").priceUsd, "$249.00");
   const merchList = parseToolText(await mcp(12, "tools/call", {
     name: "list_merch",

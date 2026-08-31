@@ -809,7 +809,7 @@ await check("professional service API preserves private order boundaries", async
   assert.match(created.data.ticket, /^svc_[0-9a-f]{32}$/);
   assert.equal(created.data.purchase.checkout, "ready");
   assert.equal(created.data.purchase.signedOffers.USDC.productType, "service");
-  assert.equal(created.data.purchase.signedOffers.USDC.amountUsdc, "49.00");
+  assert.equal(created.data.purchase.signedOffers.USDC.amountUsdc, "149.00");
   assert.equal(created.data.purchase.signedOffers.USDC.redemption.proofType, "erc-4337-user-operation-hash");
   assert.equal(created.data.purchase.signedOffers.ETH.redemption.proofType, "transaction-hash");
   assert.equal(created.data.purchase.signedOffers.USDC.productId, created.data.purchase.signedOffers.ETH.productId);

@@ -165,6 +165,8 @@ await check("professional service page is private, structured, and checkout-read
   assert.match(body, /@base-org\/account@2\.5\.10/);
   assert.match(body, /Book the \$149 focused audit/);
   assert.match(body, /Request a card checkout link/);
+  assert.match(body, /mailto:knownfix\.agent@gmail\.com/);
+  assert.doesNotMatch(body, /knownfix\.ai@gmail\.com/);
   assert.match(body, /id="free-diagnostic"/);
   assert.match(body, /services\/website-first-look\.html/);
   assert.match(body, /new URLSearchParams\(location\.search\)/);
@@ -507,6 +509,11 @@ await check("backend health, security headers, and CORS preflight", async () => 
   assert.equal(data.paymentRailReadiness.USDC.ready, true);
   assert.equal(data.paymentRailReadiness.ETH.ready, true);
   assert.equal(data.paymentStatus, "ready");
+  assert.equal(typeof data.operatorNotifications.enabled, "boolean");
+  assert.equal(
+    data.operatorNotifications.provider,
+    data.operatorNotifications.enabled ? "resend" : null,
+  );
   assert.equal(response.headers.get("cache-control"), "no-store");
   assert(response.headers.has("content-security-policy"));
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
@@ -722,7 +729,17 @@ await check("books HTML and JSON publish the store and Evidence Audit funnels", 
   assert.match(htmlResult.body, /id="nextExperiment"/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.14");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.15");
+  assert.equal(typeof jsonResult.data.operatorNotifications.enabled, "boolean");
+  assert.equal(
+    jsonResult.data.operatorNotifications.provider,
+    jsonResult.data.operatorNotifications.enabled ? "resend" : null,
+  );
+  assert.deepEqual(jsonResult.data.operatorNotifications.events, [
+    "service-payment-confirmed",
+    "service-report-delivered",
+  ]);
+  assert.match(jsonResult.data.operatorNotifications.privacy, /exclude/i);
   assert.deepEqual(
     jsonResult.data.conversionFunnel.map((stage) => stage.key),
     ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],

@@ -440,7 +440,7 @@ await check("robots, agent docs, offer document, server card, and OpenAPI", asyn
   assert.equal(fareboxResult.data.backend.acceptingPayments, true);
   assert.equal(fareboxResult.data.offer.perFix.payTo.toLowerCase(), TREASURY);
   assert.equal(fareboxResult.data.settlement.payTo.toLowerCase(), TREASURY);
-  assert.equal(openapiResult.data.info.version, "0.5.0");
+  assert.equal(openapiResult.data.info.version, "0.5.1");
   assert.match(openapiResult.data.paths["/books"].get.responses["200"].description, /rolling 30-day targets/);
   assert.match(openapiResult.data.paths["/fix/{id}"].get.responses["402"].description, /signed USDC and ETH checkout/);
   for (const path of ["/offer", "/fix/{id}", "/skills", "/skill/{id}", "/services", "/service-orders", "/service-orders/status", "/go/merch", "/requests", "/audit", "/health", "/books", "/.well-known/mcp/server-card.json"]) {
@@ -729,7 +729,7 @@ await check("books HTML and JSON publish the store and Evidence Audit funnels", 
   assert.match(htmlResult.body, /id="nextExperiment"/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.15");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.16");
   assert.equal(typeof jsonResult.data.operatorNotifications.enabled, "boolean");
   assert.equal(
     jsonResult.data.operatorNotifications.provider,
@@ -863,7 +863,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     clientInfo: { name: "knownfix-live-e2e", version: "1.0.0" },
   });
   assert.equal(initialized.result.serverInfo.name, "knownfix");
-  assert.equal(initialized.result.serverInfo.version, "0.5.0");
+  assert.equal(initialized.result.serverInfo.version, "0.5.1");
   assert.equal(initialized.result.serverInfo.description, DISCOVERY_DESCRIPTION);
   const listed = await mcp(2, "tools/list");
   assert.equal(listed.result.tools.length, 17);

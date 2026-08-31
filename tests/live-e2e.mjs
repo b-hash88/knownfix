@@ -137,7 +137,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /4 documented/);
   assert.match(body, /12 free in full/);
   assert.match(body, /<b>5<\/b> professional reviews/);
-  assert.match(body, /Book a professional review/);
+  assert.match(body, /Book the \$149 Evidence Audit/);
   assert(body.includes(`<link rel="canonical" href="${CANONICAL_STORE}">`));
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);

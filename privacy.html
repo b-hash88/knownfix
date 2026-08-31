@@ -1,7 +1,9 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
-<title>test at test:1:1 ... 'test failed' with zero real tests run — fix | KnownFix</title>
-  <meta name="description" content="Production-verified diagnosis: Passing a directory path like test/ to node --test can be misinterpreted on Windows, producing a single synthetic failing entry… Confirm the exact signature; the full remedy is free.">
+<title>Analytics and privacy | KnownFix</title>
+<meta name="description" content="What KnownFix sends to Google Analytics, what remains private, and how to change analytics consent on this browser.">
+<meta name="robots" content="index,follow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://b-hash88.github.io/knownfix/privacy.html"><link rel="icon" type="image/png" href="https://b-hash88.github.io/knownfix/knownfix-icon.png">
 <style>
 #knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
 #knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
@@ -14,7 +16,7 @@
 <script>
 (function(){
   'use strict';
-  var measurementId="G-781DC76YQN",storageKey="knownfix.analytics.consent",pageType="fix",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var measurementId="G-781DC76YQN",storageKey="knownfix.analytics.consent",pageType="privacy",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
   var allowedEvents={catalog_search:1,service_catalog_view:1,service_select:1,service_order_start:1,checkout_start:1,merch_click:1};
   function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
   function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
@@ -63,23 +65,11 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
 </script>
-<link rel="icon" type="image/png" href="https://b-hash88.github.io/knownfix/knownfix-icon.png">
-<link rel="canonical" href="https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.html">
-<link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.md">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"node --test with a bare directory argument fails with a nameless failing 'test'","name":"node --test with a bare directory argument fails with a nameless failing 'test'","description":"Production-verified diagnosis for: test at test:1:1 ... 'test failed' with zero real tests run. Passing a directory path like test/ to node --test can be misinterpreted on Windows, producing a single synthetic failing entry instead of running the suite.","abstract":"Passing a directory path like test/ to node --test can be misinterpreted on Windows, producing a single synthetic failing entry instead of running the suite.","articleSection":"Software error fix","keywords":"node, testing, windows","about":[{"@type":"Thing","name":"node"},{"@type":"Thing","name":"testing"},{"@type":"Thing","name":"windows"}],"url":"https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.html","isAccessibleForFree":true,"publisher":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"}}</script>
-  <style>*{box-sizing:border-box}body{font:16px/1.6 Georgia,serif;max-width:720px;margin:40px auto;padding:0 18px;background:#F2F4F3;color:#1A1D23}h1{font-size:20px}h2,h3,button,input,.wallet,.tx{font-family:ui-monospace,Consolas,monospace}h2{font-size:14px;margin-top:28px}h3{font-size:13px;margin-top:18px}pre{max-width:100%;background:#E7EAE8;padding:10px 12px;border-radius:4px;overflow-x:auto;font-size:12.5px;font-family:ui-monospace,Consolas,monospace}code{font-family:ui-monospace,Consolas,monospace}small{color:#5C6470}a{color:#2C6E63}button,.wallet{display:inline-block;min-height:36px;border:1px solid #2C6E63;background:#2C6E63;color:#fff;border-radius:4px;padding:7px 11px;cursor:pointer;text-decoration:none}button.secondary,button.copy,.wallet{background:transparent;color:#2C6E63}button:disabled{opacity:.55;cursor:wait}.pay-actions{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}button.copy{min-height:30px;padding:4px 8px}.tx{display:inline-block;margin-left:9px;font-size:12px}input{display:block;width:100%;margin:8px 0 10px;padding:9px 10px;border:1px solid #C9CFCC;border-radius:4px;background:#FAFBFA;color:#1A1D23}.checkout{border-top:1px solid #C9CFCC;margin-top:28px}.checkout p{overflow-wrap:anywhere}.checkout p code{word-break:break-all}.error{color:#A33A2B}#checkout-status{font-family:ui-monospace,Consolas,monospace;font-size:13px}@media(max-width:560px){body{margin:18px auto}.pay-actions button{flex:1 1 100%}button.copy{margin-top:6px}.tx{display:block;margin:10px 0 0}}@media(prefers-color-scheme:dark){body{background:#14161B;color:#D6D9E0}pre{background:#1D2127}small{color:#8A93A0}a,button.secondary,button.copy,.wallet{color:#4FA393;border-color:#4FA393}button{background:#4FA393;border-color:#4FA393;color:#101815}input{background:#1D2127;border-color:#2E343C;color:#D6D9E0}.error{color:#F08A78}}</style>
-</head><body>
-<h1>node --test with a bare directory argument fails with a nameless failing 'test'</h1>
-<p><small>Error signature:</small></p>
-<pre><code>test at test:1:1 ... 'test failed' with zero real tests run</code></pre>
-<p><small>node · testing · windows · verified-in-production · FREE SAMPLE</small></p>
-<h2>Cause</h2><p>Passing a directory path like test/ to node --test can be misinterpreted on Windows, producing a single synthetic failing entry instead of running the suite.</p>
-<h2>Fix</h2><p>Name the test file explicitly (node --test test/my.test.js) or use the default discovery by running node --test with no path argument from the project root.</p>
-
-
-<h2>Verification</h2><p>Same suite: 1 nameless failure via 'node --test test/', 7/7 passing via the explicit file path, Node 24.15 on Windows 11.</p>
-<p><em>Free sample. Use the storefront search to match another error.</em> <a href="https://b-hash88.github.io/knownfix/#search">Search KnownFix</a></p>
-<hr>
-  <p><small><a href="https://b-hash88.github.io/knownfix/">KnownFix</a> · <a href="https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.md">Markdown version</a> · <a href="https://b-hash88.github.io/knownfix/llms.txt">llms.txt</a> · Cataloged fixes for AI agents, with explicit confidence labels.</small></p>
-
-</body></html>
+<style>:root{--paper:#f2f4f1;--surface:#fafbf9;--ink:#151912;--muted:#5c6458;--rule:#cfd6cb;--accent:#12564e}@media(prefers-color-scheme:dark){:root{--paper:#12150f;--surface:#181c15;--ink:#e3e8de;--muted:#98a292;--rule:#343c30;--accent:#6fc3b0}}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.62 Georgia,serif}.wrap{width:min(48rem,calc(100% - 2rem));margin:auto;padding:2rem 0 5rem}header{border-bottom:2px solid var(--ink);padding-bottom:1.5rem}a{color:var(--accent);text-underline-offset:.18em}.brand{display:inline-flex;align-items:center;gap:.6rem;color:var(--ink);text-decoration:none;font:600 14px Arial,sans-serif}.brand img{width:2rem;height:2rem;object-fit:contain}h1,h2,button{font-family:Arial,sans-serif;letter-spacing:0}h1{font-size:clamp(2.2rem,7vw,4rem);line-height:1;margin:2rem 0 .8rem}h2{font-size:1.25rem;margin:2.2rem 0 .6rem;border-top:1px solid var(--rule);padding-top:1.2rem}p,li{max-width:65ch}.muted{color:var(--muted)}ul{padding-left:1.2rem}.choices{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}.choices button{min-height:2.5rem;border:1px solid var(--accent);border-radius:3px;padding:.55rem .9rem;background:var(--accent);color:var(--paper);font-weight:600;cursor:pointer}.choices button:last-child{background:transparent;color:var(--accent)}.status{font:13px/1.5 ui-monospace,Consolas,monospace;color:var(--muted)}</style>
+</head><body><main class="wrap"><header><a class="brand" href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" alt="">KnownFix</a><h1>Analytics and privacy</h1><p class="muted">A narrow measurement boundary for the public storefront.</p></header>
+<section><h2>Your choice</h2><p>Google Analytics is optional on KnownFix's GitHub Pages storefront. It loads only after you allow it on this browser.</p><div class="choices"><button type="button" data-knownfix-consent="granted">Allow analytics</button><button type="button" data-knownfix-consent="denied">Disable analytics</button></div><p class="status" data-knownfix-consent-status>Choose whether this browser may send analytics.</p></section>
+<section><h2>What may be measured</h2><ul><li>The page path without query strings or fragments.</li><li>The referring origin and path without query strings or fragments.</li><li>Standard browser, device, approximate region, and session information provided by Google Analytics.</li><li>Fixed events such as catalog search used, service selected, checkout started, or Merch Store opened.</li></ul></section>
+<section><h2>What is excluded</h2><p>KnownFix does not send catalog search text, order targets, notes, authorization choices, private tickets, payment proofs, wallet addresses, transaction hashes, report contents, or form-field values to Google Analytics. Private reports do not contain the analytics tag.</p></section>
+<section><h2>Separate systems</h2><p>Open Books remains the source of truth for KnownFix orders, settlement, delivery, and aggregate store activity. The Merch Store is hosted by Fourthwall and has its own privacy and consent controls. Read <a href="https://policies.google.com/privacy">Google's privacy policy</a> and <a href="https://fourthwall.com/privacy">Fourthwall's privacy policy</a> for their processing terms.</p></section>
+<section><h2>Local preference</h2><p>Your analytics choice is stored locally under <code>knownfix.analytics.consent</code>. Disabling analytics prevents the tag from loading on future KnownFix storefront pages in this browser.</p></section>
+</main></body></html>

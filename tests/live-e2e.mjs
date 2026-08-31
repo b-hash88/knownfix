@@ -6,6 +6,7 @@ if (!storeValue) {
   throw new Error("Set KNOWNFIX_STORE to the intended public storefront URL. The retired GitHub Pages host has no fallback.");
 }
 const STORE = storeValue.replace(/\/?$/, "/");
+const CANONICAL_STORE = (process.env.KNOWNFIX_CANONICAL_STORE || STORE).replace(/\/?$/, "/");
 const API = (process.env.KNOWNFIX_API || "https://knownfix-backend-28.b-hash88.deno.net").replace(/\/$/, "");
 const BASE_RPC = process.env.KNOWNFIX_BASE_RPC || "https://mainnet.base.org";
 const TREASURY = "0x064d15003e84eb6604a4c7f3745a135a588b6328";
@@ -16,7 +17,20 @@ const OPERATOR_HEADERS = {
 };
 const DISCOVERY_DESCRIPTION =
   "Verified fixes, professional reviews, and evidence-led apparel over MCP.";
+const ANALYTICS_MEASUREMENT_ID = "G-781DC76YQN";
 const results = [];
+
+function assertAnalyticsBoundary(html, label) {
+  assert.match(html, new RegExp(ANALYTICS_MEASUREMENT_ID), label + " is missing the KnownFix GA4 tag");
+  assert.match(html, /page_location:safePageUrl\(location\.href\)/);
+  assert.match(html, /allow_google_signals:false/);
+  assert.match(html, /allow_ad_personalization_signals:false/);
+  assert.match(html, /ad_storage:'denied'/);
+  assert.match(html, /knownfix\.analytics\.consent/);
+  assert.doesNotMatch(html, /page_location:location\.href|page_referrer:document\.referrer/);
+  assert.doesNotMatch(html, /localStorage[^\n;]{0,160}(?:ticket|offer|proof|query|notes|target)/i);
+  assert.doesNotMatch(html, /sessionStorage/);
+}
 
 async function check(name, fn) {
   const started = Date.now();
@@ -62,6 +76,13 @@ function internalLinks(html, pageUrl) {
     .map((match) => new URL(match[1], pageUrl))
     .filter((url) => url.origin === new URL(STORE).origin)
     .map(String);
+}
+
+function storefrontFetchUrl(canonicalUrl) {
+  const canonicalBase = new URL(CANONICAL_STORE);
+  const target = new URL(canonicalUrl);
+  if (target.origin !== canonicalBase.origin || !target.pathname.startsWith(canonicalBase.pathname)) return target;
+  return new URL(target.pathname.slice(canonicalBase.pathname.length) + target.search, STORE);
 }
 
 function parseToolText(response) {
@@ -117,10 +138,13 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.match(body, /12 free in full/);
   assert.match(body, /<b>5<\/b> professional reviews/);
   assert.match(body, /Book a professional review/);
-  assert(body.includes(`<link rel="canonical" href="${STORE}">`));
+  assert(body.includes(`<link rel="canonical" href="${CANONICAL_STORE}">`));
   assert.match(body, /property="og:title"/);
   assert.match(body, /name="twitter:card"/);
   assert(body.includes(`<meta name="description" content="${DISCOVERY_DESCRIPTION}">`));
+  assertAnalyticsBoundary(body, "storefront");
+  assert.match(body, /data-knownfix-event="catalog_search"/);
+  assert.match(body, /href="\.\/privacy\.html"/);
   assert.equal(catalog.entries.length, 38);
   assert.equal(catalog.entries.filter((entry) => entry.sample).length, 12);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
@@ -148,7 +172,9 @@ await check("professional service page is private, structured, and checkout-read
   assert.match(body, /Download HTML/);
   assert.match(body, /Download Markdown/);
   assert.match(body, /held in this page's memory only/);
-  assert.doesNotMatch(body, /(?:local|session)Storage|innerHTML\s*=/);
+  assertAnalyticsBoundary(body, "service catalog");
+  assert.match(body, /knownfixTrack\('service_order_start',serviceInput\.value\)/);
+  assert.doesNotMatch(body, /innerHTML\s*=/);
   const structured = JSON.parse(body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   assert.equal(structured.numberOfItems, 5);
   assert.equal(structured.itemListElement.length, 5);
@@ -165,6 +191,8 @@ await check("professional service page is private, structured, and checkout-read
     assert(types.includes("BreadcrumbList"));
     assert(types.includes("FAQPage"));
     assert.doesNotMatch(detail.body, /aggregateRating|reviewCount/);
+    assertAnalyticsBoundary(detail.body, "service detail " + service.id);
+    assert(detail.body.includes(`data-knownfix-context="${service.id}"`));
   }
   const sampleName = "KnownFix_20260829_Website-First-Look-Sample_RPT";
   const [sampleHtml, sampleMarkdown] = await Promise.all([
@@ -177,6 +205,7 @@ await check("professional service page is private, structured, and checkout-read
   assert.match(sampleHtml.body, new RegExp(digest));
   assert.match(sampleHtml.body, /default-src 'none'/);
   assert.match(sampleHtml.body, /content="index,follow,max-image-preview:large/);
+  assert.doesNotMatch(sampleHtml.body, new RegExp(ANALYTICS_MEASUREMENT_ID));
   const sampleSchema = JSON.parse(sampleHtml.body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   assert.equal(sampleSchema["@type"], "Report");
   return "five intent-specific service pages; indexable sample; private reports stay verified";
@@ -194,7 +223,7 @@ await check("homepage search is purchase-ready and credential-safe", async () =>
   assert.match(body, /Open free fix/);
   assert.doesNotMatch(body, /fetch\(backend\+'\/match\?q='/);
   assert.doesNotMatch(body, /paymentOffer/);
-  assert.doesNotMatch(body, /(?:local|session)Storage/);
+  assertAnalyticsBoundary(body, "storefront search");
   return "MCP search renders diagnosis, compatibility, price, bundle, and one safe next action";
 });
 
@@ -207,7 +236,8 @@ await check("public request UI keeps privacy opt-in", async () => {
   assert.doesNotMatch(body, /id="request-publish"[^>]*\schecked(?:\s|>|=)/);
   assert.match(body, /id="request-ticket"[^>]*type="password"/);
   assert.match(body, /pattern="req_\[0-9a-f\]\{32\}"/);
-  assert.doesNotMatch(body, /(?:local|session)Storage/);
+  assert.doesNotMatch(body, /localStorage[^\n;]{0,160}(?:ticket|request_ticket|signature|context)/i);
+  assert.doesNotMatch(body, /sessionStorage/);
   assert.doesNotMatch(body, /[?&](?:ticket|request_ticket)=/i);
   assert.match(body, /\.textContent=data\.ticket/);
   return "private by default; ticket masked and kept out of URLs and web storage";
@@ -220,10 +250,11 @@ await check("sitemap and every canonical public URL", async () => {
   assert.equal(urls.filter((url) => /\/fixes\/[^/]+\.html$/.test(url)).length, catalog.entries.length);
   assert.equal(urls.filter((url) => /\/fixes\/[^/]+\.md$/.test(url)).length, 0);
   assert.equal(urls.filter((url) => /\/services\/[^/]+\.html$/.test(url)).length, serviceCatalog.services.length);
+  assert(urls.includes(new URL("privacy.html", CANONICAL_STORE).toString()));
   assert.equal(urls.filter((url) => /\.(?:md|json|txt)$/.test(url)).length, 0);
   assert.doesNotMatch(body, /<lastmod>/);
   const probes = await Promise.all(
-    urls.map(async (url) => ({ url, response: await request(url, { method: "HEAD" }) })),
+    urls.map(async (url) => ({ url, response: await request(storefrontFetchUrl(url), { method: "HEAD" }) })),
   );
   const failures = probes.filter(({ response: item }) => item.status !== 200);
   assert.deepEqual(failures.map(({ url, response: item }) => item.status + " " + url), []);
@@ -265,6 +296,8 @@ await check("five recovery-pack pages expose price and proof contracts", async (
     assert.match(htmlResult.body, /Base Pay SDK timed out while loading/);
     assert.match(htmlResult.body, /script\.remove\(\)/);
     assert.doesNotMatch(htmlResult.body, /id="payment-offer"/);
+    assertAnalyticsBoundary(htmlResult.body, "recovery pack " + id);
+    assert.match(htmlResult.body, /data-knownfix-event="checkout_start"/);
     assert(mdResult.body.includes("**Price:** $" + price + " USDC"));
     if (id === "npm-publishing-recovery-pack") {
       assert.match(htmlResult.body, /Six complete recoveries/);
@@ -282,12 +315,15 @@ await check("all fix pages preserve the free and paid boundary", async () => {
   await Promise.all(catalog.entries.map(async (entry) => {
     const htmlUrl = new URL("fixes/" + entry.id + ".html", STORE);
     const mdUrl = new URL("fixes/" + entry.id + ".md", STORE);
+    const canonicalHtmlUrl = new URL("fixes/" + entry.id + ".html", CANONICAL_STORE);
+    const canonicalMdUrl = new URL("fixes/" + entry.id + ".md", CANONICAL_STORE);
     const [htmlResult, mdResult] = await Promise.all([text(htmlUrl), text(mdUrl)]);
     try {
       assert.equal(htmlResult.response.status, 200);
       assert.equal(mdResult.response.status, 200);
-      assert(htmlResult.body.includes('<link rel="canonical" href="' + htmlUrl + '">'));
-      assert(htmlResult.body.includes('<link rel="alternate" type="text/markdown" href="' + mdUrl + '">'));
+      assert(htmlResult.body.includes('<link rel="canonical" href="' + canonicalHtmlUrl + '">'));
+      assert(htmlResult.body.includes('<link rel="alternate" type="text/markdown" href="' + canonicalMdUrl + '">'));
+      assertAnalyticsBoundary(htmlResult.body, "fix " + entry.id);
       if (entry.sample) {
         assert.match(htmlResult.body, /<h2>Cause<\/h2>/);
         assert.match(htmlResult.body, /<h2>Fix<\/h2>/);
@@ -297,6 +333,7 @@ await check("all fix pages preserve the free and paid boundary", async () => {
       } else {
         assert.doesNotMatch(htmlResult.body, /<h2>Cause<\/h2>/);
         assert.match(htmlResult.body, /id="pay-usdc"/);
+        assert.match(htmlResult.body, /data-knownfix-event="checkout_start"/);
         assert.match(htmlResult.body, /Base Pay UserOperation hash/);
         assert.match(htmlResult.body, /script\[data-base-pay-sdk\]/);
         assert.match(htmlResult.body, /Base Pay SDK timed out while loading/);
@@ -414,6 +451,7 @@ await check("Merch Store links and fixed redirects are live", async () => {
   assert.match(homepage.body, /Visit the Merch Store/);
   assert.match(homepage.body, /KnownFix_20260829_Test-My-Claims-Campaign_IMG\.png/);
   assert.match(homepage.body, /go\/merch\?source=site-home/);
+  assert.match(homepage.body, /data-knownfix-event="merch_click"/);
 
   const campaign = await request(new URL("KnownFix_20260829_Test-My-Claims-Campaign_IMG.png", STORE));
   assert.equal(campaign.status, 200);
@@ -439,6 +477,17 @@ await check("Merch Store links and fixed redirects are live", async () => {
   assert.equal(fallback.status, 302);
   assert.equal(fallback.headers.get("location"), "https://knownfix-shop.fourthwall.com/");
   return "public campaign image and allowlisted Fourthwall destinations verified";
+});
+
+await check("analytics consent page and private-data boundary are live", async () => {
+  const { response, body } = await text(new URL("privacy.html", STORE));
+  assert.equal(response.status, 200);
+  assertAnalyticsBoundary(body, "privacy page");
+  assert.match(body, /Google Analytics is optional/);
+  assert.match(body, /does not send catalog search text/);
+  assert.match(body, /data-knownfix-consent="granted"/);
+  assert.match(body, /data-knownfix-consent="denied"/);
+  return "opt-in controls live; query strings, private intake, wallet proofs, and reports excluded";
 });
 
 await check("backend health, security headers, and CORS preflight", async () => {

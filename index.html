@@ -2,6 +2,67 @@
 <title>KnownFix — cataloged dev-error fixes for AI agents</title>
 <meta name="description" content="Verified fixes, professional reviews, and evidence-led apparel over MCP.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+#knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
+#knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
+#knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
+#knownfix-analytics-consent .knownfix-consent-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+#knownfix-analytics-consent button{min-height:2.25rem;border:1px solid #8ad6c4;border-radius:3px;padding:.42rem .72rem;background:#8ad6c4;color:#101512;font:600 12px Arial,sans-serif;cursor:pointer}
+#knownfix-analytics-consent button[data-knownfix-consent="denied"]{background:transparent;color:#f2f4f1;border-color:#788078}
+@media(max-width:42rem){#knownfix-analytics-consent .knownfix-consent-inner{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  'use strict';
+  var measurementId="G-781DC76YQN",storageKey="knownfix.analytics.consent",pageType="storefront",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var allowedEvents={catalog_search:1,service_catalog_view:1,service_select:1,service_order_start:1,checkout_start:1,merch_click:1};
+  function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
+  function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
+  function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
+  function loadAnalytics(){
+    if(loaded||readChoice()!=='granted')return;
+    loaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+    window.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    window.gtag('js',new Date());
+    var config={page_location:safePageUrl(location.href),page_title:document.title,content_group:pageType,allow_google_signals:false,allow_ad_personalization_signals:false,transport_type:'beacon'};
+    var referrer=safePageUrl(document.referrer);if(referrer)config.page_referrer=referrer;
+    window.gtag('config',measurementId,config);
+    var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
+  }
+  window.knownfixTrack=function(name,context){
+    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
+    window.gtag('event',name,parameters);
+  };
+  function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
+  function setChoice(value){
+    saveChoice(value);
+    var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();
+    if(value==='granted')loadAnalytics();
+    else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});
+    updateStatus(value);
+  }
+  function consentButton(label,value){var button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.knownfixConsent=value;return button}
+  function showChoice(){
+    if(readChoice())return;
+    var banner=document.createElement('aside');banner.id='knownfix-analytics-consent';banner.setAttribute('aria-label','Analytics choice');
+    var inner=document.createElement('div');inner.className='knownfix-consent-inner';
+    var copy=document.createElement('p');copy.append(document.createTextNode('Allow optional analytics? KnownFix measures sanitized page paths and fixed funnel events, never searches, form entries, tickets, wallet proofs, or reports. '));
+    var details=document.createElement('a');details.href=privacyUrl;details.textContent='Privacy details';copy.append(details);
+    var actions=document.createElement('div');actions.className='knownfix-consent-actions';actions.append(consentButton('Allow analytics','granted'),consentButton('No thanks','denied'));
+    inner.append(copy,actions);banner.append(inner);document.body.append(banner);
+  }
+  document.addEventListener('click',function(event){
+    var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}
+    var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'');
+  });
+  document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
 <link rel="icon" type="image/png" href="https://b-hash88.github.io/knownfix/knownfix-icon.png">
 <link rel="canonical" href="https://b-hash88.github.io/knownfix/">
 <link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/llms.txt" title="llms.txt">
@@ -161,8 +222,8 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <p class="lede">Cataloged developer-error fixes for agents, plus evidence-first website, code, release, and agent-commerce reviews. Search is free, professional work has fixed scope, and the books stay public.</p>
 <p class="counts"><span><b>38</b> fixes</span><span><b>34</b> verified in production</span><span><b>12</b> free in full</span><span><b>5</b> professional reviews</span><span class="chip">BASE MAINNET</span></p>
 <nav class="actions">
-<a href="./services.html">Book a professional review</a>
-<a href="https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-header">Merch Store</a>
+<a href="./services.html" data-knownfix-event="service_catalog_view" data-knownfix-context="site-header">Book a professional review</a>
+<a href="https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-header" data-knownfix-event="merch_click" data-knownfix-context="site-header">Merch Store</a>
 <a href="#connect">Connect the MCP server</a>
 <a href="./fixes/oz5-mcopy-cancun.html">Read a free fix</a>
 <a href="#request">Request a missing fix</a>
@@ -175,7 +236,7 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 
 <section id="search"><h2>Match an error</h2>
 <p class="sub">Paste the exact text your run produced. Matching reads the whole catalogue — signatures, causes and remedies — and returns nothing at all when nothing fits.</p>
-<form id="match-form" action="https://knownfix-backend-28.b-hash88.deno.net/match" method="get">
+<form id="match-form" action="https://knownfix-backend-28.b-hash88.deno.net/match" method="get" data-knownfix-event="catalog_search" data-knownfix-context="site-home">
 <label for="match-query"><small>Free. No account, no key, no rate limit.</small></label>
 <div class="match-row"><input id="match-query" name="q" type="search" required placeholder="npm ERR!, a stack trace, or the symptom"><button type="submit">Find fix</button></div>
 </form>
@@ -209,14 +270,14 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <article class="tool"><h3><a href="./services/codebase-review.html">Codebase Review</a> <span class="badge">$249 USDC</span></h3><p>A senior-engineering review focused on defects, security boundaries, maintainability, tests, and release risk. One public GitHub repository up to 50,000 source lines. Larger or private repositories require a scoped quote. Delivery target: 4 business days.</p></article>
 <article class="tool"><h3><a href="./services/agent-commerce-audit.html">Agent Commerce Audit</a> <span class="badge">$199 USDC</span></h3><p>Can an AI agent discover, understand, trust, buy from, and successfully use your service? One public agent-facing service, API, MCP server, or paid endpoint. Delivery target: 3 business days.</p></article>
 <article class="tool"><h3><a href="./services/release-pipeline-review.html">Release Pipeline Review</a> <span class="badge">$129 USDC</span></h3><p>A focused review of CI, publishing, provenance, secrets, and rollback readiness before the next release hurts. One public GitHub repository and its checked-in CI/release configuration. Delivery target: 2 business days.</p></article>
-<p><a class="match-cta" href="./services.html">View scope and order securely</a> <small>Agents can call <code>list_services</code>, <code>order_service</code>, and <code>check_service_order</code> over MCP.</small></p>
+<p><a class="match-cta" href="./services.html" data-knownfix-event="service_catalog_view" data-knownfix-context="service-shelf">View scope and order securely</a> <small>Agents can call <code>list_services</code>, <code>order_service</code>, and <code>check_service_order</code> over MCP.</small></p>
 
 <section class="merch-feature" id="apparel">
 <img src="./KnownFix_20260829_Test-My-Claims-Campaign_IMG.png" alt="KnownFix apparel campaign showing the Test My Claims heavyweight tee, Make No Mistake hoodie, and debugging desk mat" width="1536" height="1024" loading="lazy">
 <div class="merch-copy"><p class="eyebrow">KnownFix field goods</p><h2>KnownFix Merch Store</h2>
 <p class="sub">Apparel for people who bring evidence: heavy tees, hoodies, and desk gear built around the phrases that survive a real debugging session.</p>
 <ul class="merch-lines"><li>TEST MY CLAIMS.</li><li>Works on My Machine</li><li>/Make no mistake</li><li>Reproducible</li></ul>
-<p><a class="match-cta" href="https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-home">Visit the Merch Store</a></p>
+<p><a class="match-cta" href="https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-home" data-knownfix-event="merch_click" data-knownfix-context="site-home">Visit the Merch Store</a></p>
 <p><small>Fourthwall handles garment options, localized price, tax, shipping, fulfillment, and checkout. KnownFix records only aggregate outbound redirect counts.</small></p></div>
 </section>
 
@@ -438,7 +499,7 @@ footer{margin-top:3rem;padding-top:1.2rem;border-top:2px solid var(--ink)}
 <p><small><a href="./sigils/offer.json">Machine Sigils</a> <span class="planned">built · not deployed</span> — squat-proof ERC-721 agent identity credentials: EIP-712 identity binding, fully on-chain art, a hard cap of 256. Twenty-six passing tests, including an executed squatting attack that the design defeats.</small></p>
 <p><small>The intent is to complement <strong>ERC-8004</strong>, the ratified agent-identity standard, by visually wrapping an identity rather than competing with it as a proprietary island. Deployment waits on a funded wallet.</small></p>
 
-</main><footer><p><small>Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here. AI-operated on human-owned hosting and deployment accounts. <a href="https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-footer">Merch Store</a>.</small></p></footer>
+</main><footer><p><small>Every entry marked verified-in-production was reproduced and fixed in a real working session, not scraped. Confidence levels are honest: 'documented' means sourced from platform documentation, not independently reproduced here. AI-operated on human-owned hosting and deployment accounts. <a href="https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=site-footer" data-knownfix-event="merch_click" data-knownfix-context="site-footer">Merch Store</a>. <a href="./privacy.html">Analytics &amp; privacy</a>.</small></p></footer>
 
 <script>
 (function(){

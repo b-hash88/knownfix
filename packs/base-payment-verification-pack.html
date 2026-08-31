@@ -2,6 +2,67 @@
 <title>Base Pay USDC and exact ETH seller verification pack | KnownFix</title>
 <meta name="description" content="Verify Base Pay USDC UserOperations and exact-ETH transactions without mixing proof types, losing payment intent, or allowing replay.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+#knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
+#knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
+#knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
+#knownfix-analytics-consent .knownfix-consent-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+#knownfix-analytics-consent button{min-height:2.25rem;border:1px solid #8ad6c4;border-radius:3px;padding:.42rem .72rem;background:#8ad6c4;color:#101512;font:600 12px Arial,sans-serif;cursor:pointer}
+#knownfix-analytics-consent button[data-knownfix-consent="denied"]{background:transparent;color:#f2f4f1;border-color:#788078}
+@media(max-width:42rem){#knownfix-analytics-consent .knownfix-consent-inner{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  'use strict';
+  var measurementId="G-781DC76YQN",storageKey="knownfix.analytics.consent",pageType="pack",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var allowedEvents={catalog_search:1,service_catalog_view:1,service_select:1,service_order_start:1,checkout_start:1,merch_click:1};
+  function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
+  function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
+  function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
+  function loadAnalytics(){
+    if(loaded||readChoice()!=='granted')return;
+    loaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+    window.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    window.gtag('js',new Date());
+    var config={page_location:safePageUrl(location.href),page_title:document.title,content_group:pageType,allow_google_signals:false,allow_ad_personalization_signals:false,transport_type:'beacon'};
+    var referrer=safePageUrl(document.referrer);if(referrer)config.page_referrer=referrer;
+    window.gtag('config',measurementId,config);
+    var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
+  }
+  window.knownfixTrack=function(name,context){
+    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
+    window.gtag('event',name,parameters);
+  };
+  function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
+  function setChoice(value){
+    saveChoice(value);
+    var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();
+    if(value==='granted')loadAnalytics();
+    else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});
+    updateStatus(value);
+  }
+  function consentButton(label,value){var button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.knownfixConsent=value;return button}
+  function showChoice(){
+    if(readChoice())return;
+    var banner=document.createElement('aside');banner.id='knownfix-analytics-consent';banner.setAttribute('aria-label','Analytics choice');
+    var inner=document.createElement('div');inner.className='knownfix-consent-inner';
+    var copy=document.createElement('p');copy.append(document.createTextNode('Allow optional analytics? KnownFix measures sanitized page paths and fixed funnel events, never searches, form entries, tickets, wallet proofs, or reports. '));
+    var details=document.createElement('a');details.href=privacyUrl;details.textContent='Privacy details';copy.append(details);
+    var actions=document.createElement('div');actions.className='knownfix-consent-actions';actions.append(consentButton('Allow analytics','granted'),consentButton('No thanks','denied'));
+    inner.append(copy,actions);banner.append(inner);document.body.append(banner);
+  }
+  document.addEventListener('click',function(event){
+    var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}
+    var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'');
+  });
+  document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
 <link rel="icon" type="image/png" href="https://b-hash88.github.io/knownfix/knownfix-icon.png">
 <link rel="canonical" href="https://b-hash88.github.io/knownfix/packs/base-payment-verification-pack.html">
 <link rel="alternate" type="text/markdown" href="https://b-hash88.github.io/knownfix/packs/base-payment-verification-pack.md">
@@ -22,7 +83,7 @@ a{color:var(--accent)}.included strong{display:block;color:var(--accent);font:60
 <section><h2>One verification skill and seven recoveries</h2><ul class="included"><li><strong>EVM Payment Verification for Agent Sellers</strong><small>Signed intent, exact settlement evidence, and atomic one-time fulfillment</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/ethers6-sequential-nonce-reuse.html">ethers v6: 'nonce has already been used' on back-to-back transactions</a><small>nonce has already been used</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/ethers6-custom-error-unnamed.html">ethers v6 reports 'execution reverted (unknown custom error)' though the ABI defines it</a><small>execution reverted (unknown custom error)</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/hardhat-wait-confirmations-hang.html">deploymentTransaction().wait(N&gt;1) hangs forever on a local Hardhat node</a><small>wait(2) never resolves on localhost 31337</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/windows-libuv-assert-on-exit.html">Node on Windows: 'Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING)' at exit</a><small>Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING), file src\win\async.c</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/deno-deploy-508-self-fetch-loop.html">Deno Deploy returns 508 Loop Detected when a deployment fetches its own URL</a><small>508 (Loop Detected) on fetch to the app's own *.deno.net hostname</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/deno-deploy-kv-not-auto-enabled.html">Deno KV reads empty on new Deno Deploy until you attach a database</a><small>kv appears disabled / Deno.openKv() bound but reads and writes are empty on console.deno.com</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/deno-openkv-unstable-flag-local.html">Deno.openKv() throws locally without the --unstable-kv flag</a><small>Deno.openKv is not a function / requires --unstable-kv (works on Deploy, fails on local deno run)</small></li></ul></section>
 <section><h2>Free decision preview</h2><ol class="preview"><li>Select the verifier from the signed offer: Base Pay returns a UserOperation hash; direct ETH returns a transaction hash.</li><li>For USDC, resolve the operation through bundler methods and inspect only operation-scoped receipt logs.</li><li>Bind the exact amount, treasury, sender, chain, and private attribution suffix before fulfillment.</li><li>For ETH, resolve the transaction and receipt through Base JSON-RPC and require the exact signed wei amount.</li><li>Consume both the payment proof and offer digest in one durable atomic claim.</li><li>Complete declared testnet and low-value mainnet checks before advertising a production-ready rail.</li></ol><p>The paid body provides the complete verification sequence, proof-shape checks, replay controls, operational failure states, test fixtures, and official-source references.</p></section>
 <section class="checkout"><h2>Buy the pack</h2><p>The signed offer is private, product-bound, currency-bound, expires after one hour, and is consumed with the payment proof exactly once.</p>
-<div class="actions"><button id="pay-usdc" type="button">Pay $49.00 USDC</button><button id="use-eth" class="secondary" type="button">Use exact ETH</button></div>
+<div class="actions"><button id="pay-usdc" type="button" data-knownfix-event="checkout_start" data-knownfix-context="base-payment-verification-pack">Pay $49.00 USDC</button><button id="use-eth" class="secondary" type="button" data-knownfix-event="checkout_start" data-knownfix-context="base-payment-verification-pack">Use exact ETH</button></div>
 <div id="offer" class="offer" hidden><p><strong id="rail"></strong>: <code id="amount"></code></p><p>Recipient: <code id="recipient"></code></p><p><a id="wallet" class="wallet" href="#" hidden>Open compatible wallet</a></p><label id="proof-label" for="proof">Payment proof hash</label><input id="proof" autocomplete="off" spellcheck="false" placeholder="0x..."><button id="redeem" type="button">Redeem pack</button></div>
 <p id="status" role="status" aria-live="polite"></p><pre id="result" hidden></pre>
 <p><small>Agent route: call <code>get_skill</code> with <code>base-payment-verification-pack</code> alone for signed USDC and ETH checkout at <a href="https://knownfix-backend-28.b-hash88.deno.net/mcp">https://knownfix-backend-28.b-hash88.deno.net/mcp</a>; <code>get_offer</code> is optional. The private offer token stays in memory and is never displayed or stored by this page.</small></p></section>

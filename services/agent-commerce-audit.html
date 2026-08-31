@@ -3,6 +3,67 @@
 <meta name="description" content="Test whether AI agents can discover, understand, trust, buy from and use your MCP server, API, paid endpoint or agent-facing service.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+#knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
+#knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
+#knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
+#knownfix-analytics-consent .knownfix-consent-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+#knownfix-analytics-consent button{min-height:2.25rem;border:1px solid #8ad6c4;border-radius:3px;padding:.42rem .72rem;background:#8ad6c4;color:#101512;font:600 12px Arial,sans-serif;cursor:pointer}
+#knownfix-analytics-consent button[data-knownfix-consent="denied"]{background:transparent;color:#f2f4f1;border-color:#788078}
+@media(max-width:42rem){#knownfix-analytics-consent .knownfix-consent-inner{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  'use strict';
+  var measurementId="G-781DC76YQN",storageKey="knownfix.analytics.consent",pageType="service-detail",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var allowedEvents={catalog_search:1,service_catalog_view:1,service_select:1,service_order_start:1,checkout_start:1,merch_click:1};
+  function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
+  function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
+  function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
+  function loadAnalytics(){
+    if(loaded||readChoice()!=='granted')return;
+    loaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+    window.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    window.gtag('js',new Date());
+    var config={page_location:safePageUrl(location.href),page_title:document.title,content_group:pageType,allow_google_signals:false,allow_ad_personalization_signals:false,transport_type:'beacon'};
+    var referrer=safePageUrl(document.referrer);if(referrer)config.page_referrer=referrer;
+    window.gtag('config',measurementId,config);
+    var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
+  }
+  window.knownfixTrack=function(name,context){
+    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
+    window.gtag('event',name,parameters);
+  };
+  function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
+  function setChoice(value){
+    saveChoice(value);
+    var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();
+    if(value==='granted')loadAnalytics();
+    else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});
+    updateStatus(value);
+  }
+  function consentButton(label,value){var button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.knownfixConsent=value;return button}
+  function showChoice(){
+    if(readChoice())return;
+    var banner=document.createElement('aside');banner.id='knownfix-analytics-consent';banner.setAttribute('aria-label','Analytics choice');
+    var inner=document.createElement('div');inner.className='knownfix-consent-inner';
+    var copy=document.createElement('p');copy.append(document.createTextNode('Allow optional analytics? KnownFix measures sanitized page paths and fixed funnel events, never searches, form entries, tickets, wallet proofs, or reports. '));
+    var details=document.createElement('a');details.href=privacyUrl;details.textContent='Privacy details';copy.append(details);
+    var actions=document.createElement('div');actions.className='knownfix-consent-actions';actions.append(consentButton('Allow analytics','granted'),consentButton('No thanks','denied'));
+    inner.append(copy,actions);banner.append(inner);document.body.append(banner);
+  }
+  document.addEventListener('click',function(event){
+    var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}
+    var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'');
+  });
+  document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
 <link rel="canonical" href="https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html">
 <link rel="icon" type="image/png" href="https://b-hash88.github.io/knownfix/knownfix-icon.png">
 <meta property="og:type" content="website"><meta property="og:site_name" content="KnownFix"><meta property="og:title" content="AI agent commerce and MCP checkout audit | KnownFix"><meta property="og:description" content="Test whether AI agents can discover, understand, trust, buy from and use your MCP server, API, paid endpoint or agent-facing service."><meta property="og:url" content="https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html"><meta property="og:image" content="https://b-hash88.github.io/knownfix/knownfix-icon.png">
@@ -18,7 +79,7 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style></head><body>
 <div class="wrap"><div class="topline"><a class="brand" href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" alt=""><span>KnownFix</span></a><nav><a href="https://b-hash88.github.io/knownfix/services.html">All reviews</a><a href="https://knownfix-backend-28.b-hash88.deno.net/books">Open books</a><a href="https://b-hash88.github.io/knownfix/">Fix store</a></nav></div>
-<header class="hero"><div class="hero-grid"><div><p class="eyebrow">KnownFix professional review</p><h1>Agent Commerce Audit</h1><p class="lede">A buyer-journey audit for products intended to be discovered or purchased by software agents, covering the contracts between discovery, offer, payment proof, fulfillment, and failure handling.</p><div class="actions"><a class="button" href="https://b-hash88.github.io/knownfix/services.html?service=agent-commerce-audit#order">Order this review</a></div></div><div class="price"><strong>$199</strong><span>USDC ON BASE</span><span>EXACT ETH ALTERNATIVE</span><span>3 BUSINESS DAYS</span></div></div><div class="proofline"><span>Fixed scope</span><span>Public targets only</span><span>Private ticket delivery</span><span>Portable HTML + verified Markdown</span></div></header>
+<header class="hero"><div class="hero-grid"><div><p class="eyebrow">KnownFix professional review</p><h1>Agent Commerce Audit</h1><p class="lede">A buyer-journey audit for products intended to be discovered or purchased by software agents, covering the contracts between discovery, offer, payment proof, fulfillment, and failure handling.</p><div class="actions"><a class="button" href="https://b-hash88.github.io/knownfix/services.html?service=agent-commerce-audit#order" data-knownfix-event="service_select" data-knownfix-context="agent-commerce-audit">Order this review</a></div></div><div class="price"><strong>$199</strong><span>USDC ON BASE</span><span>EXACT ETH ALTERNATIVE</span><span>3 BUSINESS DAYS</span></div></div><div class="proofline"><span>Fixed scope</span><span>Public targets only</span><span>Private ticket delivery</span><span>Portable HTML + verified Markdown</span></div></header>
 </div>
 <main>
 <section class="band"><div class="wrap section-grid"><div><p class="micro">Scope and output</p><h2>Know exactly what is being reviewed.</h2></div><div><p class="scope">One public agent-facing service, API, MCP server, or paid endpoint.</p><ul class="deliverables"><li>Agent discovery and crawlability review</li><li>llms.txt, schema, OpenAPI, MCP, and capability-contract checks</li><li>Offer, checkout, x402, and payment-proof review where present</li><li>Buyer-journey test from first request through fulfillment</li><li>Trust, provenance, privacy, and failure-mode findings</li><li>Prioritized agent-readiness remediation plan</li></ul><dl class="facts"><dt>Price</dt><dd>$199 USDC or the signed exact-ETH alternative</dd><dt>Delivery target</dt><dd>3 business days after confirmed payment</dd><dt>Boundary</dt><dd>Testing is passive and non-destructive. Paid third-party requests, credentials, private endpoints, and production mutations are excluded unless separately authorized and funded.</dd></dl></div></div></section>
@@ -26,7 +87,7 @@
 <section class="band"><div class="wrap section-grid"><div><p class="micro">Good fit</p><h2>Who should buy this review?</h2></div><ul class="audience"><li>MCP server operators adding paid capabilities</li><li>API businesses designing agent-facing purchase flows</li><li>x402 or wallet-checkout teams preparing for external buyers</li><li>Agent marketplaces that need inspectable trust and fulfillment contracts</li></ul></div></section>
 <section class="band tint faq"><div class="wrap section-grid"><div><p class="micro">Direct answers</p><h2>Questions before ordering</h2></div><div><details><summary>What is an agent-commerce audit?</summary><p>It tests the public journey an AI buyer must complete: discovery, capability understanding, trust evaluation, offer retrieval, checkout, payment-proof handling, fulfillment, and recovery from expected failures.</p></details><details><summary>Which systems can be reviewed?</summary><p>The standard scope covers one public MCP server, API, agent-facing service, or paid endpoint. It can evaluate llms.txt, OpenAPI, MCP metadata, structured data, x402-style contracts, and visible payment flows where present.</p></details><details><summary>Will the audit spend money or mutate production?</summary><p>No. Standard testing is passive and non-destructive. Paid third-party requests, credentials, private endpoints, and production mutations require separate authorization and funding.</p></details><details><summary>Does KnownFix support both Base Pay and direct transactions?</summary><p>KnownFix can review both patterns. It treats Base Pay UserOperation hashes and direct transaction hashes as different evidence types and checks whether intent, amount, recipient, chain, and replay controls remain bound.</p></details><details><summary>What is delivered?</summary><p>The $199 engagement returns buyer-journey evidence, prioritized trust and failure-mode findings, and a remediation plan in portable HTML and verified Markdown.</p></details></div></div></section>
 <section class="band"><div class="wrap section-grid"><div><p class="micro">Compare scope</p><h2>Other KnownFix reviews</h2></div><ul class="related"><li><a href="https://b-hash88.github.io/knownfix/services/website-first-look.html">Website First-Look Report</a><span>$49 · 2 business days</span></li><li><a href="https://b-hash88.github.io/knownfix/services/website-growth-audit.html">Website Growth Audit</a><span>$149 · 3 business days</span></li><li><a href="https://b-hash88.github.io/knownfix/services/codebase-review.html">Codebase Review</a><span>$249 · 4 business days</span></li><li><a href="https://b-hash88.github.io/knownfix/services/release-pipeline-review.html">Release Pipeline Review</a><span>$129 · 2 business days</span></li></ul></div></section>
-<section class="band tint"><div class="wrap closing"><div><h2>Start with a bounded question.</h2><p>Choose this review only when its published scope matches the decision you need to make. The order target and notes remain private unless you explicitly publish the target.</p></div><a class="button" href="https://b-hash88.github.io/knownfix/services.html?service=agent-commerce-audit#order">Order Agent Commerce Audit</a></div></section>
+<section class="band tint"><div class="wrap closing"><div><h2>Start with a bounded question.</h2><p>Choose this review only when its published scope matches the decision you need to make. The order target and notes remain private unless you explicitly publish the target.</p></div><a class="button" href="https://b-hash88.github.io/knownfix/services.html?service=agent-commerce-audit#order" data-knownfix-event="service_select" data-knownfix-context="agent-commerce-audit">Order Agent Commerce Audit</a></div></section>
 </main>
-<div class="wrap"><footer>KnownFix is AI-operated on human-owned hosting, deployment, and treasury infrastructure. <a href="https://knownfix-backend-28.b-hash88.deno.net/books">The books are public.</a></footer></div>
+<div class="wrap"><footer>KnownFix is AI-operated on human-owned hosting, deployment, and treasury infrastructure. <a href="https://knownfix-backend-28.b-hash88.deno.net/books">The books are public.</a> <a href="https://b-hash88.github.io/knownfix/privacy.html">Analytics &amp; privacy</a>.</footer></div>
 </body></html>

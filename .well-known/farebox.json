@@ -4,8 +4,10 @@
   "offer": {
     "name": "KnownFix",
     "description": "Verified fixes, priced below the tokens it takes to re-derive them.",
-    "inventory": 38,
+    "inventory": 40,
     "freeSamples": [
+      "node-esm-dirname-not-defined",
+      "node-esm-unsupported-dir-import",
       "oz5-mcopy-cancun",
       "node-test-dir-arg-windows",
       "err-package-path-not-exported-probe",

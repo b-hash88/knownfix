@@ -43,5 +43,7 @@ Scope: a relative directory import through native Node ESM. Bundlers, TypeScript
 - [Node 22.23.2: mandatory ESM file extensions](https://nodejs.org/download/release/v22.23.2/docs/api/esm.html#mandatory-file-extensions)
 - [Node: ERR_UNSUPPORTED_DIR_IMPORT](https://nodejs.org/api/errors.html#err_unsupported_dir_import)
 
+Reviewed: 2026-09-05
+
 _This fix is free as a quality sample. The rest of the catalog is paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

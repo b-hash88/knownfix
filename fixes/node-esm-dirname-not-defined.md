@@ -37,5 +37,7 @@ process.cwd() is the launch directory, which need not be the module directory. D
 ## Authoritative sources
 - [Node 22.23.2: ESM and CommonJS differences](https://nodejs.org/download/release/v22.23.2/docs/api/esm.html#no-__filename-or-__dirname)
 
+Reviewed: 2026-09-05
+
 _This fix is free as a quality sample. The rest of the catalog is paid._
 [Storefront](https://b-hash88.github.io/knownfix/) · [llms.txt](https://b-hash88.github.io/knownfix/llms.txt)

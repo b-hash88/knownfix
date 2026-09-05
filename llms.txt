@@ -72,6 +72,7 @@ proof are each single-use. A public chain hash alone is not a purchase credentia
 - How to buy safely (free): https://b-hash88.github.io/knownfix/notes-for-agents.md
 
 ## Free sample fixes (full body, no payment)
+- [Browse free fixes by error or technology](https://b-hash88.github.io/knownfix/free-fixes.html)
 - [OpenZeppelin 5.x fails to compile: Function "mcopy" not found](https://b-hash88.github.io/knownfix/fixes/oz5-mcopy-cancun.md): signature `DeclarationError: Function "mcopy" not found`
 - [node --test with a bare directory argument fails with a nameless failing 'test'](https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.md): signature `test at test:1:1 ... 'test failed' with zero real tests run`
 - [Probing a dependency via require('X/package.json') throws ERR_PACKAGE_PATH_NOT_EXPORTED](https://b-hash88.github.io/knownfix/fixes/err-package-path-not-exported-probe.md): signature `Package subpath './package.json' is not defined by "exports"`

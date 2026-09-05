@@ -134,8 +134,8 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") || "", /text\/html/);
   assert.match(body, /34 verified/);
-  assert.match(body, /4 documented/);
-  assert.match(body, /12 free in full/);
+  assert.match(body, /6 documented/);
+  assert.match(body, /14 free in full/);
   assert.match(body, /<b>5<\/b> professional reviews/);
   assert.match(body, /Book the \$149 Evidence Audit/);
   assert(body.includes(`<link rel="canonical" href="${CANONICAL_STORE}">`));
@@ -145,13 +145,13 @@ await check("storefront metadata and truthful inventory", async () => {
   assertAnalyticsBoundary(body, "storefront");
   assert.match(body, /data-knownfix-event="catalog_search"/);
   assert.match(body, /href="\.\/privacy\.html"/);
-  assert.equal(catalog.entries.length, 38);
-  assert.equal(catalog.entries.filter((entry) => entry.sample).length, 12);
+  assert.equal(catalog.entries.length, 40);
+  assert.equal(catalog.entries.filter((entry) => entry.sample).length, 14);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
-  assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 4);
+  assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 6);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
   assert.equal(serviceCatalog.services.length, 5);
-  return "38 entries; 34 verified, 4 documented, 12 free, 5 professional reviews";
+  return "40 entries; 34 verified, 6 documented, 14 free, 5 professional reviews";
 });
 
 await check("professional service page is private, structured, and checkout-ready", async () => {
@@ -544,7 +544,7 @@ await check("catalog, strong matches, and honest miss", async () => {
     json(API + "/match?q=" + encodeURIComponent("quasar-lantern-9842 impossible frobnication")),
   ]);
   assert.equal(catalogResult.response.status, 200);
-  assert.equal(catalogResult.data.entries.length, 38);
+  assert.equal(catalogResult.data.entries.length, 40);
   assert(catalogResult.data.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
   assert.deepEqual(
     catalogResult.data.entries.find((entry) => entry.id === "npm-exec-local-bin-not-found")?.discussion,
@@ -574,6 +574,16 @@ await check("catalog, strong matches, and honest miss", async () => {
 });
 
 await check("free delivery and paid denial do not cross the boundary", async () => {
+  for (const id of ["node-esm-dirname-not-defined", "node-esm-unsupported-dir-import"]) {
+    const entry = catalog.entries.find((item) => item.id === id);
+    assert.equal(entry?.sample, true);
+    const match = await json(API + "/match?q=" + encodeURIComponent(entry.signature));
+    assert.equal(match.data.matches[0].id, id);
+    const delivered = parseToolText(await mcp(101, "tools/call", { name: "get_fix", arguments: { id } }));
+    assert.equal(delivered.tier, "free-sample");
+    assert.match(delivered.fix.verification, /Local fixture verification, not a production incident/);
+    assert(delivered.fix.patch);
+  }
   const freeResult = await json(API + "/fix/oz5-mcopy-cancun");
   assert.equal(freeResult.response.status, 200);
   assert.equal(freeResult.data.tier, "free-sample");

@@ -129,3 +129,11 @@ Full free catalog: https://knownfix-backend-28.b-hash88.deno.net/free-skills
 ## Homepage products
 - [Evidence-Led Homepage Build](https://b-hash88.github.io/knownfix/services/homepage-build.html): $750 USDC; one homepage, seven business days, no deployment or backend development.
 - [Homepage Builder Prompt for Codex and Claude](https://b-hash88.github.io/knownfix/packs/homepage-builder-prompt.md): $5 USDC; public outline only. Call get_skill with homepage-builder-prompt for checkout.
+
+- [MCP Connection Triage](https://b-hash88.github.io/knownfix/free-skills/mcp-connection-triage.md): Separate transport, authentication and tool-discovery failures with a minimal, redacted connection receipt.
+Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/mcp-connection-triage
+MCP resource: knownfix://free-skill/mcp-connection-triage
+
+- [Website Search Readiness](https://b-hash88.github.io/knownfix/free-skills/website-search-readiness.md): Review crawl directives, canonical signals and answer clarity without promising rankings or AI citations.
+Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/website-search-readiness
+MCP resource: knownfix://free-skill/website-search-readiness

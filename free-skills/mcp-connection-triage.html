@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence-First Bug Report | KnownFix</title><meta name="description" content="Turn a suspected website or code defect into a reproducible report, without inventing impact or exposing secrets."><link rel="canonical" href="https://b-hash88.github.io/knownfix/free-skills/evidence-first-bug-report.html"><style>body{margin:0;background:#151912;color:#f2f4f1;font:16px/1.65 system-ui,sans-serif}main{max-width:850px;margin:auto;padding:24px}a{color:#8ad6c4}h1{font-size:30px;line-height:1.2}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.6 ui-monospace,monospace}img{vertical-align:middle;margin-right:12px}nav{display:flex;gap:20px;flex-wrap:wrap}section{border-top:1px solid #788078;margin-top:24px;padding-top:20px}</style><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MCP Connection Triage | KnownFix</title><meta name="description" content="Separate transport, authentication and tool-discovery failures with a minimal, redacted connection receipt."><link rel="canonical" href="https://b-hash88.github.io/knownfix/free-skills/mcp-connection-triage.html"><style>body{margin:0;background:#151912;color:#f2f4f1;font:16px/1.65 system-ui,sans-serif}main{max-width:850px;margin:auto;padding:24px}a{color:#8ad6c4}h1{font-size:30px;line-height:1.2}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.6 ui-monospace,monospace}img{vertical-align:middle;margin-right:12px}nav{display:flex;gap:20px;flex-wrap:wrap}section{border-top:1px solid #788078;margin-top:24px;padding-top:20px}</style><style>
 #knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
 #knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
 #knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
@@ -49,43 +49,41 @@
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
-</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>Evidence-First Bug Report</h1><p>Turn a suspected website or code defect into a reproducible report, without inventing impact or exposing secrets.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/evidence-first-bug-report" data-knownfix-event="free_skill_download" data-knownfix-context="evidence-first-bug-report">Download SKILL.md</a></p><pre>---
-name: evidence-first-bug-report
-description: Use when reproducing a suspected website or code defect and preparing a report for its maintainer.
+</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>MCP Connection Triage</h1><p>Separate transport, authentication and tool-discovery failures with a minimal, redacted connection receipt.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/mcp-connection-triage" data-knownfix-event="free_skill_download" data-knownfix-context="mcp-connection-triage">Download SKILL.md</a></p><pre>---
+name: mcp-connection-triage
+description: Use when an MCP client cannot connect to a server or discover its tools; diagnose without invoking business tools or widening access.
 ---
 
-# Evidence-First Bug Report
+# MCP Connection Triage
 
-This is a reusable workflow, not a claim that any target has a defect. Use only systems you are authorized to inspect. Do not scan private endpoints, bypass access controls, or send reports automatically.
+Diagnose a failed connection on a server you are authorized to inspect. Do not treat a directory health badge or an HTTP 200 as proof that MCP works. This workflow does not authorize changing credentials, installing software, exposing a local server, or calling tools that write data.
 
 ## Reusable prompt
 
-Treat the suspected defect as a hypothesis. Inspect the current target and preserve the exact URL or file and commit, UTC timestamp, runtime/browser version, input, method, status, and relevant raw output. Redact credentials, bearer links, personal data, and payment details before saving evidence.
+Read the server&#39;s actual configuration and current official connection instructions. Record the client and server versions, declared transport, exact redacted endpoint or local launch command, UTC timestamp, expected authentication scheme, and a short description of the failure. Redact credentials, session identifiers, private URLs and personal data from all retained output. Never paste a token into a report, shell history, query string or unrelated domain.
 
-Reproduce with two fresh independent attempts. Cross-check with a second method: for a website compare the HTTP response with the rendered browser; for code compare a focused automated test with a direct execution of the smallest reproducer. These checks are separate observations, not claims of independent reviewers.
+For a local stdio server, distinguish process launch failure from protocol failure. Check the configured executable, working directory, runtime and required environment-variable names without printing their values. Capture exit status and redacted stderr; logs belong on stderr, not the protocol stream. Do not assume the command installed globally is the command the client launches.
 
-Search for contradictions: intentional behavior, documented constraints, stale cache, environment mismatch, missing authorization, and results on a control input. Separate observed behavior from your explanation. If it does not reproduce or the methods disagree, label it unverified and do not report it as a bug.
+For a remote server, distinguish DNS/TLS or transport failure, HTTP rejection, authentication failure, MCP initialization rejection, and tools/list failure. Use the documented MCP client or inspector for the declared transport and protocol version. Follow its negotiated initialization and session lifecycle; do not invent headers, assume all servers use SSE, disable TLS validation, or retry with broader scopes. Do not send an existing credential across an unverified redirect.
 
-Prepare the report below. Do not send it without authorization. Never claim accessibility, security, lost revenue, or affected-user counts without evidence for that specific impact. Avoid destructive fixes or widening permissions.
+Make two fresh connections with bounded timeouts. After successful initialization, list tools only and record the declared names and schemas. Do not execute a business tool merely to test discovery. Use a second method such as another documented client or a server-side redacted log correlated by timestamp. A bare HTTP probe is useful for reachability only, not a substitute for an MCP handshake. Close each client and transport after the check.
 
-## Report template
+Review contradictions: wrong transport, stale URL or configuration, mismatched environment, proxy behavior, advertised authentication requirements, and a client-specific failure. If anonymous discovery is rejected but documented authenticated discovery works, report that distinction rather than calling the server offline. If results disagree, label the diagnosis unverified and retain both observations. Stop on repeated failures instead of looping, generating credential grants, or opening more sessions.
 
-- Title: observed behavior, not an accusation
-- Target and tested version:
-- Expected behavior and its basis:
-- Actual behavior:
-- Minimal steps and input:
-- Evidence paths and timestamps:
-- Attempt A / attempt B / second-method results:
-- Contradictory evidence and control result:
-- Disposition: verified / unverified / not reproduced
-- Observed impact and limitations:
-- Proposed narrow fix, if supported:
-- Regression test and rollback condition:
+## Connection receipt
+
+- Target / transport / client and server versions / UTC:
+- Expected authentication, with no secret values:
+- Failure stage and exact redacted status or error:
+- Attempt A / B: initialization and tools/list results:
+- Second-method evidence and contradictions:
+- Tool names observed, not tools executed:
+- Disposition: reproduced / client-specific / unverified:
+- Smallest supported next check and remaining limitation:
 
 ## Acceptance checklist
 
-A maintainer can repeat the steps without your account or secrets; each factual claim points to a retained artifact; the report distinguishes a suggestion from a defect; the exact tested environment is named. A saved report is not proof of remote delivery. If authorized to send, read back the sent copy and record any promise or follow-up separately.
+The receipt separates reachability from protocol readiness and discovery from successful tool execution. No credentials are retained, no write tools are called, and no new access is granted. Any proposed configuration change is reviewed within the user&#39;s original scope. A maintainer can repeat the safe checks without receiving your token.
 
-Source: KnownFix operating discipline. No guarantee of finding a defect or improving traffic.
+Source: KnownFix evidence-first workflow. Consult the server&#39;s current official instructions for its specific transport and authentication contract; no universal compatibility guarantee.
 </pre><footer><p>Free under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Attribution: KnownFix. No account or payment required.</p></footer></main></body></html>

@@ -11,7 +11,7 @@
 (function(){
   'use strict';
   var measurementId="G-781DC76YQN",storageKey="knownfix.analytics.consent",pageType="free-skill",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
-  var allowedEvents={catalog_search:1,service_catalog_view:1,service_select:1,service_order_start:1,checkout_start:1,merch_click:1};
+  var allowedEvents={catalog_search:1,service_catalog_view:1,service_select:1,service_order_start:1,checkout_start:1,merch_click:1,free_skill_download:1,free_skill_download:1};
   function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
   function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
   function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
@@ -49,14 +49,14 @@
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
-</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>Release Smoke Check for Codex and Claude</h1><p>A bounded pre-release and live read-back checklist for developer tools, with honest payment and rollback gates.</p><p><a href="./release-smoke-check.md" download>Download SKILL.md</a> | <a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/release-smoke-check">HTTP body</a></p><pre>---
+</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>Release Smoke Check for Codex and Claude</h1><p>A bounded pre-release and live read-back checklist for developer tools, with honest payment and rollback gates.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/release-smoke-check" data-knownfix-event="free_skill_download" data-knownfix-context="release-smoke-check">Download SKILL.md</a></p><pre>---
 name: release-smoke-check
 description: Use before and after an authorized release of a website, API, or developer tool to verify its critical path.
 ---
 
 # Release Smoke Check for Codex and Claude
 
-A checklist cannot guarantee reliability. Start with the repository's actual commands and deployment process; do not substitute a guessed stack or upgrade dependencies merely to run this skill.
+A checklist cannot guarantee reliability. Start with the repository&#39;s actual commands and deployment process; do not substitute a guessed stack or upgrade dependencies merely to run this skill.
 
 ## Reusable prompt
 

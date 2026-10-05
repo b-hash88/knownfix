@@ -428,3 +428,89 @@ If a release gate fails, stop further rollout and use the documented reversible 
 The receipt names the exact tested scope; local and production results are separate; private data is absent; public behavior matches the intended change; failed checks and untested payments remain visible. Never manufacture buyers or count declared operator tests as demand.
 
 Source: KnownFix release-review discipline. Designed for Codex or Claude as a portable prompt, not an executable tool or automatic deployment authority.
+
+- [MCP Connection Triage](https://b-hash88.github.io/knownfix/free-skills/mcp-connection-triage.md): Separate transport, authentication and tool-discovery failures with a minimal, redacted connection receipt.
+Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/mcp-connection-triage
+MCP resource: knownfix://free-skill/mcp-connection-triage
+
+---
+name: mcp-connection-triage
+description: Use when an MCP client cannot connect to a server or discover its tools; diagnose without invoking business tools or widening access.
+---
+
+# MCP Connection Triage
+
+Diagnose a failed connection on a server you are authorized to inspect. Do not treat a directory health badge or an HTTP 200 as proof that MCP works. This workflow does not authorize changing credentials, installing software, exposing a local server, or calling tools that write data.
+
+## Reusable prompt
+
+Read the server's actual configuration and current official connection instructions. Record the client and server versions, declared transport, exact redacted endpoint or local launch command, UTC timestamp, expected authentication scheme, and a short description of the failure. Redact credentials, session identifiers, private URLs and personal data from all retained output. Never paste a token into a report, shell history, query string or unrelated domain.
+
+For a local stdio server, distinguish process launch failure from protocol failure. Check the configured executable, working directory, runtime and required environment-variable names without printing their values. Capture exit status and redacted stderr; logs belong on stderr, not the protocol stream. Do not assume the command installed globally is the command the client launches.
+
+For a remote server, distinguish DNS/TLS or transport failure, HTTP rejection, authentication failure, MCP initialization rejection, and tools/list failure. Use the documented MCP client or inspector for the declared transport and protocol version. Follow its negotiated initialization and session lifecycle; do not invent headers, assume all servers use SSE, disable TLS validation, or retry with broader scopes. Do not send an existing credential across an unverified redirect.
+
+Make two fresh connections with bounded timeouts. After successful initialization, list tools only and record the declared names and schemas. Do not execute a business tool merely to test discovery. Use a second method such as another documented client or a server-side redacted log correlated by timestamp. A bare HTTP probe is useful for reachability only, not a substitute for an MCP handshake. Close each client and transport after the check.
+
+Review contradictions: wrong transport, stale URL or configuration, mismatched environment, proxy behavior, advertised authentication requirements, and a client-specific failure. If anonymous discovery is rejected but documented authenticated discovery works, report that distinction rather than calling the server offline. If results disagree, label the diagnosis unverified and retain both observations. Stop on repeated failures instead of looping, generating credential grants, or opening more sessions.
+
+## Connection receipt
+
+- Target / transport / client and server versions / UTC:
+- Expected authentication, with no secret values:
+- Failure stage and exact redacted status or error:
+- Attempt A / B: initialization and tools/list results:
+- Second-method evidence and contradictions:
+- Tool names observed, not tools executed:
+- Disposition: reproduced / client-specific / unverified:
+- Smallest supported next check and remaining limitation:
+
+## Acceptance checklist
+
+The receipt separates reachability from protocol readiness and discovery from successful tool execution. No credentials are retained, no write tools are called, and no new access is granted. Any proposed configuration change is reviewed within the user's original scope. A maintainer can repeat the safe checks without receiving your token.
+
+Source: KnownFix evidence-first workflow. Consult the server's current official instructions for its specific transport and authentication contract; no universal compatibility guarantee.
+
+- [Website Search Readiness](https://b-hash88.github.io/knownfix/free-skills/website-search-readiness.md): Review crawl directives, canonical signals and answer clarity without promising rankings or AI citations.
+Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/website-search-readiness
+MCP resource: knownfix://free-skill/website-search-readiness
+
+---
+name: website-search-readiness
+description: Use for a bounded public-page SEO and answer-readiness review before proposing website changes; not a ranking forecast or security scan.
+---
+
+# Website Search Readiness
+
+Review a user-selected public homepage and a small representative set of pages. This is a triage workflow, not a guarantee of indexing, rankings, traffic, AI inclusion or conversion. Do not crawl private pages or submit changes to search platforms automatically.
+
+## Reusable prompt
+
+Define the intended audience, primary offer, canonical domain and exact public pages in scope. Record UTC timestamps, URLs, HTTP status, redirect chain, response headers, source HTML and rendered observations. Redact credentials, private links, personal data and query-string secrets before preserving artifacts. Work from current primary evidence, not a cached search snippet or a guessed sitemap.
+
+Check whether each intended public page returns usable content, whether its canonical target agrees with its final URL, and whether explicit noindex directives appear in HTML or X-Robots-Tag. Read the site's robots.txt and advertised sitemap when present; distinguish crawler directives from indexing directives. Do not infer that a missing sitemap blocks indexing, that a robots.txt rule proves deindexing, or that a canonical hint guarantees selection. Ask for authorized Search Console evidence before claiming actual index status.
+
+Compare the HTML source and rendered page. Check that the title, primary heading and visible main content identify the real product, audience and next action. Identify questions the page actually answers, whether material statements cite verifiable evidence, and whether service scope, pricing basis and contact or purchase routes are understandable. Mark absent business facts as questions; never invent customers, endorsements, guarantees or testimonials.
+
+If structured data exists, parse it and compare its entities and claims with visible content. Record malformed data separately from supported-but-inapplicable or unverifiable eligibility. Consult current official search documentation before recommending a schema type or asserting eligibility. Do not add fabricated reviews, FAQ answers, ratings or organization details.
+
+Re-read every suspected blocking directive or redirect in two fresh requests and cross-check using a second method such as a browser or an authorized search inspection tool. Review contradictions: deliberate staging restrictions, language variants, JavaScript rendering, headers overriding expectations, stale caches and a different canonical domain. Label inconsistent results unverified. An accessible page is not proof of indexing or AI citations.
+
+Prepare a short priority list: confirmed access/index-directive problems first, inconsistent identity/canonical signals next, then unsupported claims or answer gaps. Separate confirmed observations, conditional recommendations and owner questions. Performance, accessibility and conversion claims require their own measured checks; do not infer them from this review. Do not publish an accusation or modify the site without authorization.
+
+## Review template
+
+- Exact page / intended canonical / UTC:
+- Status, redirects, crawl and index directives:
+- Source versus rendered title, heading and main content:
+- Answer gaps and facts requiring owner confirmation:
+- Structured-data parse result and visible consistency:
+- Attempt A / B / second method / contradictions:
+- Disposition: verified observation / unverified / not tested:
+- Priority, narrow recommendation and validation after change:
+
+## Acceptance checklist
+
+Every observation links to an artifact and tested URL. Index status is left unknown without authorized primary evidence. Recommendations do not promise rankings or AI exposure and distinguish technical access from content usefulness. No credentials, fabricated business claims or private pages enter the report.
+
+Source: KnownFix evidence-first workflow. SEO, AEO and GEO outcomes remain unmeasured until separately evaluated.

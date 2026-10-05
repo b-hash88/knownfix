@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evidence-First Bug Report | KnownFix</title><meta name="description" content="Turn a suspected website or code defect into a reproducible report, without inventing impact or exposing secrets."><link rel="canonical" href="https://b-hash88.github.io/knownfix/free-skills/evidence-first-bug-report.html"><style>body{margin:0;background:#151912;color:#f2f4f1;font:16px/1.65 system-ui,sans-serif}main{max-width:850px;margin:auto;padding:24px}a{color:#8ad6c4}h1{font-size:30px;line-height:1.2}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.6 ui-monospace,monospace}img{vertical-align:middle;margin-right:12px}nav{display:flex;gap:20px;flex-wrap:wrap}section{border-top:1px solid #788078;margin-top:24px;padding-top:20px}</style><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Website Search Readiness | KnownFix</title><meta name="description" content="Review crawl directives, canonical signals and answer clarity without promising rankings or AI citations."><link rel="canonical" href="https://b-hash88.github.io/knownfix/free-skills/website-search-readiness.html"><style>body{margin:0;background:#151912;color:#f2f4f1;font:16px/1.65 system-ui,sans-serif}main{max-width:850px;margin:auto;padding:24px}a{color:#8ad6c4}h1{font-size:30px;line-height:1.2}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.6 ui-monospace,monospace}img{vertical-align:middle;margin-right:12px}nav{display:flex;gap:20px;flex-wrap:wrap}section{border-top:1px solid #788078;margin-top:24px;padding-top:20px}</style><style>
 #knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
 #knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
 #knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
@@ -49,43 +49,43 @@
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
-</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>Evidence-First Bug Report</h1><p>Turn a suspected website or code defect into a reproducible report, without inventing impact or exposing secrets.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/evidence-first-bug-report" data-knownfix-event="free_skill_download" data-knownfix-context="evidence-first-bug-report">Download SKILL.md</a></p><pre>---
-name: evidence-first-bug-report
-description: Use when reproducing a suspected website or code defect and preparing a report for its maintainer.
+</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>Website Search Readiness</h1><p>Review crawl directives, canonical signals and answer clarity without promising rankings or AI citations.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/website-search-readiness" data-knownfix-event="free_skill_download" data-knownfix-context="website-search-readiness">Download SKILL.md</a></p><pre>---
+name: website-search-readiness
+description: Use for a bounded public-page SEO and answer-readiness review before proposing website changes; not a ranking forecast or security scan.
 ---
 
-# Evidence-First Bug Report
+# Website Search Readiness
 
-This is a reusable workflow, not a claim that any target has a defect. Use only systems you are authorized to inspect. Do not scan private endpoints, bypass access controls, or send reports automatically.
+Review a user-selected public homepage and a small representative set of pages. This is a triage workflow, not a guarantee of indexing, rankings, traffic, AI inclusion or conversion. Do not crawl private pages or submit changes to search platforms automatically.
 
 ## Reusable prompt
 
-Treat the suspected defect as a hypothesis. Inspect the current target and preserve the exact URL or file and commit, UTC timestamp, runtime/browser version, input, method, status, and relevant raw output. Redact credentials, bearer links, personal data, and payment details before saving evidence.
+Define the intended audience, primary offer, canonical domain and exact public pages in scope. Record UTC timestamps, URLs, HTTP status, redirect chain, response headers, source HTML and rendered observations. Redact credentials, private links, personal data and query-string secrets before preserving artifacts. Work from current primary evidence, not a cached search snippet or a guessed sitemap.
 
-Reproduce with two fresh independent attempts. Cross-check with a second method: for a website compare the HTTP response with the rendered browser; for code compare a focused automated test with a direct execution of the smallest reproducer. These checks are separate observations, not claims of independent reviewers.
+Check whether each intended public page returns usable content, whether its canonical target agrees with its final URL, and whether explicit noindex directives appear in HTML or X-Robots-Tag. Read the site&#39;s robots.txt and advertised sitemap when present; distinguish crawler directives from indexing directives. Do not infer that a missing sitemap blocks indexing, that a robots.txt rule proves deindexing, or that a canonical hint guarantees selection. Ask for authorized Search Console evidence before claiming actual index status.
 
-Search for contradictions: intentional behavior, documented constraints, stale cache, environment mismatch, missing authorization, and results on a control input. Separate observed behavior from your explanation. If it does not reproduce or the methods disagree, label it unverified and do not report it as a bug.
+Compare the HTML source and rendered page. Check that the title, primary heading and visible main content identify the real product, audience and next action. Identify questions the page actually answers, whether material statements cite verifiable evidence, and whether service scope, pricing basis and contact or purchase routes are understandable. Mark absent business facts as questions; never invent customers, endorsements, guarantees or testimonials.
 
-Prepare the report below. Do not send it without authorization. Never claim accessibility, security, lost revenue, or affected-user counts without evidence for that specific impact. Avoid destructive fixes or widening permissions.
+If structured data exists, parse it and compare its entities and claims with visible content. Record malformed data separately from supported-but-inapplicable or unverifiable eligibility. Consult current official search documentation before recommending a schema type or asserting eligibility. Do not add fabricated reviews, FAQ answers, ratings or organization details.
 
-## Report template
+Re-read every suspected blocking directive or redirect in two fresh requests and cross-check using a second method such as a browser or an authorized search inspection tool. Review contradictions: deliberate staging restrictions, language variants, JavaScript rendering, headers overriding expectations, stale caches and a different canonical domain. Label inconsistent results unverified. An accessible page is not proof of indexing or AI citations.
 
-- Title: observed behavior, not an accusation
-- Target and tested version:
-- Expected behavior and its basis:
-- Actual behavior:
-- Minimal steps and input:
-- Evidence paths and timestamps:
-- Attempt A / attempt B / second-method results:
-- Contradictory evidence and control result:
-- Disposition: verified / unverified / not reproduced
-- Observed impact and limitations:
-- Proposed narrow fix, if supported:
-- Regression test and rollback condition:
+Prepare a short priority list: confirmed access/index-directive problems first, inconsistent identity/canonical signals next, then unsupported claims or answer gaps. Separate confirmed observations, conditional recommendations and owner questions. Performance, accessibility and conversion claims require their own measured checks; do not infer them from this review. Do not publish an accusation or modify the site without authorization.
+
+## Review template
+
+- Exact page / intended canonical / UTC:
+- Status, redirects, crawl and index directives:
+- Source versus rendered title, heading and main content:
+- Answer gaps and facts requiring owner confirmation:
+- Structured-data parse result and visible consistency:
+- Attempt A / B / second method / contradictions:
+- Disposition: verified observation / unverified / not tested:
+- Priority, narrow recommendation and validation after change:
 
 ## Acceptance checklist
 
-A maintainer can repeat the steps without your account or secrets; each factual claim points to a retained artifact; the report distinguishes a suggestion from a defect; the exact tested environment is named. A saved report is not proof of remote delivery. If authorized to send, read back the sent copy and record any promise or follow-up separately.
+Every observation links to an artifact and tested URL. Index status is left unknown without authorized primary evidence. Recommendations do not promise rankings or AI exposure and distinguish technical access from content usefulness. No credentials, fabricated business claims or private pages enter the report.
 
-Source: KnownFix operating discipline. No guarantee of finding a defect or improving traffic.
+Source: KnownFix evidence-first workflow. SEO, AEO and GEO outcomes remain unmeasured until separately evaluated.
 </pre><footer><p>Free under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Attribution: KnownFix. No account or payment required.</p></footer></main></body></html>

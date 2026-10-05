@@ -180,8 +180,8 @@ await check("professional service page is private, structured, and checkout-read
   assert.match(body, /knownfixTrack\('service_order_start',serviceInput\.value\)/);
   assert.doesNotMatch(body, /innerHTML\s*=/);
   const structured = JSON.parse(body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-  assert.equal(structured.numberOfItems, 5);
-  assert.equal(structured.itemListElement.length, 6);
+  assert.equal(structured.numberOfItems, serviceCatalog.services.length);
+  assert.equal(structured.itemListElement.length, serviceCatalog.services.length);
   for (const service of serviceCatalog.services) {
     const detail = await text(new URL("services/" + service.id + ".html", STORE));
     assert.equal(detail.response.status, 200);
@@ -212,7 +212,7 @@ await check("professional service page is private, structured, and checkout-read
   assert.doesNotMatch(sampleHtml.body, new RegExp(ANALYTICS_MEASUREMENT_ID));
   const sampleSchema = JSON.parse(sampleHtml.body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   assert.equal(sampleSchema["@type"], "Report");
-  return "five intent-specific service pages; indexable sample; private reports stay verified";
+  return `${serviceCatalog.services.length} intent-specific service pages; indexable sample; private reports stay verified`;
 });
 
 await check("homepage search is purchase-ready and credential-safe", async () => {

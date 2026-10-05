@@ -37,6 +37,13 @@ try {
       const skill = data.skills.find(s => s.id === id);
       return route.fulfill({ status: skill ? 200 : 404, headers: { 'content-type': 'text/markdown', 'content-disposition': 'attachment; filename="SKILL.md"' }, body: skill?.body || '' });
     });
+    if (process.env.KNOWNFIX_BOOKS_URL) {
+      await page.goto(process.env.KNOWNFIX_BOOKS_URL);
+      assert.equal(await page.locator('#workflow_activity tbody tr').count(), 4);
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      if (process.env.KNOWNFIX_SCREENSHOT_DIR) await page.locator('#workflow_activity').screenshot({ path: path.join(process.env.KNOWNFIX_SCREENSHOT_DIR, `KnownFix_20261005_Workflow-Books-${label}_IMG.png`) });
+      console.log(label + ': live Books workflow breakdown has four rows and no page overflow.');
+    }
     await page.goto(base + '/free-skills.html');
     await page.getByRole('button', { name: 'No thanks', exact: true }).click();
     assert.equal(await page.getByRole('link', { name: 'Download SKILL.md', exact: true }).count(), 4);

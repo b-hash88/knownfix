@@ -739,7 +739,10 @@ await check("books HTML and JSON publish the store and Evidence Audit funnels", 
   assert.match(htmlResult.body, /id="nextExperiment"/);
   assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
   assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.16");
+  assert.equal(jsonResult.data.spec, "knownfix-books/0.17");
+  assert.equal(jsonResult.data.freeWorkflows.spec, "knownfix-free-workflow-activity/1.0");
+  assert.equal(Object.keys(jsonResult.data.freeWorkflows.byId).length, 4);
+  assert.equal(jsonResult.data.freeWorkflows.bodiesServed, jsonResult.data.freeWorkflows.byChannel.http + jsonResult.data.freeWorkflows.byChannel.mcp);
   assert.equal(typeof jsonResult.data.operatorNotifications.enabled, "boolean");
   assert.equal(
     jsonResult.data.operatorNotifications.provider,

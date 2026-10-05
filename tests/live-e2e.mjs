@@ -499,7 +499,7 @@ await check("backend health, security headers, and CORS preflight", async () => 
   assert.equal(response.status, 200);
   assert.equal(data.ok, true);
   assert.equal(data.inventory, catalog.entries.length);
-  assert.equal(data.services, 5);
+  assert.equal(data.services, 6);
   assert.equal(data.chainId, 8453);
   assert.equal(data.kv, true);
   assert.equal(data.checkoutEnabled, true);

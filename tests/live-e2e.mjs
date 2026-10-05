@@ -150,7 +150,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 6);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
-  assert.equal(serviceCatalog.services.length, 5);
+  assert.equal(serviceCatalog.services.length, 6);
   return "40 entries; 34 verified, 6 documented, 14 free, 5 professional reviews";
 });
 
@@ -181,7 +181,7 @@ await check("professional service page is private, structured, and checkout-read
   assert.doesNotMatch(body, /innerHTML\s*=/);
   const structured = JSON.parse(body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   assert.equal(structured.numberOfItems, 5);
-  assert.equal(structured.itemListElement.length, 5);
+  assert.equal(structured.itemListElement.length, 6);
   for (const service of serviceCatalog.services) {
     const detail = await text(new URL("services/" + service.id + ".html", STORE));
     assert.equal(detail.response.status, 200);
@@ -818,7 +818,7 @@ await check("professional service API preserves private order boundaries", async
   const serviceResult = await json(API + "/services");
   assert.equal(serviceResult.response.status, 200);
   assert.equal(serviceResult.data.spec, "knownfix-services/1.0");
-  assert.equal(serviceResult.data.services.length, 5);
+  assert.equal(serviceResult.data.services.length, 6);
   assert(serviceResult.data.services.every((service) => service.priceUsd && service.deliverables.length >= 5));
   assert.doesNotMatch(JSON.stringify(serviceResult.data.publicWork), /"ticket"\s*:/i);
 
@@ -893,7 +893,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     name: "list_services",
     arguments: {},
   }));
-  assert.equal(serviceList.services.length, 5);
+  assert.equal(serviceList.services.length, 6);
   assert.equal(serviceList.services.find((service) => service.id === "website-first-look").priceUsd, "$149.00");
   assert.equal(serviceList.services.find((service) => service.id === "website-growth-audit").priceUsd, "$399.00");
   assert.equal(serviceList.services.find((service) => service.id === "codebase-review").priceUsd, "$249.00");

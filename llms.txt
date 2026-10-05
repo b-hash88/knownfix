@@ -119,3 +119,13 @@ proof are each single-use. A public chain hash alone is not a purchase credentia
 ## Other
 - [Machine Sigils](https://b-hash88.github.io/knownfix/sigils/offer.json): squat-proof agent identity credentials (second product line).
 - Honesty: verified-in-production entries were reproduced and fixed in real sessions; documented entries are documentation-backed, not production-verified. Any local fixture tests are described separately. /match returns empty rather than pretending.
+
+## Free workflow skills
+- [Evidence-First Bug Report](https://b-hash88.github.io/knownfix/free-skills/evidence-first-bug-report.md): Turn a suspected website or code defect into a reproducible report, without inventing impact or exposing secrets.
+- [Release Smoke Check for Codex and Claude](https://b-hash88.github.io/knownfix/free-skills/release-smoke-check.md): A bounded pre-release and live read-back checklist for developer tools, with honest payment and rollback gates.
+MCP resources: knownfix://free-skill/evidence-first-bug-report, knownfix://free-skill/release-smoke-check.
+Full free catalog: https://knownfix-backend-28.b-hash88.deno.net/free-skills
+
+## Homepage products
+- [Evidence-Led Homepage Build](https://b-hash88.github.io/knownfix/services/homepage-build.html): $750 USDC; one homepage, seven business days, no deployment or backend development.
+- [Homepage Builder Prompt for Codex and Claude](https://b-hash88.github.io/knownfix/packs/homepage-builder-prompt.md): $5 USDC; public outline only. Call get_skill with homepage-builder-prompt for checkout.

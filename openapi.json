@@ -338,6 +338,39 @@
           }
         }
       }
+    },
+    "/free-skills": {
+      "get": {
+        "summary": "Full free workflow catalog",
+        "responses": {
+          "200": {
+            "description": "Complete free workflow bodies."
+          }
+        }
+      }
+    },
+    "/free-skill/{id}": {
+      "get": {
+        "summary": "Download a free workflow",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Complete Markdown workflow."
+          },
+          "404": {
+            "description": "Unknown free skill."
+          }
+        }
+      }
     }
   },
   "components": {

@@ -47,6 +47,26 @@
       "limitations": "No ranking, traffic, revenue, or conversion outcome is guaranteed. The review covers public pages and observable behavior only."
     },
     {
+      "id": "homepage-build",
+      "title": "Evidence-Led Homepage Build",
+      "tagline": "A conversion-focused homepage designed, written, built, and browser-tested from observable evidence instead of generic templates.",
+      "priceUsdCents": 75000,
+      "priceWei": "300000000000000000",
+      "deliveryBusinessDays": 7,
+      "targetKind": "website",
+      "scope": "One responsive homepage for an existing public brand or product website, delivered as self-contained HTML, CSS, and JavaScript or an equivalent implementation-ready component in the target's observable frontend stack.",
+      "deliverables": [
+        "Evidence brief covering audience, offer, conversion path, trust signals, and current-site constraints",
+        "Homepage information architecture and conversion-focused copy",
+        "High-fidelity responsive visual design tailored to the brand and product",
+        "Production-ready homepage source included in the private delivery",
+        "Technical SEO, answer-engine metadata, and accurate structured-data recommendations",
+        "Desktop and mobile browser QA with accessibility and performance checks",
+        "Implementation notes, verification evidence, and a prioritized launch checklist"
+      ],
+      "limitations": "The engagement covers one public-facing homepage and does not include deployment, credentials, private repositories, CMS or backend development, authentication, ecommerce, custom illustration, or a full rebrand. Existing public assets may be reused only where the buyer has authority. No ranking, traffic, revenue, or conversion outcome is guaranteed."
+    },
+    {
       "id": "codebase-review",
       "title": "Codebase Review",
       "tagline": "A senior-engineering review focused on defects, security boundaries, maintainability, tests, and release risk.",

@@ -334,3 +334,97 @@ Cause: npm exec treats an exact package name and version already present in the 
 Fix: Test a published executable from a neutral directory outside the package source tree. Inside the source checkout, invoke the local bin entry directly or through a repository script; do not use that same checkout as proof that the registry artifact installs.
 Verified: Reproduced on Windows 11 with Node 24.15.0 and npm 11.12.1. A disposable package root named knownfix at version 0.3.13 with a matching bin declaration returned exit 1 and the exact not-recognized message. The identical npm exec command from a neutral consumer package returned exit 0 and ran the public knownfix@0.3.13 binary. npm's current official npm-exec documentation confirms exact local name/version matches satisfy --package, while fetched packages are installed into a cache directory that is added to PATH.
 Page: https://b-hash88.github.io/knownfix/fixes/npm-exec-local-bin-not-found.html
+
+## Free workflow skills
+- [Evidence-First Bug Report](https://b-hash88.github.io/knownfix/free-skills/evidence-first-bug-report.md): Turn a suspected website or code defect into a reproducible report, without inventing impact or exposing secrets.
+- [Release Smoke Check for Codex and Claude](https://b-hash88.github.io/knownfix/free-skills/release-smoke-check.md): A bounded pre-release and live read-back checklist for developer tools, with honest payment and rollback gates.
+MCP resources: knownfix://free-skill/evidence-first-bug-report, knownfix://free-skill/release-smoke-check.
+Full free catalog: https://knownfix-backend-28.b-hash88.deno.net/free-skills
+
+## Homepage products
+- [Evidence-Led Homepage Build](https://b-hash88.github.io/knownfix/services/homepage-build.html): $750 USDC; one homepage, seven business days, no deployment or backend development.
+- [Homepage Builder Prompt for Codex and Claude](https://b-hash88.github.io/knownfix/packs/homepage-builder-prompt.md): $5 USDC; public outline only. Call get_skill with homepage-builder-prompt for checkout.
+
+---
+name: evidence-first-bug-report
+description: Use when reproducing a suspected website or code defect and preparing a report for its maintainer.
+---
+
+# Evidence-First Bug Report
+
+This is a reusable workflow, not a claim that any target has a defect. Use only systems you are authorized to inspect. Do not scan private endpoints, bypass access controls, or send reports automatically.
+
+## Reusable prompt
+
+Treat the suspected defect as a hypothesis. Inspect the current target and preserve the exact URL or file and commit, UTC timestamp, runtime/browser version, input, method, status, and relevant raw output. Redact credentials, bearer links, personal data, and payment details before saving evidence.
+
+Reproduce with two fresh independent attempts. Cross-check with a second method: for a website compare the HTTP response with the rendered browser; for code compare a focused automated test with a direct execution of the smallest reproducer. These checks are separate observations, not claims of independent reviewers.
+
+Search for contradictions: intentional behavior, documented constraints, stale cache, environment mismatch, missing authorization, and results on a control input. Separate observed behavior from your explanation. If it does not reproduce or the methods disagree, label it unverified and do not report it as a bug.
+
+Prepare the report below. Do not send it without authorization. Never claim accessibility, security, lost revenue, or affected-user counts without evidence for that specific impact. Avoid destructive fixes or widening permissions.
+
+## Report template
+
+- Title: observed behavior, not an accusation
+- Target and tested version:
+- Expected behavior and its basis:
+- Actual behavior:
+- Minimal steps and input:
+- Evidence paths and timestamps:
+- Attempt A / attempt B / second-method results:
+- Contradictory evidence and control result:
+- Disposition: verified / unverified / not reproduced
+- Observed impact and limitations:
+- Proposed narrow fix, if supported:
+- Regression test and rollback condition:
+
+## Acceptance checklist
+
+A maintainer can repeat the steps without your account or secrets; each factual claim points to a retained artifact; the report distinguishes a suggestion from a defect; the exact tested environment is named. A saved report is not proof of remote delivery. If authorized to send, read back the sent copy and record any promise or follow-up separately.
+
+Source: KnownFix operating discipline. No guarantee of finding a defect or improving traffic.
+
+
+---
+name: release-smoke-check
+description: Use before and after an authorized release of a website, API, or developer tool to verify its critical path.
+---
+
+# Release Smoke Check for Codex and Claude
+
+A checklist cannot guarantee reliability. Start with the repository's actual commands and deployment process; do not substitute a guessed stack or upgrade dependencies merely to run this skill.
+
+## Reusable prompt
+
+Read the project instructions, current diff, runtime pins, and documented build/test/release commands. Preserve unrelated user changes. Identify one critical user journey and define success, expected rejection, and rollback conditions before changing anything. Work only on authorized targets.
+
+Create a timestamped evidence record containing commit or dirty-tree state, runtime versions, commands, exit codes, target URLs, and raw relevant output. Redact credentials, private tickets, personal data, and payment details.
+
+Run the narrow regression test and the documented build/type/test checks. A zero exit code is necessary but not sufficient: inspect the expected output. Do not suppress failing tests or disable security protections. If a check is unavailable, list it as not tested.
+
+On a local or staging instance, exercise the critical journey and one expected failure. For a browser UI inspect a desktop viewport near 1440px and mobile near 390px, checking layout, keyboard focus, loading, empty and error states. Record actual screenshots when available; do not describe screenshots you did not inspect. For an API compare status and schema, not only an HTTP 200.
+
+After an authorized deployment, read the public result twice with fresh requests and cross-check using a second method. Confirm the release marker or changed behavior, not merely a green deployment log. Readiness and mocked payment tests do not prove live settlement. Do not create a real order, charge a card, move crypto, or send notification mail without explicit authorization; prefer documented sandbox flows.
+
+If a release gate fails, stop further rollout and use the documented reversible rollback only when authorized. Record what remains changed and unverified. Do not claim the whole system works because one route passed.
+
+## Release receipt template
+
+- Target / release / environment / UTC:
+- Critical journey and success criteria:
+- Commands, exit codes and evidence paths:
+- Happy path and expected rejection results:
+- Desktop / mobile / keyboard checks:
+- Public attempt A / B / second method:
+- Payment scope: not tested / sandbox / authorized live:
+- Contradictions and untested integrations:
+- Disposition: ready within tested scope / blocked / unverified
+- Rollback trigger and documented recovery path:
+- Next action, owner, and due date:
+
+## Acceptance checklist
+
+The receipt names the exact tested scope; local and production results are separate; private data is absent; public behavior matches the intended change; failed checks and untested payments remain visible. Never manufacture buyers or count declared operator tests as demand.
+
+Source: KnownFix release-review discipline. Designed for Codex or Claude as a portable prompt, not an executable tool or automatic deployment authority.

@@ -4,7 +4,7 @@ import vm from 'node:vm';
 
 const root = new URL('../', import.meta.url);
 const data = JSON.parse(fs.readFileSync(new URL('free-skills.json', root), 'utf8'));
-const read = name => fs.readFileSync(new URL(name, root), 'utf8');
+const read = name => fs.readFileSync(new URL(name, root), 'utf8').replace(/\r\n/g, '\n');
 const api = 'https://knownfix-backend-28.b-hash88.deno.net';
 assert.equal(data.skills.length, 4);
 for (const skill of data.skills) {

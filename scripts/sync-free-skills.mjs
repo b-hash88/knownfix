@@ -14,8 +14,9 @@ const download = skill => `<a href="${api}/free-skill/${skill.id}" data-knownfix
 const template = read('free-skills/release-smoke-check.html');
 const bodyStart = '<body><main>';
 const pageHead = template.slice(0, template.indexOf(bodyStart));
+const analyticsHead = head => head.replace(/(?:,free_skill_download:1)+/g, '').replace('merch_click:1', 'merch_click:1,free_skill_download:1');
 const footer = '<footer><p>Free under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Attribution: KnownFix. No account or payment required.</p></footer></main></body></html>\n';
-const nav = `<nav><a href="${site}/"><img src="${site}/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="${site}/free-skills.html">Free Skills</a><a href="${site}/services.html">Evidence Audit</a></nav>`;
+const nav = `<nav><a href="${site}/"><img src="${site}/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="${site}/free-skills.html">Free Skills</a><a href="${site}/mcp-connect.html">MCP Connection Kit</a><a href="${site}/services.html">Evidence Audit</a></nav>`;
 
 write('free-skills.json', JSON.stringify(data, null, 2) + '\n');
 for (const skill of data.skills) {
@@ -24,15 +25,15 @@ for (const skill of data.skills) {
     .replace(/<title>.*?<\/title>/, `<title>${esc(skill.title)} | KnownFix</title>`)
     .replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(skill.description)}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${site}/free-skills/${skill.id}.html$2`)
-    .replace('merch_click:1', 'merch_click:1,free_skill_download:1');
-  write(`free-skills/${skill.id}.html`, `${head}${bodyStart}${nav}<h1>${esc(skill.title)}</h1><p>${esc(skill.description)}</p><p>${download(skill)}</p><pre>${esc(skill.body)}</pre>${footer}`);
+    ;
+  write(`free-skills/${skill.id}.html`, `${analyticsHead(head)}${bodyStart}${nav}<h1>${esc(skill.title)}</h1><p>${esc(skill.description)}</p><p>${download(skill)}</p><pre>${esc(skill.body)}</pre>${footer}`);
 }
 const description = 'Free workflows for reproducible bug reports, release checks, MCP connection triage and website search readiness.';
 let hub = read('free-skills.html');
 hub = hub.slice(0, hub.indexOf(bodyStart))
   .replace(/(<meta name="description" content=")[^"]*(")/, `$1${description}$2`)
-  .replace('merch_click:1', 'merch_click:1,free_skill_download:1');
-write('free-skills.html', `${hub}${bodyStart}${nav}<h1>Free Skills for Codex and Claude</h1><p>${description}</p>${data.skills.map(s => `<section><h2><a href="./free-skills/${s.id}.html">${esc(s.title)}</a></h2><p>${esc(s.description)}</p>${download(s)}</section>`).join('\n')}${footer}`);
+  ;
+write('free-skills.html', `${analyticsHead(hub)}${bodyStart}${nav}<h1>Free Skills for Codex and Claude</h1><p>${description}</p><p><a href="./mcp-connect.html">Open the free MCP connection kit</a></p><label for="skill-filter">Find a workflow</label><input id="skill-filter" type="search" autocomplete="off" placeholder="MCP, release, bug report..."><p id="skill-count" role="status">4 workflows</p>${data.skills.map(s => `<section data-skill><h2><a href="./free-skills/${s.id}.html">${esc(s.title)}</a></h2><p>${esc(s.description)}</p>${download(s)}</section>`).join('\n')}<script type="module" src="./scripts/skill-filter.mjs"></script>${footer}`);
 
 let index = read('index.html');
 for (const skill of data.skills) {

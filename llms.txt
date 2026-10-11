@@ -137,3 +137,7 @@ MCP resource: knownfix://free-skill/mcp-connection-triage
 - [Website Search Readiness](https://b-hash88.github.io/knownfix/free-skills/website-search-readiness.md): Review crawl directives, canonical signals and answer clarity without promising rankings or AI citations.
 Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/website-search-readiness
 MCP resource: knownfix://free-skill/website-search-readiness
+
+## Free MCP connection kit
+https://b-hash88.github.io/knownfix/mcp-connect.html
+Browser-local JSON structure checks and copyable KnownFix requests. Does not test a live connection. Only consent-gated fixed action events; pasted configuration is never sent.

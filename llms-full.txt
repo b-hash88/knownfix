@@ -514,3 +514,7 @@ Prepare a short priority list: confirmed access/index-directive problems first, 
 Every observation links to an artifact and tested URL. Index status is left unknown without authorized primary evidence. Recommendations do not promise rankings or AI exposure and distinguish technical access from content usefulness. No credentials, fabricated business claims or private pages enter the report.
 
 Source: KnownFix evidence-first workflow. SEO, AEO and GEO outcomes remain unmeasured until separately evaluated.
+
+## Free MCP connection kit
+https://b-hash88.github.io/knownfix/mcp-connect.html
+Browser-local JSON structure checks and copyable KnownFix requests. Does not test a live connection. Only consent-gated fixed action events; pasted configuration is never sent.

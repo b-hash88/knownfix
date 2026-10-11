@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import { checkConfig, connectionSnippet } from '../scripts/mcp-kit-core.mjs';
+for (const kind of ['remote', 'vscode']) assert(checkConfig(connectionSnippet(kind)).ok);
+for (const kind of ['initialize', 'tools-list', 'search']) assert.equal(JSON.parse(connectionSnippet(kind)).jsonrpc, '2.0');
+for (const bad of ['', '{', 'null', '[]', '{"servers":{}}', '{"servers":{"x":{"url":"javascript:alert(1)"}}}', '{"servers":{"x":{"url":"https://user:secret@example.com"}}}', '{"servers":{"x":{"command":"node","args":"bad"}}}']) assert.equal(checkConfig(bad).ok, false);
+assert(checkConfig('{"mcpServers":{"local":{"command":"node","args":["server.js"]}}}').ok);
+const secret = checkConfig('{"servers":{"private@example.com":{"url":"https://example.com/?secret=fake-secret","headers":{"authorization":"fake-token"}}}}');
+assert(secret.ok);
+assert.equal(secret.warnings.length, 2);
+assert(!JSON.stringify(secret).includes('fake-'));
+assert(!JSON.stringify(secret).includes('private@example.com'));
+assert.equal(checkConfig('{"servers":{"x":{"url":"http://example.com"}}}').warnings.length, 1);
+console.log('MCP kit: JSON examples, malformed configs, URL credentials and secret-free validation results passed.');

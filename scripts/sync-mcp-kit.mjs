@@ -31,7 +31,7 @@ const body = `<body><main>
 <div class="actions"><button type="submit">Check configuration</button><button type="button" class="secondary" id="load-example">Load example</button><button type="button" class="secondary" id="clear-config">Clear</button></div></form>
 <p class="muted">Configuration stays in this browser. It is not saved or uploaded. This is a structure check, not a live connection or security audit.</p><div id="config-result" role="status" aria-live="polite"></div>
 </section></div>
-<section class="kit-links"><h2>Connection references</h2><div class="resources"><a href="./free-skills/mcp-connection-triage.html">MCP Connection Triage</a><a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle">MCP lifecycle</a><a href="https://code.visualstudio.com/docs/copilot/customization/mcp-servers">VS Code MCP settings</a><a href="https://knownfix-backend-28.b-hash88.deno.net/books">Connection signals in Books</a></div></section>
+<section class="kit-links"><h2>Connection references</h2><div class="resources"><a href="./free-skills/mcp-connection-triage.html">MCP Connection Triage</a><a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle">MCP lifecycle</a><a href="https://code.visualstudio.com/docs/copilot/customization/mcp-servers">VS Code MCP settings</a><a href="https://knownfix-backend-28.b-hash88.deno.net/books">Owner stats (sign-in required)</a></div></section>
 <footer><a href="./free-skills.html">Four free workflow skills</a> · <a href="./">KnownFix catalog</a> · <a href="./privacy.html">Analytics choice</a></footer>
 </main><script type="module" src="./scripts/mcp-kit.mjs"></script></body></html>\n`;
 write('mcp-connect.html', head + style + controlStyle + '</head>' + body);

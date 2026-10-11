@@ -49,15 +49,15 @@ try {
   assert((await mcp('resources/read', { uri: 'knownfix://free-skill/homepage-builder-prompt' })).error);
   assert.equal((await request(api + '/free-skill/homepage-builder-prompt')).response.status, 404);
   assert.equal((await request(api + '/free-skill/' + data.skills[0].id, { method: 'POST' })).response.status, 405);
-  const books = JSON.parse((await request(api + '/books?format=json')).body);
-  assert.equal(books.freeWorkflows.spec, 'knownfix-free-workflow-activity/1.0');
-  assert.deepEqual(Object.keys(books.freeWorkflows.byId).sort(), data.skills.map(s => s.id).sort());
-  records.push({ at: books.generatedAt, observation: 'safe Books projection', freeWorkflows: books.freeWorkflows });
+  const books = await request(api + '/books?format=json');
+  assert.equal(books.response.status, 401);
+  assert.equal(JSON.parse(books.body).error, 'unauthorized');
   const dashboard = await request(api + '/books', { headers: { accept: 'text/html' } });
-  assert(dashboard.body.includes('id="workflow_activity"'));
-  assert(dashboard.body.includes('Free workflow skills'));
+  assert.equal(dashboard.response.status, 401);
+  assert(!dashboard.body.includes('id="workflow_activity"'));
+  records.push({ at: new Date().toISOString(), observation: 'anonymous Books HTML/JSON denied', status: 401 });
   passed = true;
-  console.log('Independent MCP readback, paid isolation, method rejection and live Books tracking passed.');
+  console.log('Independent MCP readback, paid isolation, method rejection and owner-only Books boundary passed.');
 } finally {
   if (process.env.KNOWNFIX_EVIDENCE_PATH) fs.writeFileSync(process.env.KNOWNFIX_EVIDENCE_PATH, JSON.stringify({ at: new Date().toISOString(), environment: { node: process.version, platform: process.platform }, passed, records }, null, 2));
 }

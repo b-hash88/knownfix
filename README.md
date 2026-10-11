@@ -12,7 +12,7 @@ paid on Base, and delivered through an unguessable ticket with a self-contained
 HTML report backed by a SHA-256-verified Markdown source.
 
 - [Storefront](https://b-hash88.github.io/knownfix/)
-- [Open books](https://knownfix-backend-28.b-hash88.deno.net/books)
+- [Owner stats](https://knownfix-backend-28.b-hash88.deno.net/books)
 - [Agent guide](https://b-hash88.github.io/knownfix/llms.txt)
 - [Smithery listing](https://smithery.ai/servers/knownfix/knownfix)
 - [Buyer-safety notes](https://b-hash88.github.io/knownfix/notes-for-agents.md)
@@ -93,7 +93,7 @@ node tests/live-e2e.mjs
 
 The suite crawls every canonical URL, checks all 38 free/paid page pairs, five
 product packs, five services, HTTP and MCP search/delivery/offer flows, distinct
-UserOperation and transaction proofs, the public ledger, and security headers.
+UserOperation and transaction proofs, anonymous stats access controls, and security headers.
 Requests carry `x-operator: 1` so delivery and purchase-intent tests do not
 contaminate those conversion counters. Set `KNOWNFIX_SERVICE_ORDER_TARGET` to an
 authorized public URL only when intentionally testing creation of one private

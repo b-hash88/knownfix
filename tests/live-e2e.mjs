@@ -727,83 +727,19 @@ await check("live chain verification rejects a successful payment to the wrong r
   return "successful Base transaction was read live and rejected for the wrong recipient";
 });
 
-await check("books HTML and JSON publish the store and Evidence Audit funnels", async () => {
+await check("owner stats reject anonymous HTML and JSON access", async () => {
   const [htmlResult, jsonResult] = await Promise.all([
     text(API + "/books", { headers: { accept: "text/html" } }),
     json(API + "/books?format=json"),
   ]);
-  assert.equal(htmlResult.response.status, 200);
-  assert.match(htmlResult.body, /Evidence Audit funnel/i);
-  assert.match(htmlResult.body, /Store conversion funnel/i);
-  assert.match(htmlResult.body, /id="service_funnel"/);
-  assert.match(htmlResult.body, /id="nextExperiment"/);
-  assert.match(htmlResult.body, /as of \d{4}-\d{2}-\d{2}/);
-  assert.doesNotMatch(htmlResult.body, /Loading ledger/);
-  assert.equal(jsonResult.data.spec, "knownfix-books/0.17");
-  assert.equal(jsonResult.data.freeWorkflows.spec, "knownfix-free-workflow-activity/1.0");
-  assert.equal(Object.keys(jsonResult.data.freeWorkflows.byId).length, 4);
-  assert.equal(jsonResult.data.freeWorkflows.bodiesServed, jsonResult.data.freeWorkflows.byChannel.http + jsonResult.data.freeWorkflows.byChannel.mcp);
-  assert.equal(typeof jsonResult.data.operatorNotifications.enabled, "boolean");
-  assert.equal(
-    jsonResult.data.operatorNotifications.provider,
-    jsonResult.data.operatorNotifications.enabled ? "resend" : null,
-  );
-  assert.deepEqual(jsonResult.data.operatorNotifications.events, [
-    "service-payment-confirmed",
-    "service-report-delivered",
-  ]);
-  assert.match(jsonResult.data.operatorNotifications.privacy, /exclude/i);
-  assert.deepEqual(
-    jsonResult.data.conversionFunnel.map((stage) => stage.key),
-    ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
-  );
-  assert.equal(typeof jsonResult.data.nextExperiment, "string");
-  assert.deepEqual(
-    jsonResult.data.serviceFunnel.stages.map((stage) => stage.key),
-    ["qualifiedVisits", "diagnosticCompletions", "ordersCreated", "paymentConfirmed", "reportsDelivered", "implementationStarted"],
-  );
-  assert.equal(jsonResult.data.serviceFunnel.qualifiedVisits, undefined);
-  assert.equal(jsonResult.data.serviceFunnel.stages[0].value, null);
-  assert.equal(jsonResult.data.serviceFunnel.stages[5].value, null);
-  assert.equal(typeof jsonResult.data.serviceFunnel.ordersCreated, "number");
-  assert.equal(typeof jsonResult.data.serviceFunnel.paymentConfirmed, "number");
-  assert.equal(typeof jsonResult.data.serviceFunnel.reportsDelivered, "number");
-  assert.doesNotMatch(
-    JSON.stringify(jsonResult.data.serviceFunnel),
-    /"(?:targetUrl|ticket|paymentHash|buyer)"\s*:/,
-  );
-  assert.equal(jsonResult.data.measurementWindow.spec, "knownfix-target-window/0.2");
-  assert.equal(jsonResult.data.measurementWindow.days, 30);
-  assert.equal(typeof jsonResult.data.measurementWindow.historyStartsOnOrBeforeWindow, "boolean");
-  assert.deepEqual(
-    jsonResult.data.measurementWindow.funnel.map((stage) => stage.key),
-    ["requests", "handshakes", "toolCalls", "freeDeliveries", "paywallHits", "checkoutShown", "sales"],
-  );
-  assert.equal(jsonResult.data.measurementWindow.targets.meaningfulToolUse.targetRate, 0.01);
-  assert.equal(jsonResult.data.measurementWindow.targets.paywallToOffer.targetRate, 0.30);
-  assert.equal(jsonResult.data.measurementWindow.targets.externalSales.target, 5);
-  assert.equal(jsonResult.data.measurementWindow.experiments.purchaseReady.id, "purchase-ready-v1");
-  assert.equal(jsonResult.data.measurementWindow.experiments.purchaseReady.targetRate, 0.30);
-  assert.equal(typeof jsonResult.data.measurementWindow.experiments.purchaseReady.checkoutShown, "number");
-  assert.match(jsonResult.data.measurementWindow.note, /Raw HTTP requests include automated and operator traffic/);
-  assert(!JSON.stringify(jsonResult.data.measurementWindow).includes("paymentOffer"));
-  assert.equal(typeof jsonResult.data.offers.purchaseReadyByFix, "object");
-  assert.equal(typeof jsonResult.data.offers.purchaseReadyBySkill, "object");
-  assert.equal(typeof jsonResult.data.offers.purchaseReadyByService, "object");
-  assert.equal(typeof jsonResult.data.salesSettledOnChain, "number");
-  assert.equal(typeof jsonResult.data.externalSalesSettledOnChain, "number");
-  assert.equal(typeof jsonResult.data.operatorPaymentTests, "number");
-  assert.equal(
-    jsonResult.data.salesSettledOnChain,
-    jsonResult.data.externalSalesSettledOnChain + jsonResult.data.operatorPaymentTests,
-  );
-  assert.equal(typeof jsonResult.data.intent.paywallHits, "number");
-  assert.match(htmlResult.body, /Merch Store redirects/);
-  assert.equal(typeof jsonResult.data.merch.redirects, "number");
-  assert.equal(typeof jsonResult.data.merch.bySource, "object");
-  assert.equal(typeof jsonResult.data.merch.byProduct, "object");
-  assert.match(jsonResult.data.merch.note, /no identity, referrer, IP address/i);
-  return "funnel published at " + jsonResult.data.generatedAt;
+  assert.equal(htmlResult.response.status, 401);
+  assert.equal(jsonResult.response.status, 401);
+  assert.match(htmlResult.body, /Owner access required/);
+  assert.doesNotMatch(htmlResult.body, /INITIAL_DATA|service_funnel|workflow_activity/);
+  assert.equal(jsonResult.data.error, "unauthorized");
+  assert.match(jsonResult.response.headers.get("cache-control"), /private, no-store/);
+  assert.equal(jsonResult.response.headers.get("access-control-allow-origin"), null);
+  return "anonymous callers receive no operational statistics";
 });
 
 await check("public request board preserves ticket privacy", async () => {

@@ -28,12 +28,12 @@ for (const skill of data.skills) {
     ;
   write(`free-skills/${skill.id}.html`, `${analyticsHead(head)}${bodyStart}${nav}<h1>${esc(skill.title)}</h1><p>${esc(skill.description)}</p><p>${download(skill)}</p><pre>${esc(skill.body)}</pre>${footer}`);
 }
-const description = 'Free workflows for reproducible bug reports, release checks, MCP connection triage and website search readiness.';
+const description = 'Free workflows for bug reports, release checks, MCP connections, website search readiness and API response triage.';
 let hub = read('free-skills.html');
 hub = hub.slice(0, hub.indexOf(bodyStart))
   .replace(/(<meta name="description" content=")[^"]*(")/, `$1${description}$2`)
   ;
-write('free-skills.html', `${analyticsHead(hub)}${bodyStart}${nav}<h1>Free Skills for Codex and Claude</h1><p>${description}</p><p><a href="./mcp-connect.html">Open the free MCP connection kit</a></p><label for="skill-filter">Find a workflow</label><input id="skill-filter" type="search" autocomplete="off" placeholder="MCP, release, bug report..."><p id="skill-count" role="status">4 workflows</p>${data.skills.map(s => `<section data-skill><h2><a href="./free-skills/${s.id}.html">${esc(s.title)}</a></h2><p>${esc(s.description)}</p>${download(s)}</section>`).join('\n')}<script type="module" src="./scripts/skill-filter.mjs"></script>${footer}`);
+write('free-skills.html', `${analyticsHead(hub)}${bodyStart}${nav}<h1>Free Skills for Codex and Claude</h1><p>${description}</p><p><a href="./mcp-connect.html">MCP connection kit</a> · <a href="./mcp-response.html">MCP Response Inspector</a></p><label for="skill-filter">Find a workflow</label><input id="skill-filter" type="search" autocomplete="off" placeholder="MCP, release, bug report..."><p id="skill-count" role="status">${data.skills.length} workflows</p>${data.skills.map(s => `<section data-skill><h2><a href="./free-skills/${s.id}.html">${esc(s.title)}</a></h2><p>${esc(s.description)}</p>${download(s)}</section>`).join('\n')}<script type="module" src="./scripts/skill-filter.mjs"></script>${footer}`);
 
 let index = read('index.html');
 for (const skill of data.skills) {

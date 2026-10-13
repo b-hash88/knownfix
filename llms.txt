@@ -139,5 +139,12 @@ Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-ski
 MCP resource: knownfix://free-skill/website-search-readiness
 
 ## Free MCP connection kit
+MCP Response Inspector: https://b-hash88.github.io/knownfix/mcp-response.html
+Browser-local JSON-RPC envelope checks; input is not uploaded or saved. Not a live connection or method-schema test.
+
 https://b-hash88.github.io/knownfix/mcp-connect.html
 Browser-local JSON structure checks and copyable KnownFix requests. Does not test a live connection. Only consent-gated fixed action events; pasted configuration is never sent.
+
+- [API Response Triage](https://b-hash88.github.io/knownfix/free-skills/api-response-triage.md): Separate HTTP, JSON-RPC and tool-result failures with bounded, evidence-first checks and safe retry decisions.
+Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/api-response-triage
+MCP resource: knownfix://free-skill/api-response-triage

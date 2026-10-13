@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { EXAMPLE, inspectResponse, responseReceipt } from '../scripts/mcp-response-core.mjs';
+assert(inspectResponse(EXAMPLE).ok);
+for (const body of [{ jsonrpc: '2.0', id: 0, result: null }, { jsonrpc: '2.0', id: '', result: false }, { jsonrpc: '2.0', id: null, error: { code: -32700, message: 'private-secret' } }]) assert(inspectResponse(JSON.stringify(body)).ok);
+for (const text of ['', '{', 'null', '[]', 'data: {}', JSON.stringify({jsonrpc:'2.0',result:{}}), JSON.stringify({jsonrpc:'2.0',id:true,result:1}), JSON.stringify({jsonrpc:'2.0',id:1,result:1,error:{code:0,message:''}}), JSON.stringify({jsonrpc:'2.0',id:1,error:{code:1.5,message:''}}), JSON.stringify({jsonrpc:'2.0',id:1,method:'ping'}), ' '.repeat(200001)+'{}']) assert.equal(inspectResponse(text).ok, false);
+const checked = inspectResponse(JSON.stringify({jsonrpc:'2.0',id:'private-id',result:{isError:true,content:[{text:'private-secret <script>'}]}}));
+assert.equal(checked.kind, 'Tool-level error flag');
+assert(!responseReceipt(checked).includes('private-'));
+assert(!responseReceipt(inspectResponse('{"private-secret')).includes('private-'));
+const ui = fs.readFileSync(new URL('../scripts/mcp-response.mjs', import.meta.url), 'utf8');
+assert(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|innerHTML/.test(ui));
+assert(ui.includes("track('check')"));
+console.log('MCP response inspector: valid/error/malformed envelopes, input bound, payload-free receipt, fixed-event tracking and local-only processing passed.');

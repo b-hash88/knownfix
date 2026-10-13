@@ -47,7 +47,7 @@ try {
     }
     await page.goto(base + '/free-skills.html');
     await page.getByRole('button', { name: 'No thanks', exact: true }).click();
-    assert.equal(await page.getByRole('link', { name: 'Download SKILL.md', exact: true }).count(), 4);
+    assert.equal(await page.getByRole('link', { name: 'Download SKILL.md', exact: true }).count(), data.skills.length);
     assert(await page.getByRole('heading', { name: 'MCP Connection Triage', exact: true }).isVisible());
     assert(await page.getByRole('heading', { name: 'Website Search Readiness', exact: true }).isVisible());
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
@@ -97,6 +97,25 @@ try {
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     if (process.env.KNOWNFIX_SCREENSHOT_DIR) await page.screenshot({ path: path.join(process.env.KNOWNFIX_SCREENSHOT_DIR, `KnownFix_20261010_MCP-Kit-${label}_IMG.png`), fullPage: true });
     console.log(label + ': local config validation, secret-free errors, clear, format selection, JSON download, skill filter and responsive kit passed.');
+    await page.goto(base + '/mcp-response.html');
+    assert(await page.locator('#copy-receipt').isDisabled());
+    await page.getByRole('button', { name: 'Load example', exact: true }).click();
+    await page.getByRole('button', { name: 'Inspect response', exact: true }).click();
+    await page.getByRole('heading', { name: 'Envelope structure passed' }).waitFor();
+    await page.getByRole('button', { name: 'Copy checklist', exact: true }).click();
+    await page.getByText('Checklist copied. Input omitted.').waitFor();
+    assert((await page.evaluate(() => navigator.clipboard.readText())).includes('live behavior not tested'));
+    await page.getByLabel('JSON response body').fill('{"jsonrpc":"2.0","id":"private-id","result":{"isError":true,"content":"private-secret <img src=x>"}}');
+    assert(await page.locator('#copy-receipt').isDisabled());
+    await page.getByRole('button', { name: 'Inspect response', exact: true }).click();
+    assert(!(await page.locator('#response-result').innerText()).includes('private-'));
+    assert.equal(await page.locator('#response-result img').count(), 0);
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    if (process.env.KNOWNFIX_SCREENSHOT_DIR) await page.screenshot({ path: path.join(process.env.KNOWNFIX_SCREENSHOT_DIR, `response-${label}.png`), fullPage: true });
+    await page.getByRole('button', { name: 'Clear', exact: true }).click();
+    assert.equal(await page.getByLabel('JSON response body').inputValue(), '');
+    assert(await page.locator('#copy-receipt').isDisabled());
+    console.log(label + ': response check, safe copy, invalidation, error flag and local-only results passed.');
     for (const skill of data.skills) {
       await page.goto(base + '/free-skills/' + skill.id + '.html');
       assert(await page.getByRole('heading', { name: skill.title, exact: true }).isVisible());
@@ -108,7 +127,7 @@ try {
       assert.equal(fs.readFileSync(await download.path(), 'utf8'), skill.body);
     }
     assert.deepEqual(errors, []);
-    console.log(label + ': four readable skill pages, no overflow, consent control and exact SKILL.md downloads passed (download response mocked; backend integration tested separately).');
+    console.log(label + ': five readable skill pages, no overflow, consent control and exact SKILL.md downloads passed (download response mocked; backend integration tested separately).');
     await context.close();
   }
 } finally {

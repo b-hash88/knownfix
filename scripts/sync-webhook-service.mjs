@@ -4,20 +4,21 @@ const root = new URL('../', import.meta.url);
 const read = p => fs.readFileSync(new URL(p, root), 'utf8');
 const write = (p, v) => fs.writeFileSync(new URL(p, root), v);
 const data = JSON.parse(fs.readFileSync(new URL('../../knownfix-release-backend/services.json', import.meta.url), 'utf8'));
-const s = data.services.find(s => s.id === 'webhook-reliability-review');
+const s = data.services.find(s => s.id === (process.argv[2] || 'webhook-reliability-review'));
 if (!s) throw new Error('Missing approved service');
 const base = 'https://b-hash88.github.io/knownfix';
 const api = 'https://knownfix-backend-28.b-hash88.deno.net';
+const scopeContact = 'mailto:knownfix.agent@gmail.com?subject=' + encodeURIComponent('KnownFix SaaS Security Exposure Review - scope approval');
 const esc = v => String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const url = base + '/services/' + s.id + '.html';
 const price = (s.priceUsdCents / 100).toFixed(0);
 write('services.json', JSON.stringify(data, null, 2) + '\n');
 let hub = read('services.html');
 const card = `<article class="service" id="${s.id}">
-<div class="service-head"><div><p class="service-type">Public GitHub repository</p><h2><a href="${url}">${esc(s.title)}</a></h2></div><strong class="price">$${price}<small> USDC</small></strong></div>
+<div class="service-head"><div><p class="service-type">${s.requiresScopeApproval ? 'Written scope approval required' : 'Public GitHub repository'}</p><h2><a href="${url}">${esc(s.title)}</a></h2></div><strong class="price">$${price}<small> USDC</small></strong></div>
 <p class="tagline">${esc(s.tagline)}</p><p class="scope">${esc(s.scope)}</p>
 <ul>${s.deliverables.map(v => '<li>' + esc(v) + '</li>').join('')}</ul>
-<div class="service-foot"><span>${s.deliveryBusinessDays} business days</span><span class="service-actions"><a href="${url}">Full scope</a><button type="button" data-service="${s.id}" data-knownfix-event="service_select" data-knownfix-context="${s.id}">Select service</button></span></div></article>`;
+<div class="service-foot"><span>${s.deliveryBusinessDays} business days</span><span class="service-actions"><a href="${url}">Full scope</a>${s.requiresScopeApproval ? `<a href="${scopeContact}">Request scope approval</a>` : `<button type="button" data-service="${s.id}" data-knownfix-event="service_select" data-knownfix-context="${s.id}">Select service</button>`}</span></div></article>`;
 if (hub.includes('id="' + s.id + '"')) hub = hub.replace(new RegExp('<article class="service" id="' + s.id + '">[\\s\\S]*?</article>'), card);
 else {
   const marker = '</article></div></section>';
@@ -27,13 +28,15 @@ else {
 hub = hub.replace(/(<select id="service-id" required>)[\s\S]*?(<\/select>)/,
   (_, start, end) => start + data.services.map(v => `<option value="${v.id}">${esc(v.title)} - $${(v.priceUsdCents/100).toFixed(0)} USDC</option>`).join('') + end);
 hub = hub.replace(/services=\[[\s\S]*?\],sdkUrl=/, () => 'services=' + JSON.stringify(data.services) + ',sdkUrl=');
+if (!hub.includes('id="scope-approval"')) hub = hub.replace('<button id="order-submit"', '<p id="scope-approval" class="hidden">Written ownership confirmation, exact target allowlist and testing permission must be reviewed before payment or testing. <a href="' + scopeContact + '">Request scope approval</a>. Do not email credentials or customer data.</p><button id="order-submit"');
+hub = hub.replace(/function updateHint\(\)\{[\s\S]*?\}(?=\s*function selectService)/, `function updateHint(){var service=serviceById(serviceInput.value),approval=!!(service&&service.requiresScopeApproval);document.getElementById('scope-approval').classList.toggle('hidden',!approval);document.getElementById('order-submit').disabled=approval;targetHint.textContent=approval?'Scope approval required before payment or testing. Automated checkout is unavailable.':service&&service.targetKind==='github-repository'?'Public GitHub repository only: https://github.com/owner/repository':'Public HTTPS website or agent endpoint. Query strings and private hosts are rejected.'}`);
 hub = hub.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/, (_, raw) => {
   const schema = JSON.parse(raw);
   schema.numberOfItems = data.services.length;
   const template = schema.itemListElement[0].item;
   schema.itemListElement = data.services.map((v, index) => ({'@type':'ListItem',position:index+1,item:{
     ...template, name:v.title, description:v.tagline, url:base+'/services/'+v.id+'.html',
-    offers:{...template.offers,price:(v.priceUsdCents/100).toFixed(2),url:base+'/services.html?service='+v.id+'#order'}
+    offers:{...template.offers,price:(v.priceUsdCents/100).toFixed(2),url:v.requiresScopeApproval ? scopeContact : base+'/services.html?service='+v.id+'#order'}
   }}));
   return '<script type="application/ld+json">' + JSON.stringify(schema) + '</script>';
 });
@@ -56,10 +59,27 @@ EDITORIAL[s.id] = {
     ['Is reliability guaranteed?',s.limitations]
   ]
 };
+if (s.requiresScopeApproval) EDITORIAL[s.id] = {
+  seoTitle:'Authorized SaaS security exposure review | KnownFix',
+  metaDescription:'A $299 scope-approved review of one SaaS application and up to five agreed endpoints or flows. Written permission required; no bulk scanning or customer-data extraction.',
+  overview:'A bounded review for SaaS owners who need evidence about exposed databases or admin interfaces, login flows and application access boundaries. Written authorization and a precise scope come first.',
+  audience:['SaaS owners reviewing an application they control','Teams preparing an authorized staging security review','Maintainers seeking a prioritized exposure-remediation report'],
+  questions:['Which database, storage or admin interfaces are exposed within the approved target list?','How do login, reset and session flows behave under agreed tests?','Can approved test accounts access only their own records?','Which evidenced risks should the team remediate first?'],
+  faq:[
+    ['What is included?',s.scope],
+    ['What authorization is required?','Provide written ownership or authorized-representative confirmation and explicit testing permission. Agree exact hosts and endpoints, methods, test window, request limits, test accounts, exclusions, emergency contact and stop conditions. A public URL or checkout checkbox is not permission. Third-party provider permission may also be needed.'],
+    ['How much does it cost and when is delivery?','$299 USDC. The 5-business-day delivery target begins after written scope approval, confirmed payment and required test access. Request approval first; automated checkout is unavailable for this service.'],
+    ['How are accounts and sensitive data handled?','Prefer staging with owner-provided test accounts. Do not email passwords, signing keys, tokens or customer payloads. Any needed access is arranged separately after scope approval. Stop if unexpected sensitive data or out-of-scope access appears.'],
+    ['Is this a full penetration test or a security guarantee?',s.limitations],
+    ['What do I receive?','A private evidence-backed report with severity, safe reproduction steps and prioritized fixes, delivered as self-contained HTML plus SHA-256-verified Markdown. Payment and private report delivery are arranged separately after scope approval; this service does not issue an automated checkout ticket. Implementation is not included.']
+  ]
+};
 let detail = renderServiceDetailPage({base,backend:api,iconFile:'knownfix-icon.png',service:s,relatedServices:data.services.filter(v=>v.id!==s.id)});
+if (s.requiresScopeApproval) detail = detail.replaceAll(base+'/services.html?service='+s.id+'#order', scopeContact).replaceAll('Order this review','Request scope approval').replaceAll('Order '+s.title,'Request scope approval').replace('3 business days after confirmed payment','5 business days after scope approval, payment and test access').replace('5 business days after confirmed payment','5 business days after scope approval, payment and test access');
+if (s.requiresScopeApproval) detail = detail.replaceAll('Private ticket delivery','Private report delivery').replaceAll('EXACT ETH ALTERNATIVE','SCOPE APPROVAL FIRST').replaceAll('USDC or the signed exact-ETH alternative','USDC after scope approval');
 detail = detail.replace('The books are public.', 'Owner-only statistics.');
 detail = detail.replace(/\.6[578]rem/g, '.75rem');
-detail = detail.replace('<footer>', '<footer><p><a href="' + base + '/free-skills/webhook-delivery-triage.html">Free Webhook Delivery Triage skill</a></p>');
+if (!s.requiresScopeApproval) detail = detail.replace('<footer>', '<footer><p><a href="' + base + '/free-skills/webhook-delivery-triage.html">Free Webhook Delivery Triage skill</a></p>');
 write('services/' + s.id + '.html', detail);
 let index = read('index.html');
 if (!index.includes('./services/' + s.id + '.html')) {
@@ -75,5 +95,5 @@ for (const p of ['llms.txt','llms-full.txt']) {
 let sitemap = read('sitemap.xml');
 if (!sitemap.includes(url)) sitemap = sitemap.replace('</urlset>', '<url><loc>' + url + '</loc></url></urlset>');
 write('sitemap.xml', sitemap);
-console.log('Synced approved webhook review, seven-service catalog, checkout selection and discovery.');
+console.log(`Synced ${s.id}; ${data.services.length}-service catalog, scope-aware checkout and discovery.`);
 

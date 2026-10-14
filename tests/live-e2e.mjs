@@ -150,7 +150,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 6);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
-  assert.equal(serviceCatalog.services.length, 7);
+  assert.equal(serviceCatalog.services.length, 8);
   return "40 entries; 34 verified, 6 documented, 14 free, 5 professional reviews";
 });
 
@@ -757,7 +757,7 @@ await check("professional service API preserves private order boundaries", async
   const serviceResult = await json(API + "/services");
   assert.equal(serviceResult.response.status, 200);
   assert.equal(serviceResult.data.spec, "knownfix-services/1.0");
-  assert.equal(serviceResult.data.services.length, 7);
+  assert.equal(serviceResult.data.services.length, 8);
   assert(serviceResult.data.services.every((service) => service.priceUsd && service.deliverables.length >= 5));
   assert.doesNotMatch(JSON.stringify(serviceResult.data.publicWork), /"ticket"\s*:/i);
 
@@ -832,7 +832,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     name: "list_services",
     arguments: {},
   }));
-  assert.equal(serviceList.services.length, 7);
+  assert.equal(serviceList.services.length, 8);
   assert.equal(serviceList.services.find((service) => service.id === "website-first-look").priceUsd, "$149.00");
   assert.equal(serviceList.services.find((service) => service.id === "website-growth-audit").priceUsd, "$399.00");
   assert.equal(serviceList.services.find((service) => service.id === "codebase-review").priceUsd, "$249.00");

@@ -140,6 +140,26 @@
         "Self-contained HTML report plus SHA-256-verified Markdown source"
       ],
       "limitations": "This is a bounded source review, not live incident response, a penetration test or a guarantee that all defects will be found. Private repositories, provider dashboards, signing keys, customer payloads, production access, event replays, deployment and implementation are excluded. No payment or business event is triggered. The three-business-day delivery target starts after confirmed payment and a complete, in-scope public repository brief."
+    },
+    {
+      "id": "saas-security-exposure-review",
+      "title": "SaaS Security Exposure Review",
+      "tagline": "A bounded, explicitly authorized review of exposed services, login flows and application access boundaries.",
+      "priceUsdCents": 29900,
+      "priceWei": "119600000000000000",
+      "deliveryBusinessDays": 5,
+      "targetKind": "website",
+      "requiresScopeApproval": true,
+      "scope": "One owner-authorized SaaS application and up to five agreed endpoints or flows. Prefer staging and owner-provided test accounts; public exposure observations are limited to an exact approved target allowlist.",
+      "deliverables": [
+        "Scope and authorization receipt with exact targets, permitted methods and stop conditions",
+        "Bounded exposed database, storage and admin-interface observations without accessing customer records",
+        "Login, password-reset and session-handling findings within agreed test flows",
+        "Authorization and cross-account isolation checks using approved test accounts only",
+        "Severity-ranked evidence, safe reproduction steps and prioritized remediation recommendations",
+        "Self-contained HTML report plus SHA-256-verified Markdown source"
+      ],
+      "limitations": "Written ownership or authorized-representative confirmation and explicit testing permission are required before work. Agree the exact host and endpoint allowlist, permitted methods, test accounts, test window, request limits, exclusions, emergency contact and stop conditions in advance; a public URL or checkbox is not permission. Obtain any required third-party provider permission. No destructive testing, broad or bulk scanning, denial of service, credential guessing, persistence, customer-data extraction, production account takeover or third-party systems. Stop on unexpected sensitive data or out-of-scope access. This is a bounded review, not a comprehensive penetration test, compliance certification or security guarantee; implementation and remediation are excluded. Request scope approval before arranging payment; automated checkout is unavailable for this service. The five-business-day delivery target starts only after written scope approval, confirmed payment and required test access."
     }
   ]
 }

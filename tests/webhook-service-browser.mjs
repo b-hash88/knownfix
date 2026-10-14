@@ -54,6 +54,20 @@ try {
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   assert.deepEqual(errors,[]);
   console.log(label+': approved price/turnaround, readable scope, repository hint, private defaults and mocked order error passed; no live order/payment.');
+  await page.goto(base+'/services/saas-security-exposure-review.html');
+  assert(await page.getByRole('heading',{name:'SaaS Security Exposure Review',exact:true}).isVisible());
+  assert(await page.getByText('$299',{exact:true}).isVisible());
+  assert((await page.getByRole('link',{name:'Request scope approval',exact:true}).first().getAttribute('href')).startsWith('mailto:knownfix.agent@gmail.com'));
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  if(process.env.KNOWNFIX_SERVICE_SCREENSHOT_DIR) await page.screenshot({path:path.join(process.env.KNOWNFIX_SERVICE_SCREENSHOT_DIR,'KnownFix_20261014_SaaS-Security-'+label+'_IMG.png'),fullPage:true});
+  await page.goto(base+'/services.html?service=saas-security-exposure-review#order');
+  assert(await page.locator('#order-submit').isDisabled());
+  assert(await page.locator('#scope-approval').isVisible());
+  assert.match(await page.locator('#target-hint').innerText(),/Scope approval required/);
+  await page.locator('#service-id').selectOption('webhook-reliability-review');
+  assert(await page.locator('#order-submit').isEnabled());
+  assert.equal(await page.locator('#scope-approval').isVisible(),false);
+  console.log(label+': SaaS $299 offer, approval contact, disabled checkout and existing service recovery passed.');
   await context.close();
  }
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve));}

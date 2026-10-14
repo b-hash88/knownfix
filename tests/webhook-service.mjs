@@ -4,7 +4,7 @@ import vm from 'node:vm';
 const read = p => fs.readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const data = JSON.parse(read('services.json'));
 const service = data.services.find(s => s.id === 'webhook-reliability-review');
-assert.equal(data.services.length, 7);
+assert.equal(data.services.length, 8);
 assert.equal(service.priceUsdCents, 17900);
 assert.equal(service.deliveryBusinessDays, 3);
 assert.equal(service.targetKind, 'github-repository');

@@ -1,0 +1,28 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
+const data=JSON.parse(read('services.json'));
+const s=data.services.find(s=>s.id==='saas-security-exposure-review');
+assert.equal(data.services.length,8);
+assert.equal(s.priceUsdCents,29900);
+assert.equal(s.deliveryBusinessDays,5);
+assert.equal(s.requiresScopeApproval,true);
+const hub=read('services.html');
+const schema=JSON.parse(hub.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+assert.equal(schema.numberOfItems,8);
+assert.equal(schema.itemListElement.find(v=>v.item.name===s.title).item.offers.price,'299.00');
+assert(schema.itemListElement.find(v=>v.item.name===s.title).item.offers.url.startsWith('mailto:knownfix.agent@gmail.com'));
+assert.deepEqual(JSON.parse(hub.match(/services=(\[[\s\S]*?\]),sdkUrl=/)[1]),data.services);
+for(const [,script] of hub.matchAll(/<script>([\s\S]*?)<\/script>/g)) new vm.Script(script);
+assert(hub.includes("document.getElementById('order-submit').disabled=approval"));
+assert(hub.includes('id="scope-approval"'));
+const detail=read('services/'+s.id+'.html');
+assert(detail.includes(s.scope));assert(detail.includes(s.limitations));
+assert(detail.includes('Request scope approval'));
+assert(!detail.includes('?service='+s.id+'#order'));
+assert(detail.includes('Do not email passwords'));
+assert(detail.includes('Owner-only statistics.'));
+for(const file of ['index.html','llms.txt','llms-full.txt','sitemap.xml']) assert(read(file).includes(s.id));
+console.log('SaaS offer: $299/5 days, full written-authorization boundaries, approval contact and disabled automated checkout consistent.');
+

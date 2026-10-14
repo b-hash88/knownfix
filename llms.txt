@@ -148,3 +148,7 @@ Browser-local JSON structure checks and copyable KnownFix requests. Does not tes
 - [API Response Triage](https://b-hash88.github.io/knownfix/free-skills/api-response-triage.md): Separate HTTP, JSON-RPC and tool-result failures with bounded, evidence-first checks and safe retry decisions.
 Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/api-response-triage
 MCP resource: knownfix://free-skill/api-response-triage
+
+- [Webhook Delivery Triage](https://b-hash88.github.io/knownfix/free-skills/webhook-delivery-triage.md): Trace missing, failed or duplicate webhooks without replaying live events or confusing delivery with processing.
+Tracked backend download: https://knownfix-backend-28.b-hash88.deno.net/free-skill/webhook-delivery-triage
+MCP resource: knownfix://free-skill/webhook-delivery-triage

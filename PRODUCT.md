@@ -14,4 +14,4 @@ Static GitHub Pages storefront with a separate private Deno backend. Free JSON c
 KnownFix identity and existing catalog/ledger visual language remain in place. No fabricated impact, social proof or traffic uplift claims.
 
 ## Evidence on Hand
-Existing catalog, five free workflow skills, application tests and canonical operations registers. MCP attribution commits each new event's dimensions together; historical counter gaps remain explicit. Client signals have no historical backfill; source and user-agent labels are untrusted.
+Existing catalog, six free workflow skills, application tests and canonical operations registers. MCP attribution commits each new event's dimensions together; historical counter gaps remain explicit. Client signals have no historical backfill; source and user-agent labels are untrusted.

@@ -57,6 +57,10 @@ try {
     await page.getByLabel('Find a workflow').fill('nothing-matches-this');
     await page.getByText('No matching workflows.', { exact: true }).waitFor();
     await page.getByLabel('Find a workflow').fill('');
+    await page.getByLabel('Find a workflow').fill('webhook');
+    await page.getByText('1 workflow', { exact: true }).waitFor();
+    assert(await page.getByRole('heading', { name: 'Webhook Delivery Triage', exact: true }).isVisible());
+    await page.getByLabel('Find a workflow').fill('');
     if (process.env.KNOWNFIX_SCREENSHOT_DIR) await page.screenshot({ path: path.join(process.env.KNOWNFIX_SCREENSHOT_DIR, `KnownFix_20261005_Free-Skills-${label}_IMG.png`), fullPage: true });
     await page.goto(base + '/mcp-connect.html');
     await page.getByRole('heading', { name: 'KnownFix MCP Connection Kit', exact: true }).waitFor();
@@ -120,6 +124,9 @@ try {
       await page.goto(base + '/free-skills/' + skill.id + '.html');
       assert(await page.getByRole('heading', { name: skill.title, exact: true }).isVisible());
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      if (skill.id === 'webhook-delivery-triage' && process.env.KNOWNFIX_WEBHOOK_SCREENSHOT_DIR) {
+        await page.screenshot({ path: path.join(process.env.KNOWNFIX_WEBHOOK_SCREENSHOT_DIR, `KnownFix_20261014_Webhook-Triage-${label}_IMG.png`), fullPage: true });
+      }
       const pending = page.waitForEvent('download');
       await page.getByRole('link', { name: 'Download SKILL.md', exact: true }).click();
       const download = await pending;
@@ -127,7 +134,7 @@ try {
       assert.equal(fs.readFileSync(await download.path(), 'utf8'), skill.body);
     }
     assert.deepEqual(errors, []);
-    console.log(label + ': five readable skill pages, no overflow, consent control and exact SKILL.md downloads passed (download response mocked; backend integration tested separately).');
+    console.log(`${label}: ${data.skills.length} readable skill pages, no overflow, consent control and exact SKILL.md downloads passed (download response mocked; backend integration tested separately).`);
     await context.close();
   }
 } finally {

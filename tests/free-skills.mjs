@@ -6,7 +6,7 @@ const root = new URL('../', import.meta.url);
 const data = JSON.parse(fs.readFileSync(new URL('free-skills.json', root), 'utf8'));
 const read = name => fs.readFileSync(new URL(name, root), 'utf8').replace(/\r\n/g, '\n');
 const api = 'https://knownfix-backend-28.b-hash88.deno.net';
-assert.equal(data.skills.length, 5);
+assert.equal(data.skills.length, 6);
 for (const skill of data.skills) {
   assert.equal(read(`free-skills/${skill.id}.md`), skill.body);
   for (const file of ['free-skills.html', `free-skills/${skill.id}.html`]) {
@@ -53,4 +53,4 @@ for (const skill of data.skills) {
   for (const file of ['index.html', 'sitemap.xml', 'llms.txt', 'llms-full.txt']) assert(read(file).includes(skill.id));
 }
 assert(!read('llms-full.txt').includes('## Reusable master prompt'));
-console.log('Five skills: bodies, discovery, tracked links and consent-gated sanitized GA4 events passed.');
+console.log(`${data.skills.length} skills: bodies, discovery, tracked links and consent-gated sanitized GA4 events passed.`);

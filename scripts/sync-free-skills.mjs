@@ -28,7 +28,7 @@ for (const skill of data.skills) {
     ;
   write(`free-skills/${skill.id}.html`, `${analyticsHead(head)}${bodyStart}${nav}<h1>${esc(skill.title)}</h1><p>${esc(skill.description)}</p><p>${download(skill)}</p><pre>${esc(skill.body)}</pre>${footer}`);
 }
-const description = 'Free workflows for bug reports, release checks, MCP connections, website search readiness and API response triage.';
+const description = 'Free workflows for bug reports, release checks, MCP connections, website search readiness, API responses and webhook delivery.';
 let hub = read('free-skills.html');
 hub = hub.slice(0, hub.indexOf(bodyStart))
   .replace(/(<meta name="description" content=")[^"]*(")/, `$1${description}$2`)

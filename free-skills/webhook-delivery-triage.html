@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Webhook Delivery Triage | KnownFix</title><meta name="description" content="Trace missing, failed or duplicate webhooks without replaying live events or confusing delivery with processing."><link rel="canonical" href="https://b-hash88.github.io/knownfix/free-skills/webhook-delivery-triage.html"><style>body{margin:0;background:#151912;color:#f2f4f1;font:16px/1.65 system-ui,sans-serif}main{max-width:850px;margin:auto;padding:24px}a{color:#8ad6c4}h1{font-size:30px;line-height:1.2}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.6 ui-monospace,monospace}img{vertical-align:middle;margin-right:12px}nav{display:flex;gap:20px;flex-wrap:wrap}section{border-top:1px solid #788078;margin-top:24px;padding-top:20px}</style><style>
+#knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
+#knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
+#knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
+#knownfix-analytics-consent .knownfix-consent-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+#knownfix-analytics-consent button{min-height:2.25rem;border:1px solid #8ad6c4;border-radius:3px;padding:.42rem .72rem;background:#8ad6c4;color:#101512;font:600 12px Arial,sans-serif;cursor:pointer}
+#knownfix-analytics-consent button[data-knownfix-consent="denied"]{background:transparent;color:#f2f4f1;border-color:#788078}
+@media(max-width:42rem){#knownfix-analytics-consent .knownfix-consent-inner{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  'use strict';
+  var measurementId="G-781DC76YQN",storageKey="knownfix.analytics.consent",pageType="free-skill",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var allowedEvents={catalog_search:1,service_catalog_view:1,service_select:1,service_order_start:1,checkout_start:1,merch_click:1,free_skill_download:1};
+  function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
+  function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
+  function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
+  function loadAnalytics(){
+    if(loaded||readChoice()!=='granted')return;
+    loaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+    window.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    window.gtag('js',new Date());
+    var config={page_location:safePageUrl(location.href),page_title:document.title,content_group:pageType,allow_google_signals:false,allow_ad_personalization_signals:false,transport_type:'beacon'};
+    var referrer=safePageUrl(document.referrer);if(referrer)config.page_referrer=referrer;
+    window.gtag('config',measurementId,config);
+    var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
+  }
+  window.knownfixTrack=function(name,context){
+    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
+    window.gtag('event',name,parameters);
+  };
+  function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
+  function setChoice(value){saveChoice(value);var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();if(value==='granted')loadAnalytics();else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});updateStatus(value)}
+  function consentButton(label,value){var button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.knownfixConsent=value;return button}
+  function showChoice(){
+    if(readChoice())return;
+    var banner=document.createElement('aside');banner.id='knownfix-analytics-consent';banner.setAttribute('aria-label','Analytics choice');
+    var inner=document.createElement('div');inner.className='knownfix-consent-inner';
+    var copy=document.createElement('p');copy.append(document.createTextNode('Allow optional analytics? KnownFix measures sanitized page paths and fixed funnel events, never searches, form entries, tickets, wallet proofs, or reports. '));
+    var details=document.createElement('a');details.href=privacyUrl;details.textContent='Privacy details';copy.append(details);
+    var actions=document.createElement('div');actions.className='knownfix-consent-actions';actions.append(consentButton('Allow analytics','granted'),consentButton('No thanks','denied'));
+    inner.append(copy,actions);banner.append(inner);document.body.append(banner);
+  }
+  document.addEventListener('click',function(event){var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/mcp-connect.html">MCP Connection Kit</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>Webhook Delivery Triage</h1><p>Trace missing, failed or duplicate webhooks without replaying live events or confusing delivery with processing.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/webhook-delivery-triage" data-knownfix-event="free_skill_download" data-knownfix-context="webhook-delivery-triage">Download SKILL.md</a></p><pre>---
+name: webhook-delivery-triage
+description: Use when diagnosing a missing, failed or duplicate webhook delivery on an authorized integration; not for replaying events or changing signing keys.
+---
+
+# Webhook Delivery Triage
+
+## Reusable prompt
+
+Define the expected event, provider, endpoint and environment. Read the integration&#39;s current official delivery, signature and retry documentation rather than assuming another provider&#39;s rules. This workflow authorizes diagnosis only, not a live replay, signing-key rotation or a business-state change.
+
+Preserve UTC timestamps, application version, delivery-attempt status, redacted response and a minimal timeline. Redact credentials, signing secrets, signatures, bearer links, customer data and payment details before retaining evidence. Keep raw payloads only in an approved private evidence location when needed; do not paste them into public tools or reports.
+
+Separate event creation, provider dispatch, endpoint receipt, signature verification, acceptance or durable enqueue, processing and the final business effect. An HTTP success or a provider&#39;s delivered badge does not by itself prove processing completed. Correlate authorized provider records with endpoint and worker logs using an opaque event reference kept private; do not infer a customer or payment from a delivery count.
+
+Compare two fresh read-only observations of the recorded attempt and current processing state. Cross-check with a second method such as authorized provider delivery history versus receiver logs. A refreshed historical record is not a new webhook attempt. If a sandbox reproduction is authorized, use documented fixtures and one isolated test destination, not a real payment or order. Record separately what was inspected and what was reproduced.
+
+For duplicates, inspect the actual deduplication boundary and atomicity of the business effect. For missing events, check subscriptions, environment, destination, failure status, queue retention and documented retry timing. Verify signatures using the provider&#39;s supported verifier and required original body representation. Do not disable verification, log secrets, broaden subscriptions or acknowledge an event before the integration&#39;s documented acceptance condition merely to make the test pass.
+
+Review contradictions: test versus live mode, multiple destinations, reordered events, delayed retries, wrong event type, expired logs, proxy responses and processing after an earlier timeout. If records disagree or logs are missing, label the diagnosis unverified. Distinguish missing evidence from a confirmed lost event. Stop after bounded checks; do not replay a production event until authorization, idempotency and the possible business effects are established.
+
+## Delivery receipt
+
+- Provider / destination / environment / version / UTC:
+- Expected event and documented delivery contract:
+- Dispatch / receipt / verification / queue / processing observations:
+- Attempt record A / B / second method and redacted evidence:
+- Sandbox reproduction, if authorized, versus historical inspection:
+- Duplicate-handling boundary and possible replay effect:
+- Contradictions, missing logs and disposition:
+- Narrow next action, authorization needed and stop condition:
+
+## Acceptance checklist
+
+The report names the last evidenced stage without calling acceptance a completed business action. Each claim points to retained redacted evidence. No live event was replayed, verification weakened or key rotated under diagnosis-only authority. Inconsistent results stay unverified; any proposed repair needs its own regression test and separately authorized release.
+
+Source: KnownFix evidence-first workflow. Provider-specific delivery guarantees and retry schedules must be checked against current official documentation.
+</pre><footer><p>Free under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Attribution: KnownFix. No account or payment required.</p></footer></main></body></html>

@@ -15,3 +15,5 @@ jobs:
         run: node tests/mcp-response.mjs
       - name: Free skill and analytics boundaries
         run: node tests/free-skills.mjs
+      - name: Paid webhook service catalog and checkout consistency
+        run: node tests/webhook-service.mjs

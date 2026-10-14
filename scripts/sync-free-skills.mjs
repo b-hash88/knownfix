@@ -26,7 +26,8 @@ for (const skill of data.skills) {
     .replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(skill.description)}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${site}/free-skills/${skill.id}.html$2`)
     ;
-  write(`free-skills/${skill.id}.html`, `${analyticsHead(head)}${bodyStart}${nav}<h1>${esc(skill.title)}</h1><p>${esc(skill.description)}</p><p>${download(skill)}</p><pre>${esc(skill.body)}</pre>${footer}`);
+  const related = skill.id === 'webhook-delivery-triage' ? '<p>Related service: <a href="../services/webhook-reliability-review.html">Webhook Reliability Review</a> - $179 USDC, 3 business days.</p>' : '';
+  write(`free-skills/${skill.id}.html`, `${analyticsHead(head)}${bodyStart}${nav}<h1>${esc(skill.title)}</h1><p>${esc(skill.description)}</p><p>${download(skill)}</p>${related}<pre>${esc(skill.body)}</pre>${footer}`);
 }
 const description = 'Free workflows for bug reports, release checks, MCP connections, website search readiness, API responses and webhook delivery.';
 let hub = read('free-skills.html');

@@ -121,10 +121,25 @@
         "Prioritized fixes with verification steps"
       ],
       "limitations": "The review covers checked-in configuration and public workflow evidence. Private logs, organization settings, registries, and signing systems are outside scope unless separately authorized."
+    },
+    {
+      "id": "webhook-reliability-review",
+      "title": "Webhook Reliability Review",
+      "tagline": "An evidence-first source review of webhook verification, duplicate handling, retries and processing boundaries.",
+      "priceUsdCents": 17900,
+      "priceWei": "71600000000000000",
+      "deliveryBusinessDays": 3,
+      "targetKind": "github-repository",
+      "scope": "One public GitHub repository, one webhook integration and up to three event-processing paths, capped at 10,000 relevant source lines. Read-only review of checked-in code, tests and configuration.",
+      "deliverables": [
+        "Delivery-to-processing flow map for the scoped integration",
+        "Signature verification and acceptance-boundary findings with file and line references",
+        "Duplicate handling, idempotency, ordering and retry review",
+        "Queue failure, recovery and observability gap analysis",
+        "Prioritized fixes with focused regression-test recommendations",
+        "Self-contained HTML report plus SHA-256-verified Markdown source"
+      ],
+      "limitations": "This is a bounded source review, not live incident response, a penetration test or a guarantee that all defects will be found. Private repositories, provider dashboards, signing keys, customer payloads, production access, event replays, deployment and implementation are excluded. No payment or business event is triggered. The three-business-day delivery target starts after confirmed payment and a complete, in-scope public repository brief."
     }
-  ],
-  "page": "https://b-hash88.github.io/knownfix/services.html",
-  "orderEndpoint": "https://knownfix-backend-28.b-hash88.deno.net/service-orders",
-  "statusEndpoint": "https://knownfix-backend-28.b-hash88.deno.net/service-orders/status",
-  "privacy": "Targets and notes are private by default. A private svc_ ticket is the only retrieval credential and must never be published."
+  ]
 }

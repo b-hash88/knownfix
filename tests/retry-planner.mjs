@@ -15,6 +15,9 @@ assert.equal(planRetries({ ...DEFAULT_PLAN, attempts: 1, budget: 10 }).attemptsW
 assert.equal(planRetries({ ...DEFAULT_PLAN, attempts: 1, budget: 9 }).attemptsWithinBudget, 0);
 assert.equal(planRetries({ ...DEFAULT_PLAN, budget: 65 }).attemptsWithinBudget, 3);
 assert.equal(planRetries({ ...DEFAULT_PLAN, initialDelay: 0 }).durationMax, 60);
+const decimalBoundary = { ...DEFAULT_PLAN, attempts: 14, timeout: 0.1, initialDelay: 0, budget: 1.4 };
+assert.equal(planRetries(decimalBoundary).attemptsWithinBudget, 14);
+assert.equal(planRetries({ ...decimalBoundary, budget: 1.4 - 1e-9 }).attemptsWithinBudget, 13);
 assert.equal(planRetries({ ...DEFAULT_PLAN, attempts: 20, multiplier: 10, initialDelay: 86400, maxDelay: 86400 }).durationMax, 1641800);
 for (const change of [{attempts:0},{attempts:1.5},{attempts:21},{timeout:0},{budget:''},{budget:null},{budget:true},{initialDelay:NaN},{multiplier:Infinity},{maxDelay:-1},{jitter:'equal'}]) assert.throws(() => planRetries({...DEFAULT_PLAN,...change}));
 assert.match(planChecklist(jitter), /No queue latency/);

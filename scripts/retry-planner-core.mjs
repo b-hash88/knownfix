@@ -32,8 +32,11 @@ export function planRetries(input) {
       expected += config.timeout + delayExpected;
       latest += config.timeout + delayMax;
     }
+    const finishLatest = latest + config.timeout;
+    // Allow only accumulated floating-point rounding error at an exact budget boundary.
+    const tolerance = Number.EPSILON * 4 * attempt * Math.max(1, finishLatest, config.budget);
     rows.push({ attempt, delayMin, delayMax, startEarliest: earliest, startExpected: expected, startLatest: latest,
-      finishLatest: latest + config.timeout, fitsBudget: latest + config.timeout <= config.budget });
+      finishLatest, fitsBudget: finishLatest - config.budget <= tolerance });
   }
   return { config, rows, durationMin: earliest + config.timeout, durationExpected: expected + config.timeout,
     durationMax: latest + config.timeout, attemptsWithinBudget: rows.filter(row => row.fitsBudget).length };

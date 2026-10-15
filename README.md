@@ -5,11 +5,36 @@ in production, 4 documented, and 12 available in full for free. Search is free;
 paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
 on Base mainnet.
 
-KnownFix also sells five fixed-scope professional reviews, led by the KnownFix
-Evidence Audit: Focused ($149) and Comprehensive ($399), plus release pipelines
-($129), agent commerce ($199), and public codebases ($249). Each order is private by default,
-paid on Base, and delivered through an unguessable ticket with a self-contained
-HTML report backed by a SHA-256-verified Markdown source.
+KnownFix offers eight scoped services, including website audits, a homepage build,
+code and release reviews, a Webhook Reliability Review ($179 USDC / 3 business
+days), and a SaaS Security Exposure Review ($299 USDC / 5 business days).
+Delivery targets begin after payment and a complete in-scope brief. SaaS security
+requires written ownership/testing permission and an agreed target/method/window
+allowlist before payment or testing; its automated checkout is disabled. Payment
+and private delivery for that service are arranged after approval. Other services
+use the existing private order ticket and verified report delivery.
+
+Three free browser-local tools complement six free workflow skills:
+[MCP Connection Kit](https://b-hash88.github.io/knownfix/mcp-connect.html),
+[MCP Response Inspector](https://b-hash88.github.io/knownfix/mcp-response.html), and
+[Webhook Retry Planner](https://b-hash88.github.io/knownfix/webhook-retry.html).
+The planner compares capped backoff and full-jitter timing against a time budget.
+It sends no webhooks and saves no settings. Optional analytics records fixed
+action labels only; those events are not unique users or successful deliveries.
+
+## Storefront Checks
+
+Run `node tests/retry-planner.mjs` and `node tests/service-comparison.mjs` for the
+new tool and catalog consistency. The existing Gitea workflow includes both.
+`tests/retry-planner-browser.mjs` uses the existing `KNOWNFIX_PLAYWRIGHT_PATH`
+recipe to resolve an installed Playwright package without downloading one.
+Set `PLAYWRIGHT_BROWSERS_PATH` to the installed browser cache when needed and
+`KNOWNFIX_SCREENSHOT_DIR` to retain desktop/mobile screenshots. Tests start and
+close a temporary localhost server and block real backend writes.
+
+Regenerate the planner with `node scripts/sync-retry-planner.mjs`, then run
+`node scripts/sync-site-improvements.mjs` to refresh catalog comparison and links.
+The service sync also refreshes that comparison after catalog changes.
 
 - [Storefront](https://b-hash88.github.io/knownfix/)
 - [Owner stats](https://knownfix-backend-28.b-hash88.deno.net/books)

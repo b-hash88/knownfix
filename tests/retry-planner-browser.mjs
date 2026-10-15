@@ -1,0 +1,94 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import http from 'node:http';
+import path from 'node:path';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+const require = createRequire(import.meta.url);
+if (!process.env.KNOWNFIX_PLAYWRIGHT_PATH) throw new Error('Provide installed Playwright path');
+const { chromium } = require(process.env.KNOWNFIX_PLAYWRIGHT_PATH);
+const root = fileURLToPath(new URL('../', import.meta.url));
+const server = http.createServer((req, res) => {
+  const file = path.resolve(root, '.' + decodeURIComponent(new URL(req.url, 'http://localhost').pathname));
+  const relative = path.relative(root, file);
+  if (relative.startsWith('..') || path.isAbsolute(relative) || !fs.existsSync(file) || !fs.statSync(file).isFile()) return res.writeHead(404).end();
+  const types = { '.html': 'text/html', '.css': 'text/css', '.mjs': 'text/javascript', '.js': 'text/javascript', '.png': 'image/png' };
+  res.writeHead(200, { 'content-type': types[path.extname(file)] || 'text/plain' });
+  fs.createReadStream(file).pipe(res);
+});
+await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+const base = 'http://127.0.0.1:' + server.address().port;
+const browser = await chromium.launch({ headless: true });
+const captures = process.env.KNOWNFIX_SCREENSHOT_DIR;
+if (captures) fs.mkdirSync(captures, { recursive: true });
+try {
+  for (const [label, width, height] of [['Desktop',1440,1000], ['Mobile',390,844]]) {
+    const context = await browser.newContext({ viewport: { width, height }, permissions: ['clipboard-read', 'clipboard-write'] });
+    const page = await context.newPage();
+    const errors = [], external = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.route('**/*', route => {
+      const url = new URL(route.request().url());
+      if (url.origin === base) return route.continue();
+      if (url.href === 'https://b-hash88.github.io/knownfix/knownfix-icon.png') return route.fulfill({contentType:'image/png',body:fs.readFileSync(path.join(root,'knownfix-icon.png'))});
+      external.push({ origin: url.origin, path: url.pathname, method: route.request().method() });
+      if (url.hostname === 'www.googletagmanager.com') return route.fulfill({ contentType: 'text/javascript', body: '' });
+      if (url.hostname.endsWith('googleapis.com') || url.hostname.endsWith('gstatic.com')) return route.continue();
+      return route.abort();
+    });
+    await page.goto(base + '/webhook-retry.html');
+    await page.getByRole('button', {name:'No thanks',exact:true}).click();
+    await page.locator('#maximum-time').filter({hasText:'215s'}).waitFor();
+    assert.equal(await page.locator('#budget-count').innerText(), '6 / 6');
+    assert.equal(await page.locator('#retry-rows tr').count(), 6);
+    await page.locator('#budget').fill('65');
+    assert(await page.locator('#copy-plan').isDisabled());
+    assert.equal(await page.locator('#retry-result').isVisible(), false);
+    await page.getByRole('button', {name:'Calculate schedule',exact:true}).click();
+    assert.equal(await page.locator('#budget-count').innerText(), '3 / 6');
+    await page.getByRole('button',{name:'Copy plan JSON',exact:true}).click();
+    await page.locator('#retry-status').filter({hasText:'Copied.'}).waitFor();
+    const copied = JSON.parse(await page.evaluate(() => navigator.clipboard.readText()));
+    assert.equal(copied.config.budget,65);
+    assert.equal(copied.durationExpected,137.5);
+    await page.getByRole('button',{name:'Reset',exact:true}).click();
+    assert.equal(await page.locator('#budget').inputValue(),'600');
+    assert.equal(await page.evaluate(() => window.dataLayer?.length || 0),0);
+    assert.deepEqual(external,[]);
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    if (captures) await page.screenshot({path:path.join(captures,`KnownFix_20261015_Retry-Planner-${label}_IMG.png`),fullPage:true});
+    await page.evaluate(() => localStorage.setItem('knownfix.analytics.consent','granted'));
+    await page.reload();
+    await page.getByRole('button',{name:'Calculate schedule',exact:true}).click();
+    await page.getByRole('button',{name:'Copy review checklist',exact:true}).click();
+    await page.locator('#retry-status').filter({hasText:'Copied.'}).waitFor();
+    const events = await page.evaluate(() => window.dataLayer.filter(event=>event[0]==='event').map(event=>[event[1],event[2]]));
+    assert.deepEqual(events,[['retry_planner_action',{event_context:'calculate'}],['retry_planner_action',{event_context:'copy-checklist'}]]);
+    assert.match(await page.evaluate(() => navigator.clipboard.readText()),/No queue latency/);
+    await page.evaluate(() => localStorage.setItem('knownfix.analytics.consent','denied'));
+    await page.goto(base + '/services.html');
+    assert(await page.getByRole('heading',{name:'KnownFix Services',exact:true}).isVisible());
+    assert.equal(await page.locator('#service-comparison tbody tr:visible').count(),8);
+    await page.locator('#service-kind').selectOption('repository');
+    await page.locator('#service-budget').selectOption('200');
+    assert.equal(await page.locator('#service-comparison tbody tr:visible').count(),2);
+    await page.locator('#service-kind').selectOption('security');
+    assert(await page.locator('#comparison-empty').isVisible());
+    await page.getByRole('button',{name:'Reset filters',exact:true}).click();
+    assert.equal(await page.locator('#service-comparison tbody tr:visible').count(),8);
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    if (captures) {
+      await page.evaluate(() => window.scrollTo(0,0));
+      await page.screenshot({path:path.join(captures,`KnownFix_20261015_Service-Comparison-${label}_IMG.png`),fullPage:true});
+    }
+    await page.locator('#service-id').selectOption('saas-security-exposure-review');
+    assert(await page.locator('#order-submit').isDisabled());
+    assert(await page.locator('#scope-approval').isVisible());
+    await page.locator('#service-id').selectOption('webhook-reliability-review');
+    assert(await page.locator('#order-submit').isEnabled());
+    assert.deepEqual(errors,[]);
+    assert(!external.some(request => request.method !== 'GET'));
+    console.log(`PASS ${label}: schedules, budget changes, clipboard exports, consent denied/granted, fixed event payloads, filters/empty/reset, SaaS gate, no overflow; no live order or webhook calls.`);
+    await context.close();
+  }
+} finally { await browser.close(); await new Promise(resolve=>server.close(resolve)); }

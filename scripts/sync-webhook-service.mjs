@@ -96,4 +96,5 @@ let sitemap = read('sitemap.xml');
 if (!sitemap.includes(url)) sitemap = sitemap.replace('</urlset>', '<url><loc>' + url + '</loc></url></urlset>');
 write('sitemap.xml', sitemap);
 console.log(`Synced ${s.id}; ${data.services.length}-service catalog, scope-aware checkout and discovery.`);
+await import('./sync-site-improvements.mjs');
 

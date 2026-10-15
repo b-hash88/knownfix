@@ -19,3 +19,7 @@ jobs:
         run: node tests/webhook-service.mjs
       - name: SaaS security scope approval and catalog consistency
         run: node tests/saas-service.mjs
+      - name: Retry timing, budget and local input privacy
+        run: node tests/retry-planner.mjs
+      - name: Service comparison and free tool discovery
+        run: node tests/service-comparison.mjs

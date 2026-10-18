@@ -16,3 +16,19 @@ for (const service of services) {
 }
 for (const file of ['index.html', 'free-skills.html', 'mcp-connect.html', 'mcp-response.html', 'services.html', 'sitemap.xml', 'llms.txt', 'llms-full.txt', 'privacy.html']) assert(read(file).includes('webhook-retry.html'), file);
 console.log('PASS service comparison: all catalog services, prices, delivery targets, approval requirement and new tool discovery agree.');
+const fix = services.find(s => s.id === 'verified-repo-fix');
+assert.equal(fix.priceUsdCents, 14900);
+assert.equal(fix.deliveryBusinessDays, 3);
+assert.equal(fix.paymentTiming, 'after-verified-delivery');
+const detail = read('services/verified-repo-fix.html');
+assert(detail.includes(fix.scope));
+assert(detail.includes(fix.limitations));
+assert(detail.includes('Request a scoped fix'));
+assert(detail.includes('mailto:knownfix.agent@gmail.com'));
+assert(!detail.includes('after confirmed payment'));
+assert(!detail.includes('?service=verified-repo-fix#order'));
+assert(!detail.includes('EXACT ETH ALTERNATIVE'));
+assert(hub.includes("selected.paymentTiming==='after-verified-delivery'"));
+assert(!hub.includes('innerHTML='));
+for (const file of ['index.html', 'llms.txt', 'llms-full.txt', 'sitemap.xml']) assert(read(file).includes('verified-repo-fix'), file);
+console.log('PASS Verified Repo Fix: $149/3 days, payment on verified delivery, manual request and discovery match.');

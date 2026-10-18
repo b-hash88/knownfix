@@ -150,7 +150,7 @@ await check("storefront metadata and truthful inventory", async () => {
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "verified-in-production").length, 34);
   assert.equal(catalog.entries.filter((entry) => entry.confidence === "documented").length, 6);
   assert(catalog.entries.every((entry) => !("cause" in entry) && !("fix" in entry)));
-  assert.equal(serviceCatalog.services.length, 8);
+  assert.equal(serviceCatalog.services.length, 9);
   return "40 entries; 34 verified, 6 documented, 14 free, 5 professional reviews";
 });
 
@@ -187,7 +187,8 @@ await check("professional service page is private, structured, and checkout-read
     assert.equal(detail.response.status, 200);
     assert(detail.body.includes("<h1>" + service.title + "</h1>"));
     assert.match(detail.body, /name="robots" content="index,follow,max-image-preview:large/);
-    assert(detail.body.includes("services.html?service=" + service.id + "#order"));
+    if (service.requiresScopeApproval || service.paymentTiming === 'after-verified-delivery') assert(detail.body.includes('mailto:knownfix.agent@gmail.com'));
+    else assert(detail.body.includes("services.html?service=" + service.id + "#order"));
     assert((detail.body.match(/<details>/g) || []).length >= 5);
     const schema = JSON.parse(detail.body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
     const types = schema["@graph"].map((item) => item["@type"]);
@@ -757,7 +758,7 @@ await check("professional service API preserves private order boundaries", async
   const serviceResult = await json(API + "/services");
   assert.equal(serviceResult.response.status, 200);
   assert.equal(serviceResult.data.spec, "knownfix-services/1.0");
-  assert.equal(serviceResult.data.services.length, 8);
+  assert.equal(serviceResult.data.services.length, 9);
   assert(serviceResult.data.services.every((service) => service.priceUsd && service.deliverables.length >= 5));
   assert.doesNotMatch(JSON.stringify(serviceResult.data.publicWork), /"ticket"\s*:/i);
 
@@ -832,7 +833,7 @@ await check("MCP initialize, registry, search, free fix, offer, and request gate
     name: "list_services",
     arguments: {},
   }));
-  assert.equal(serviceList.services.length, 8);
+  assert.equal(serviceList.services.length, 9);
   assert.equal(serviceList.services.find((service) => service.id === "website-first-look").priceUsd, "$149.00");
   assert.equal(serviceList.services.find((service) => service.id === "website-growth-audit").priceUsd, "$399.00");
   assert.equal(serviceList.services.find((service) => service.id === "codebase-review").priceUsd, "$249.00");

@@ -3,6 +3,25 @@
   "currency": "USD-equivalent USDC on Base mainnet",
   "services": [
     {
+      "id": "verified-repo-fix",
+      "title": "Verified Repo Fix",
+      "tagline": "One reproducible repository issue, a tested patch, and payment only on verified delivery.",
+      "priceUsdCents": 14900,
+      "priceWei": "60000000000000000",
+      "deliveryBusinessDays": 3,
+      "targetKind": "github-repository",
+      "paymentTiming": "after-verified-delivery",
+      "scope": "One public GitHub repository pinned to an agreed commit and one small reproducible bug, broken test or CI issue. Supported stack, reproduction, acceptance criteria and execution requirements are agreed before work is accepted.",
+      "deliverables": [
+        "Agreed scope and acceptance test with a preserved failing baseline",
+        "A focused patch, or pull request only with explicit maintainer authorization",
+        "A regression test and before/after evidence for the agreed acceptance criteria",
+        "Relevant test results, disclosed baseline failures, base commit and patch summary",
+        "One in-scope correction round requested within seven days of delivery"
+      ],
+      "limitations": "149 USDC is due only on verified patch delivery meeting the agreed acceptance criteria; no completion fee if those criteria are not met. Target: three business days after scope acceptance and a complete reproducible brief, not after payment. Manual scope approval, invoicing and artifact handoff; no automated checkout or private order ticket. No automatic merge, deployment, production access, private repositories, unlimited revisions or guaranteed maintainer acceptance. Sensitive security, authentication and payment changes require separate scope. Never send credentials or customer data."
+    },
+    {
       "id": "website-first-look",
       "title": "KnownFix Evidence Audit: Focused",
       "tagline": "A rigorous, bounded review of the design, trust, SEO/AEO, performance, and conversion evidence that matters first.",

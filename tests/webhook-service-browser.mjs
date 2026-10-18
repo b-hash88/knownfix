@@ -68,6 +68,27 @@ try {
   assert(await page.locator('#order-submit').isEnabled());
   assert.equal(await page.locator('#scope-approval').isVisible(),false);
   console.log(label+': SaaS $299 offer, approval contact, disabled checkout and existing service recovery passed.');
+  await page.goto(base+'/services/verified-repo-fix.html');
+  assert(await page.getByRole('heading',{name:'Verified Repo Fix',exact:true}).isVisible());
+  assert(await page.getByText('$149',{exact:true}).isVisible());
+  assert(await page.getByText('PAY ON VERIFIED DELIVERY',{exact:true}).isVisible());
+  assert((await page.getByRole('link',{name:'Request a scoped fix',exact:true}).first().getAttribute('href')).startsWith('mailto:knownfix.agent@gmail.com'));
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  if(process.env.KNOWNFIX_SERVICE_SCREENSHOT_DIR) await page.screenshot({path:path.join(process.env.KNOWNFIX_SERVICE_SCREENSHOT_DIR,'KnownFix_20261018_Repo-Fix-'+label+'_IMG.png'),fullPage:true});
+  submitted=undefined;
+  await page.goto(base+'/services.html?service=verified-repo-fix#order');
+  assert(await page.locator('#order-submit').isDisabled());
+  assert(await page.locator('#scope-approval').isVisible());
+  assert.match(await page.locator('#scope-approval').innerText(),/due only on verified patch delivery/);
+  assert.equal(await page.locator('.card-bridge').isVisible(),false);
+  await page.locator('#order-form').dispatchEvent('submit');
+  assert.equal(submitted,undefined);
+  assert.equal(await page.locator('#checkout').isVisible(),false);
+  await page.locator('#service-id').selectOption('webhook-reliability-review');
+  assert(await page.locator('#order-submit').isEnabled());
+  assert.equal(await page.locator('#scope-approval').isVisible(),false);
+  assert.deepEqual(errors,[]);
+  console.log(label+': Verified Repo Fix request-only route, no forced submit/payment and normal checkout recovery passed.');
   await context.close();
  }
 } finally {await browser.close();await new Promise(resolve=>server.close(resolve));}

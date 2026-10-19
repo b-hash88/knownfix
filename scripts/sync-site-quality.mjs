@@ -29,6 +29,7 @@ for (const file of ['llms.txt', 'llms-full.txt']) {
   write(file, text);
 }
 let home = read('index.html');
+home = home.replace('var allowedEvents={catalog_search:1,', 'var allowedEvents={sample_report_view:1,diagnostic_view:1,catalog_search:1,');
 home = home.replace(/<h4>/g, '<h3>').replace(/<\/h4>/g, '</h3>').replace(/\.step h4/g, '.step h3');
 home = home.replace('<span><b>5</b> professional reviews</span>', `<span><b>${services.length}</b> scoped services</span>`)
   .replace('Reproducible fixes for agents and evidence audits for founders. We test the claim, publish the boundary, and turn observable findings into an implementation sequence.', 'Find an exact-error fix, use a free developer tool, or request scoped repository and website work. Each offer states its evidence, limits and payment terms.')
@@ -79,6 +80,11 @@ write('sitemap.xml', sitemap);
 for (const file of fs.readdirSync(root, { recursive: true }).filter(f => f.endsWith('.html') && !/^(?:\.git|\.impeccable|test-results)[\\/]/.test(f))) {
   let html = read(file);
   if (!html.includes('var measurementId=')) continue;
+  if (file.replaceAll('\\', '/') === 'services/homepage-build.html' && !html.includes('function loadAnalytics()')) {
+    const sharedConsent = read('services/website-first-look.html').match(/<style>\s*#knownfix-analytics-consent[\s\S]*?<\/script>/)[0];
+    html = html.replace(/<script>\(function\(\)\{'use strict';var measurementId=[\s\S]*?<\/script>/, sharedConsent);
+  }
+  html = html.replace(/document.addEventListener\('click',function\(event\)\{[\s\S]*?\}\);/, handler => handler.replace('if(target)window.knownfixTrack', "if(target&&target.tagName!=='FORM')window.knownfixTrack"));
   if (html.includes('function loadAnalytics()') && !html.includes('function syncStoredConsent()')) {
     html = html.replace('loaded=false;', "loaded=false,analyticsConsent='';")
       .replace("if(loaded||readChoice()!=='granted')return;", `if(readChoice()!=='granted')return;

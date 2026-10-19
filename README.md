@@ -29,6 +29,26 @@ action labels only; those events are not unique users or successful deliveries.
 
 ## Storefront Checks
 
+Website analytics uses GA4 `G-PPPE9TYRM2` (property `559407250`). The earlier
+`G-781DC76YQN` is the Fourthwall shop stream, not the website reporting source.
+Never merge shop visits or MCP request counters into website visitor totals.
+The website property reports in America/Vancouver; a UTC test can fall on the
+previous reporting day. Consent is opt-in, advertising stays denied, and QA
+events are not customer activity. Report processing is separate from transport.
+
+`tests/analytics-property.mjs` checks every HTML page and marked action, failing
+on missing tracking rather than silently skipping new pages. Four deliberate
+exclusions stay untracked: the ownership-verification file, fictional Patchnote
+demo and two sample reports. `tests/analytics-consent-lifecycle.mjs` covers every
+tracked wrapper. `tests/analytics-coverage-browser.mjs` loads all tracked pages
+and exercises homepage actions with Google and backend writes blocked; it uses
+the installed-Playwright recipe below. `tests/tool-guides-browser.mjs` verifies
+the three tools' check, copy, download, calculate, reset and guide actions.
+The opt-in `tests/tool-guides-live-analytics.mjs` creates synthetic QA events in
+temporary profiles only. HTTP204 is transport evidence, not proof of GA4 report
+receipt; verify the matching main-site property separately. Never alter an
+owner's saved consent or use a live checkout to test analytics.
+
 Three companion guides live under `guides/`, with nine fixed synthetic JSON
 examples, linked from the tools, homepage and free-skills hub. Regenerate this
 content with `node scripts/sync-tool-guides.mjs`. The MCP-kit and retry-planner

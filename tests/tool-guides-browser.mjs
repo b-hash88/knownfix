@@ -88,6 +88,20 @@ try {
       await page.locator(tool.load).click();
       const events = await page.evaluate(() => window.dataLayer.filter(item => item[0] === 'event').map(item => [item[1], item[2]]));
       assert.deepEqual(events, [[tool.event, { event_context: 'example-' + tool.example }]]);
+      const actions = tool.file === 'mcp-connect.html'
+        ? [['#config-form button[type=submit]', 'config-check'], ['#copy-snippet', 'copy-snippet'], ['#download-snippet', 'download-snippet']]
+        : tool.file === 'mcp-response.html'
+          ? [['#response-form button[type=submit]', 'check'], ['#copy-receipt', 'copy-checklist']]
+          : [['#retry-form button[type=submit]', 'calculate'], ['#copy-plan', 'copy-json'], ['#copy-checklist', 'copy-checklist'], ['#reset-plan', 'reset']];
+      for (const [selector, action] of actions) {
+        const before = await page.evaluate(() => window.dataLayer.filter(item => item[0] === 'event').length);
+        await page.locator(selector).click();
+        await page.waitForFunction(count => window.dataLayer.filter(item => item[0] === 'event').length === count + 1, before);
+        assert.deepEqual(await page.evaluate(() => {
+          const event = window.dataLayer.filter(item => item[0] === 'event').at(-1);
+          return [event[1], event[2]];
+        }), [tool.event, { event_context: action }]);
+      }
       if (tool.input) {
         await page.locator(tool.input).fill('PRIVATE-CANARY-INPUT');
         await page.locator(tool.run).click();

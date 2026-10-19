@@ -61,7 +61,7 @@
   }
   document.addEventListener('click',function(event){
     var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}
-    var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'');
+    var target=event.target.closest('[data-knownfix-event]');if(target&&target.tagName!=='FORM')window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'');
   });
   document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
   function setAnalyticsConsent(value){

@@ -7,7 +7,7 @@ let pages = 0;
 for (const file of fs.readdirSync(root, { recursive: true })) {
   if (!file.endsWith('.html') || /^(?:\.git|\.impeccable|test-results)[\\/]/.test(file)) continue;
   const html = fs.readFileSync(new URL(file.replaceAll('\\', '/'), root), 'utf8');
-  const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('function loadAnalytics()'));
+  const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('var measurementId='));
   if (!script) continue;
   let choice = 'denied';
   const handlers = {}, windowHandlers = {}, appended = [];

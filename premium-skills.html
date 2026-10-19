@@ -44,7 +44,7 @@
     var actions=document.createElement('div');actions.className='knownfix-consent-actions';actions.append(consentButton('Allow analytics','granted'),consentButton('No thanks','denied'));
     inner.append(copy,actions);banner.append(inner);document.body.append(banner);
   }
-  document.addEventListener('click',function(event){var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  document.addEventListener('click',function(event){var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}var target=event.target.closest('[data-knownfix-event]');if(target&&target.tagName!=='FORM')window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
   document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
   function setAnalyticsConsent(value){
     window.gtag('consent','update',{analytics_storage:value,ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});

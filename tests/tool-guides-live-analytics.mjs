@@ -11,6 +11,8 @@ const headless = process.env.KNOWNFIX_ANALYTICS_HEADED !== '1';
 const browser = await chromium.launch({ headless, channel: 'msedge' });
 const evidence = { startedAt: new Date().toISOString(), environment: `Temporary ${headless ? 'headless' : 'headed'} Edge / installed Playwright; synthetic QA, not customer traffic`, results: [] };
 const cases = [
+  ['', 'page_view', null, null, null],
+  ['services/homepage-build.html', 'page_view', null, null, null],
   ['mcp-connect.html', 'mcp_kit_action', 'example-conflict', '#load-example', 'conflict'],
   ['mcp-response.html', 'mcp_response_action', 'example-tool', '#response-example', 'tool'],
   ['webhook-retry.html', 'retry_planner_action', 'example-tight', '#load-scenario', 'tight'],
@@ -53,11 +55,16 @@ try {
     assert.equal(sdk.length, 0);
     assert.equal(acknowledgments.length, 0);
     const sdkLoaded = page.waitForResponse(response => response.url().startsWith('https://www.googletagmanager.com/gtag/js?'));
+    const pageView = page.waitForResponse(response => /(^|\.)google-analytics\.com$/.test(new URL(response.url()).hostname) && parameters(response.request()).get('en') === 'page_view', { timeout: 25000 });
     await page.getByRole('button', { name: 'Allow analytics', exact: true }).click();
     await sdkLoaded;
+    const pageViewResponse = await pageView;
+    assert.equal(pageViewResponse.status(), 204);
+    assert.equal(parameters(pageViewResponse.request()).get('tid'), 'G-PPPE9TYRM2');
+    assert.equal(parameters(pageViewResponse.request()).get('dl'), base + '/' + file);
     if (example) await page.locator('#example-case').selectOption(example);
-    const received = page.waitForResponse(response => /(^|\.)google-analytics\.com$/.test(new URL(response.url()).hostname) && parameters(response.request()).get('en') === event, { timeout: 25000 });
-    await page.locator(selector).first().click();
+    const received = selector ? page.waitForResponse(response => /(^|\.)google-analytics\.com$/.test(new URL(response.url()).hostname) && parameters(response.request()).get('en') === event, { timeout: 25000 }) : Promise.resolve(pageViewResponse);
+    if (selector) await page.locator(selector).first().click();
     const response = await received;
     const params = parameters(response.request());
     assert.equal(response.status(), 204);

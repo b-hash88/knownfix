@@ -47,7 +47,7 @@ const body = `<body><main>
 <p><a href="./toolkit/README.md">Install the six free skills and local CLI toolkit</a> · <a href="./agents.html">Complete agent catalog</a></p>
 </section>
 <section class="kit-links"><h2>Connection references</h2><div class="resources"><a href="./free-skills/mcp-connection-triage.html">MCP Connection Triage</a><a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle">MCP lifecycle</a><a href="https://code.visualstudio.com/docs/copilot/customization/mcp-servers">VS Code MCP settings</a><a href="https://knownfix-backend-28.b-hash88.deno.net/books">Owner stats (sign-in required)</a></div></section>
-<footer><a href="./mcp-response.html">MCP Response Inspector</a> · <a href="./free-skills.html">Free workflow skills</a> · <a href="./">KnownFix catalog</a> · <a href="./privacy.html">Analytics choice</a></footer>
+<footer><a href="./mcp-response.html">MCP Response Inspector</a> · <a href="./webhook-retry.html">Webhook Retry Planner</a> · <a href="./free-skills.html">Free workflow skills</a> · <a href="./">KnownFix catalog</a> · <a href="./privacy.html">Analytics choice</a></footer>
 </main><script type="module" src="./scripts/mcp-kit.mjs"></script></body></html>\n`;
 write('mcp-connect.html', head + style + controlStyle + '</head>' + body);
 for (const f of ['llms.txt', 'llms-full.txt']) {

@@ -21,6 +21,7 @@ for (const skill of data.skills) {
         const appended = [];
         const handlers = {};
         const context = {
+          addEventListener: () => {},
           localStorage: { getItem: () => consent },
           location: { href: 'https://example.com/skill?secret=private#token' },
           URL,

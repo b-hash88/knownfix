@@ -61,7 +61,7 @@ const consentScript = consentTemplate.match(/<script>\s*\(function\(\)[\s\S]*?<\
   .replace('pageType="mcp-response"', 'pageType="guide"')
   .replace('var allowedEvents={mcp_response_action:1};', 'var allowedEvents={guide_action:1},allowedContexts={"open-tool":1,"download-example":1,"related-guide":1};')
   .replace("if(!loaded||readChoice()!=='granted'||", 'if(!loaded||')
-  .replace("if(!loaded||!allowedEvents[name]", "if(!loaded||readChoice()!=='granted'||!allowedContexts[context]||!allowedEvents[name]");
+  .replace("if(!loaded||!allowedEvents[name]", "if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedContexts,context)||!Object.prototype.hasOwnProperty.call(allowedEvents,name)");
 
 for (const guide of guides) {
   const path = `guides/${guide.id}.html`;
@@ -97,6 +97,9 @@ for (const guide of guides) {
 
 const discovery = `<section class="tool-notes" id="companion-guides"><h2>Free troubleshooting guides</h2><ul>${guides.map(guide => `<li><a href="./guides/${guide.id}.html">${esc(guide.title)}</a></li>`).join('')}</ul></section>`;
 for (const page of ['index.html', 'free-skills.html']) write(page, replaceBlock(read(page), 'companion-guides', discovery, '<footer'));
+let privacy = read('privacy.html').replace('retry_planner_action records only calculate, reset, copy-json or copy-checklist.', 'retry_planner_action records calculate, reset, copy-json, copy-checklist, example-standard, example-tight, example-capped or read-guide.');
+privacy = replaceBlock(privacy, 'guide-analytics-disclosure', '<section><h2>Companion guide actions</h2><p>With optional analytics allowed, guide_action records only open-tool, download-example or related-guide. The three tools also record a fixed label when a built-in example is loaded or a companion guide is opened. Guide downloads contain fixed synthetic JSON examples, not your input. No configuration, response payload, entered numbers or private identifiers are included in these action events. The event_context reporting dimension groups these fixed labels; it adds no new data collection. Actions are not unique visitors, installations, resolved incidents or purchases.</p></section>', '</main>');
+write('privacy.html', privacy);
 let sitemap = read('sitemap.xml');
 for (const guide of guides) if (!sitemap.includes(`/guides/${guide.id}.html`)) sitemap = sitemap.replace('</urlset>', `<url><loc>${site}/guides/${guide.id}.html</loc></url></urlset>`);
 write('sitemap.xml', sitemap);

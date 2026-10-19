@@ -58,6 +58,8 @@ for (const id of ids) {
     context.knownfixTrack('guide_action', 'open-tool');
     if (initial === 'granted') {
       context.knownfixTrack('guide_action', 'private-canary');
+      context.knownfixTrack('guide_action', 'constructor');
+      context.knownfixTrack('constructor', 'open-tool');
       context.knownfixTrack('wrong_event', 'download-example');
       const events = context.dataLayer.filter(event => event[0] === 'event');
       assert.equal(events.length, 1);
@@ -82,7 +84,11 @@ for (const file of ['mcp-connect.html', 'mcp-response.html', 'webhook-retry.html
 for (const id of ids) {
   for (const file of ['sitemap.xml', 'llms.txt', 'llms-full.txt', 'index.html', 'free-skills.html']) assert(read(file).includes(`/guides/${id}.html`));
 }
-const generated = ['mcp-connect.html', 'mcp-response.html', 'webhook-retry.html', 'index.html', 'free-skills.html', 'sitemap.xml', 'llms.txt', 'llms-full.txt', ...ids.map(id => `guides/${id}.html`)];
+const privacy = read('privacy.html');
+assert(!privacy.includes('retry_planner_action records only calculate, reset, copy-json or copy-checklist.'));
+for (const label of ['example-standard', 'example-tight', 'example-capped', 'read-guide', 'guide_action', 'open-tool', 'download-example', 'related-guide']) assert(privacy.includes(label));
+assert(read('scripts/sync-site-improvements.mjs').includes('example-standard, example-tight, example-capped or read-guide'));
+const generated = ['mcp-connect.html', 'mcp-response.html', 'webhook-retry.html', 'index.html', 'free-skills.html', 'privacy.html', 'sitemap.xml', 'llms.txt', 'llms-full.txt', ...ids.map(id => `guides/${id}.html`)];
 const before = generated.map(read);
 const synced = spawnSync(process.execPath, ['scripts/sync-tool-guides.mjs'], { cwd: root, encoding: 'utf8' });
 assert.equal(synced.status, 0, synced.stderr);

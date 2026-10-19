@@ -42,7 +42,8 @@ for (const file of ['mcp-response.html', 'mcp-connect.html']) {
   write(file, page);
 }
 let privacy = read('privacy.html');
-if (!privacy.includes('retry_planner_action')) privacy = privacy.replace('</main>', '<section><h2>Webhook Retry Planner</h2><p>The <a href="./webhook-retry.html">retry planner</a> calculates locally. It does not save or upload settings or contact webhook endpoints. With optional analytics allowed, retry_planner_action records only calculate, reset, copy-json or copy-checklist. Service comparison records a fixed target-category label. No entered numbers, schedule, payload, URL or identifying data is included in these action events. These events measure actions, not unique people or successful deliveries.</p></section></main>');
+if (!privacy.includes('retry_planner_action')) privacy = privacy.replace('</main>', '<section><h2>Webhook Retry Planner</h2><p>The <a href="./webhook-retry.html">retry planner</a> calculates locally. It does not save or upload settings or contact webhook endpoints. With optional analytics allowed, retry_planner_action records calculate, reset, copy-json, copy-checklist, example-standard, example-tight, example-capped or read-guide. Service comparison records a fixed target-category label. No entered numbers, schedule, payload, URL or identifying data is included in these action events. These events measure actions, not unique people or successful deliveries.</p></section></main>');
+privacy = privacy.replace('retry_planner_action records only calculate, reset, copy-json or copy-checklist.', 'retry_planner_action records calculate, reset, copy-json, copy-checklist, example-standard, example-tight, example-capped or read-guide.');
 write('privacy.html', privacy);
 let detail = read('services/webhook-reliability-review.html');
 if (!detail.includes('/webhook-retry.html')) detail = detail.replace('<footer>', '<footer><p><a href="../webhook-retry.html">Free Webhook Retry Planner</a></p>');

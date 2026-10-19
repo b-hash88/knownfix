@@ -40,8 +40,9 @@ try {
     await page.goto(base + '/' + file);
     assert.equal(sdk.length, 0);
     assert.equal(acknowledgments.length, 0);
+    const sdkLoaded = page.waitForResponse(response => response.url().startsWith('https://www.googletagmanager.com/gtag/js?'));
     await page.getByRole('button', { name: 'Allow analytics', exact: true }).click();
-    await page.waitForResponse(response => response.url().startsWith('https://www.googletagmanager.com/gtag/js?'));
+    await sdkLoaded;
     if (example) await page.locator('#example-case').selectOption(example);
     const received = page.waitForResponse(response => /(^|\.)google-analytics\.com$/.test(new URL(response.url()).hostname) && parameters(response.request()).get('en') === event, { timeout: 25000 });
     await page.locator(selector).first().click();

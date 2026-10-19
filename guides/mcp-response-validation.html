@@ -27,7 +27,7 @@
     var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
   }
   window.knownfixTrack=function(name,context){
-    if(!loaded||readChoice()!=='granted'||!allowedContexts[context]||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedContexts,context)||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||typeof window.gtag!=='function')return;
     var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
     window.gtag('event',name,parameters);
   };

@@ -10,13 +10,15 @@
 <script>
 (function(){
   'use strict';
-  var measurementId="G-PPPE9TYRM2",storageKey="knownfix.analytics.consent",pageType="mcp-kit",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var measurementId="G-PPPE9TYRM2",storageKey="knownfix.analytics.consent",pageType="mcp-kit",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false,analyticsConsent='';
   var allowedEvents={mcp_kit_action:1};
   function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
   function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
   function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
   function loadAnalytics(){
-    if(loaded||readChoice()!=='granted')return;
+    if(readChoice()!=='granted')return;
+    if(loaded){if(analyticsConsent!=='granted')setAnalyticsConsent('granted');return;}
+    analyticsConsent='granted';
     loaded=true;
     window.dataLayer=window.dataLayer||[];
     window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
@@ -33,7 +35,7 @@
     window.gtag('event',name,parameters);
   };
   function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
-  function setChoice(value){saveChoice(value);var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();if(value==='granted')loadAnalytics();else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});updateStatus(value)}
+  function setChoice(value){saveChoice(value);var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();if(value==='granted')loadAnalytics();else if(loaded)setAnalyticsConsent('denied');updateStatus(value)}
   function consentButton(label,value){var button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.knownfixConsent=value;return button}
   function showChoice(){
     if(readChoice())return;
@@ -46,6 +48,17 @@
   }
   document.addEventListener('click',function(event){var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
   document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  function setAnalyticsConsent(value){
+    window.gtag('consent','update',{analytics_storage:value,ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    analyticsConsent=value;
+  }
+  function syncStoredConsent(){
+    var choice=readChoice();
+    if(choice==='granted')loadAnalytics();
+    else if(loaded&&analyticsConsent!=='denied')setAnalyticsConsent('denied');
+    updateStatus(choice);
+  }
+  window.addEventListener('storage',function(event){if(event.key===storageKey||event.key===null)syncStoredConsent()});
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();

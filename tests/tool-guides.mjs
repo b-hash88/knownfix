@@ -48,7 +48,7 @@ for (const id of ids) {
   for (const initial of ['', 'denied', 'granted']) {
     let consent = initial;
     const appended = [], handlers = {};
-    const context = { URL, localStorage: { getItem: () => consent }, location: { href: 'https://example.test/guide?canary=private#secret' },
+    const context = { URL, addEventListener: () => {}, localStorage: { getItem: () => consent }, location: { href: 'https://example.test/guide?canary=private#secret' },
       document: { title: 'KnownFix guide', referrer: 'https://example.test/?secret=private', readyState: 'loading', addEventListener: (key, value) => handlers[key] = value,
         head: { appendChild: element => appended.push(element) }, createElement: () => ({}), querySelectorAll: () => [] } };
     context.window = context;

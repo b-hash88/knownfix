@@ -79,6 +79,25 @@ write('sitemap.xml', sitemap);
 for (const file of fs.readdirSync(root, { recursive: true }).filter(f => f.endsWith('.html') && !/^(?:\.git|\.impeccable|test-results)[\\/]/.test(f))) {
   let html = read(file);
   if (!html.includes('var measurementId=')) continue;
+  if (html.includes('function loadAnalytics()') && !html.includes('function syncStoredConsent()')) {
+    html = html.replace('loaded=false;', "loaded=false,analyticsConsent='';")
+      .replace("if(loaded||readChoice()!=='granted')return;", `if(readChoice()!=='granted')return;
+    if(loaded){if(analyticsConsent!=='granted')setAnalyticsConsent('granted');return;}
+    analyticsConsent='granted';`)
+      .replace("else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});", "else if(loaded)setAnalyticsConsent('denied');")
+      .replace('  function start(){', `  function setAnalyticsConsent(value){
+    window.gtag('consent','update',{analytics_storage:value,ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    analyticsConsent=value;
+  }
+  function syncStoredConsent(){
+    var choice=readChoice();
+    if(choice==='granted')loadAnalytics();
+    else if(loaded&&analyticsConsent!=='denied')setAnalyticsConsent('denied');
+    updateStatus(choice);
+  }
+  window.addEventListener('storage',function(event){if(event.key===storageKey||event.key===null)syncStoredConsent()});
+  function start(){`);
+  }
   html = html.replace('if(!loaded||!allowedEvents[name]||', "if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||")
     .replace("if(!loaded||readChoice()!=='granted'||!allowedEvents[name]||", "if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||")
     .replace(/<p class="eyebrow">[^<]*<\/p>/g, '')

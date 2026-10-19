@@ -27,5 +27,7 @@ jobs:
         run: node tests/tool-guides.mjs
       - name: Owner analytics consent and data minimization
         run: node tests/analytics-property.mjs
+      - name: Analytics consent lifecycle
+        run: node tests/analytics-consent-lifecycle.mjs
       - name: Site-wide content and service metadata consistency
         run: node tests/site-quality.mjs

@@ -33,9 +33,10 @@ try {
       const page = await context.newPage();
       const errors = [], external = [];
       page.on('pageerror', error => errors.push(error.message));
-      await page.route('**/*', route => {
+      await context.route('**/*', route => {
         const url = new URL(route.request().url());
         if (url.origin === origin) return route.continue();
+        if (url.href === 'https://b-hash88.github.io/knownfix/knownfix-icon.png') return route.fulfill({ contentType: 'image/png', path: path.join(root, 'knownfix-icon.png') });
         external.push({ origin: url.origin, path: url.pathname, method: route.request().method() });
         if (url.hostname === 'www.googletagmanager.com') return route.fulfill({ contentType: 'text/javascript', body: '' });
         return route.abort();
@@ -52,8 +53,19 @@ try {
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
       if (captures) await page.screenshot({ path: path.join(captures, `KnownFix_20261019_${tool.guide}-${label}_IMG.png`), fullPage: true });
 
-      await page.evaluate(() => localStorage.setItem('knownfix.analytics.consent', 'granted'));
-      await page.reload();
+      const privacy = await context.newPage();
+      await privacy.goto(base + '/privacy.html');
+      await privacy.getByRole('button', { name: 'Allow analytics', exact: true }).click();
+      await page.waitForFunction(() => window.dataLayer?.some(item => item[0] === 'config'));
+      await privacy.getByRole('button', { name: 'Disable analytics', exact: true }).click();
+      await page.waitForFunction(() => [...window.dataLayer].reverse().find(item => item[0] === 'consent')?.[2].analytics_storage === 'denied');
+      await page.locator(tool.load).click();
+      assert.equal(await page.evaluate(() => window.dataLayer.filter(item => item[0] === 'event').length), 0);
+      await privacy.getByRole('button', { name: 'Allow analytics', exact: true }).click();
+      await page.waitForFunction(() => [...window.dataLayer].reverse().find(item => item[0] === 'consent')?.[2].analytics_storage === 'granted');
+      assert.equal(await privacy.evaluate(() => [...window.dataLayer].reverse().find(item => item[0] === 'consent')[2].analytics_storage), 'granted');
+      assert.equal(await page.evaluate(() => window.dataLayer.filter(item => item[0] === 'config').length), 1);
+      await privacy.close();
       await page.locator('#example-case').selectOption(tool.example);
       await page.locator(tool.load).click();
       const events = await page.evaluate(() => window.dataLayer.filter(item => item[0] === 'event').map(item => [item[1], item[2]]));
@@ -92,7 +104,7 @@ try {
       }
       for (const href of await page.locator('a[href^="#"]').evaluateAll(elements => elements.map(element => element.getAttribute('href')))) assert(await page.locator(href).count());
       assert.deepEqual(errors, []);
-      assert(external.every(request => request.origin === 'https://www.googletagmanager.com' && request.method === 'GET'));
+      assert(external.every(request => request.origin === 'https://www.googletagmanager.com' && request.method === 'GET'), JSON.stringify(external));
       await context.close();
       console.log(`PASS ${label} ${tool.file}: worked example, guide navigation/download, fixed consented events, private-input exclusion, withdrawal, no overflow.`);
     }

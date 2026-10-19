@@ -21,6 +21,7 @@ function inspect(folder) {
     for (let consent of ['', 'denied', 'granted']) {
       const appended = [], handlers = {};
       const context = {
+        addEventListener:()=>{},
         localStorage:{getItem:()=>consent}, URL,
         location:{href:'https://example.com/page?secret=private#token'},
         document:{title:'Public page',referrer:'https://example.org/ref?email=private',readyState:'loading',

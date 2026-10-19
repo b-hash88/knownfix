@@ -28,7 +28,7 @@
     var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
   }
   window.knownfixTrack=function(name,context){
-    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||typeof window.gtag!=='function')return;
     var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
     window.gtag('event',name,parameters);
   };
@@ -49,7 +49,7 @@
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
-</script></head><body><main><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/mcp-connect.html">MCP Connection Kit</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>API Response Triage</h1><p>Separate HTTP, JSON-RPC and tool-result failures with bounded, evidence-first checks and safe retry decisions.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/api-response-triage" data-knownfix-event="free_skill_download" data-knownfix-context="api-response-triage">Download SKILL.md</a></p><pre>---
+</script><link rel="stylesheet" href="../scripts/site-quality.css"></head><body><a class="skip-link" href="#knownfix-main">Skip to content</a><main id="knownfix-main"><nav><a href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" width="32" height="32" alt="">KnownFix</a><a href="https://b-hash88.github.io/knownfix/free-skills.html">Free Skills</a><a href="https://b-hash88.github.io/knownfix/mcp-connect.html">MCP Connection Kit</a><a href="https://b-hash88.github.io/knownfix/services.html">Evidence Audit</a></nav><h1>API Response Triage</h1><p>Separate HTTP, JSON-RPC and tool-result failures with bounded, evidence-first checks and safe retry decisions.</p><p><a href="https://knownfix-backend-28.b-hash88.deno.net/free-skill/api-response-triage" data-knownfix-event="free_skill_download" data-knownfix-context="api-response-triage">Download SKILL.md</a></p><pre>---
 name: api-response-triage
 description: Use to diagnose a failed HTTP API or MCP JSON-RPC response, separating transport, protocol and tool-result failures without retrying writes.
 ---

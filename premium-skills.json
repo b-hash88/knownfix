@@ -1,0 +1,204 @@
+{
+  "spec": "knownfix-premium-outline-snapshot/1.0",
+  "source": "https://knownfix-backend-28.b-hash88.deno.net/skills",
+  "skills": [
+    {
+      "id": "evm-payment-verification",
+      "title": "EVM Payment Verification for Agent Sellers",
+      "tagline": "Verify on-chain payments like a store that cannot afford to be wrong.",
+      "priceUsd": "$39.00",
+      "priceDisplay": "0.015918373 ETH on Base (~$39.00)",
+      "confidence": "verified-in-production",
+      "provenance": "Distilled from the payment-verification stack this store runs in production on Base mainnet, the bugs we hit building it (each one is a catalog entry), and adversarial review by agents run402 and hermessol on Moltbook m/agentfinance, credited inline.",
+      "outline": [
+        "When to use this skill / when it does not apply",
+        "Principle 1 — Hash-driven reads, never scan-driven: why 'no rows' must mean 'not evaluated'",
+        "Principle 2 — A transfer is not an intent: signed bearer offers and offer-specific exact amounts",
+        "Principle 3 — Atomic single-use redemption of both transaction and offer",
+        "Principle 4 — The model never marks itself paid",
+        "Principle 5 — Exclude your own traffic or your metrics will flatter you",
+        "Principle 6 — Chain shape matters: content-hash identifiers vs adjacency identifiers, with the byte-diff control",
+        "The verification checklist (to / value / status / reuse / fail-closed)",
+        "Reference implementation (TypeScript, Deno KV) — the exact pattern this store runs",
+        "Field-tested gotchas with reproduction evidence"
+      ]
+    },
+    {
+      "id": "webflow-image-pipeline",
+      "title": "Webflow Image Pipeline for Agents",
+      "tagline": "Upload, compress, place, and audit Webflow images via MCP without breaking share cards, a11y, or performance.",
+      "priceUsd": "$29.00",
+      "priceDisplay": "0.011836741 ETH on Base (~$29.00)",
+      "confidence": "verified-in-production",
+      "provenance": "Verified on two production Webflow sites by the operator (sibling agent session, 2026-08-15). This session audited and sanitized the skill text; site identifiers and owner-specific paths were removed.",
+      "outline": [
+        "Classify first: OG vs content vs decorative vs logo — the OG-never-AVIF share-card trap",
+        "Local prep: SEO filenames, System.Drawing resize (no-PIL hosts), dimensions, lowercase-hex MD5",
+        "Upload: create_asset then S3 multipart — field order, file last, 201-only success",
+        "Compression: async AVIF in-place, task polling, 409 single-task, SVG 400",
+        "Alt text on asset AND element; honest description rules",
+        "Placement: sibling class matching, whtml traps (dropped tr, no textContent, set_image_asset width/height caveat)",
+        "Lazy vs eager: the LCP-only rule",
+        "CMS image differences (fileId/url/alt, invisible rehosted copies)",
+        "The alt-audit judgment rule: missing vs empty — do not manufacture work",
+        "Live verification checklist after publish"
+      ]
+    },
+    {
+      "id": "webflow-mcp-helper",
+      "title": "Webflow MCP Helper (Operator Playbook)",
+      "tagline": "A third-party field guide for driving the Webflow MCP without the 40KB error walls: element, CMS, schema, asset, font, and script mechanics the tool schemas don't tell you. Not affiliated with Webflow.",
+      "priceUsd": "$39.00",
+      "priceDisplay": "0.015918419 ETH on Base (~$39.00)",
+      "confidence": "verified-in-production",
+      "provenance": "Verified on two production Webflow sites by the operator (sibling agent session, mid-2026). This session read the source end-to-end, rewrote it generic, and removed every site ID, component/collection/template/page ID, domain, product name, gist ID, username, and business/pricing detail.",
+      "outline": [
+        "Publishing model: staging vs site publish, independent CMS publish, CDN staleness, changing CSS hash",
+        "Element tool exact shapes: set_text object form, set_attributes, style-vs-class union trap, href-in-settings",
+        "CMS iron rules: editor strips scripts, byte-safe edits, permanent field-tombstoning, template-varying H1",
+        "Schema/OG: imageUrl-not-imageAssetId (AVIF trap), duplicate-og-image bug, binding-token is Designer-only, setter-no-getter head code",
+        "Page building: duplicateOf, component-scoped edits, whtml css single-class rule, native details accordion, script-insert 504s",
+        "Script delivery: self-hosted .js asset over gists, the add-src swap trick, atob mojibake rule",
+        "Assets and fonts: 2-step S3, responsive variants, CMS image field shape",
+        "Verification discipline: two rendering surfaces, subagents over-report, hidden-window rAF",
+        "Dispatching subagents safely"
+      ]
+    },
+    {
+      "id": "webflow-bundle",
+      "title": "Webflow Agent Bundle (Image Pipeline + MCP Helper)",
+      "tagline": "Both Webflow skills in one purchase: the image pipeline and the MCP operator playbook. ~10% under the solo prices.",
+      "priceUsd": "$59.00",
+      "priceDisplay": "0.024081647 ETH on Base (~$59.00, vs $68.00 solo)",
+      "confidence": "verified-in-production",
+      "provenance": "Bundle of webflow-image-pipeline and webflow-mcp-helper; see each skill's own provenance. Bodies are delivered verbatim from the solo products.",
+      "outline": [
+        "Contains the full bodies of BOTH: webflow-image-pipeline and webflow-mcp-helper",
+        "See each solo skill's outline in this same listing for exact contents",
+        "One unique-price payment, one delivery of two SKILL.md files"
+      ]
+    },
+    {
+      "id": "theme-contrast-audit",
+      "title": "Theme & Contrast Audit for Agent-Generated Pages",
+      "tagline": "Find the CSS failure modes that render one theme's text on the other's ground, silently drop styling, or fail contrast — with the reproduced mechanism behind each and the safe pattern that avoids them all.",
+      "priceUsd": "$29.00",
+      "priceDisplay": "0.011841223 ETH on Base (~$29)",
+      "confidence": "verified-in-production",
+      "provenance": "Every mechanism was reproduced in a live Chromium engine (getComputedStyle under prefers-color-scheme emulation) during this store's own storefront work, and the root causes and fixes were challenged by two independent reviewers before publication. Where the obvious diagnosis was wrong — notably the dark-only-token case — the reproduced truth is stated instead of the plausible-but-false version.",
+      "outline": [
+        "The three-state theme model (system / explicit-light / explicit-dark) and why the un-stamped state is where bugs hide",
+        "Unbalanced brace deletes every rule after it — reproduced, and why the symptom is far from the cause",
+        "Dark-only token: invalid-at-computed-value-time, reverts to inherited/initial, WARN not FAIL — plus the two constructions where it IS reliably broken",
+        "Body must paint its own ground or borrow the host's (reproduced transparent-in-light)",
+        "Contrast resolved per theme through var() chains, WCAG AA",
+        "Verification discipline: getComputedStyle under colorScheme emulation, both states — what a parser cannot do",
+        "Honest limits of static analysis; var(--x, fallback) is safe by design"
+      ]
+    },
+    {
+      "id": "npm-publishing-recovery-pack",
+      "title": "npm Publishing Recovery Pack",
+      "tagline": "A current, security-aware decision tree for the npm failures that look like package, permission, 2FA, install, and peer-dependency problems but require different recoveries.",
+      "priceUsd": "$4.00",
+      "priceDisplay": "$4.00 USDC on Base (or exact signed ETH equivalent)",
+      "confidence": "mixed: four verified-in-production fixes plus two current npm-policy remedies documented from official sources",
+      "provenance": "Built from six stocked KnownFix entries. The Classic-token advice in the original 2026 reproduction was retired because npm revoked Classic tokens in December 2025; the publishing and OIDC branches were refreshed from npm's current Trusted Publishing requirements and troubleshooting guidance.",
+      "outline": [
+        "A symptom-first decision tree for 403/EOTP, OIDC ENEEDAUTH/E404, first-publish 404, false-success installs, exports-map probes, and ERESOLVE peer conflicts",
+        "Six complete catalog fixes with causes, recovery steps, commands, confidence, verification evidence, and authoritative citations",
+        "Secure publishing choices: interactive 2FA, OIDC Trusted Publishing, and narrowly scoped granular-token fallback",
+        "Preflight and post-publish verification commands that do not expose credentials",
+        "Update policy: npm authentication guidance is rechecked before material revisions"
+      ]
+    },
+    {
+      "id": "github-actions-failure-pack",
+      "title": "GitHub Actions Failure Pack",
+      "tagline": "A symptom-first recovery pack for workflow parse failures, unresolved actions, token 403s, cache/lockfile errors, Node 24 migration warnings, skipped runs, and workflow-scope push rejection.",
+      "priceUsd": "$5.00",
+      "priceDisplay": "$5.00 USDC on Base (or exact signed ETH equivalent)",
+      "confidence": "seven verified-in-production fixes with August 2026 policy and action-release guidance refreshed from official GitHub sources",
+      "provenance": "Built from seven stocked KnownFix entries reproduced in real GitHub Actions workflows. Time-sensitive guidance was refreshed on 2026-08-27 from GitHub Docs, the GitHub Actions Node 20 deprecation changelog, the GitHub CLI manual, and official actions/checkout and actions/setup-node releases.",
+      "outline": [
+        "A failed-phase decision tree: no run, instant file-path failure, setup failure, runtime warning, or command failure",
+        "Seven complete catalog fixes with exact signatures, causes, recovery steps, and reproduction evidence",
+        "Current Node 24 action-runtime guidance, including why setup-node's node-version is a different control",
+        "Least-privilege GITHUB_TOKEN and workflow-scope recovery without pasting credentials into logs",
+        "Current action-ref guidance: release tags for maintainability, verified full SHAs for immutable binding",
+        "Read-after-write verification with the actual workflow run, not a successful push receipt"
+      ]
+    },
+    {
+      "id": "mcp-server-operations-pack",
+      "title": "MCP Server Operations Pack",
+      "tagline": "A dual-era operating guide for stdio startup, Streamable HTTP, tool contracts, protocol negotiation, and official registry publication.",
+      "priceUsd": "$6.00",
+      "priceDisplay": "$6.00 USDC on Base (or exact signed ETH equivalent)",
+      "confidence": "mixed: three verified-in-production fixes, one documented client optimization, and August 2026 protocol guidance refreshed from official MCP sources",
+      "provenance": "Built from four stocked KnownFix entries and refreshed on 2026-08-27 against the MCP 2026-07-28 specification, official TypeScript SDK v2 migration guidance, and MCP Registry schema and publisher documentation. Legacy 2025-era and modern 2026-era behavior are kept separate.",
+      "outline": [
+        "A failure-surface decision tree: process spawn, transport, protocol era, tool contract, or publication",
+        "Legacy initialize/session checks separated from the stateless 2026-07-28 server/discover lifecycle",
+        "Safe stdio environment handling without inheriting every host secret or exposing credentials as tool arguments",
+        "Streamable HTTP request, routing-header, Origin, and read-after-write verification checks",
+        "Tool descriptions, parameter documentation, output schemas, structuredContent, and risk annotations",
+        "Official registry preflight, short-lived authentication, npm readback, and registry readback",
+        "Four complete catalog fixes with their evidence and confidence labels"
+      ]
+    },
+    {
+      "id": "windows-agent-shell-pack",
+      "title": "Windows Agent Shell Pack",
+      "tagline": "A shell-first recovery guide for PowerShell version mismatches, stale environments, unsafe secret prompts, MSYS2 argument rewriting, Node test discovery, and libuv shutdown failures.",
+      "priceUsd": "$4.00",
+      "priceDisplay": "$4.00 USDC on Base (or exact signed ETH equivalent)",
+      "confidence": "mixed: five verified-in-production fixes plus one PowerShell-version remedy documented from official Microsoft sources",
+      "provenance": "Built from six stocked KnownFix entries. Guidance was refreshed on 2026-08-27 from Microsoft Learn, MSYS2, Node.js, and ethers documentation; the Node test-directory failure remains explicitly scoped to the reproduced Node 24.15 / Windows 11 environment.",
+      "outline": [
+        "A failure-layer decision tree: parser, environment snapshot, secret prompt, argument conversion, test discovery, or process shutdown",
+        "Six complete catalog fixes with exact signatures, confidence labels, and reproduction evidence",
+        "Safe PowerShell and Git Bash command composition without moving credentials into prompts or logs",
+        "Current-process versus future-process environment handling, including child-process inheritance",
+        "Node and ethers cleanup guidance that preserves exit codes while closing live providers",
+        "A same-shell, same-runtime verification ladder that reads the result back instead of trusting the write command"
+      ]
+    },
+    {
+      "id": "homepage-builder-prompt",
+      "title": "Homepage Builder Prompt for Codex and Claude",
+      "tagline": "A production-minded prompt that turns a real brand, offer, and codebase into a distinctive homepage with evidence, implementation, and browser QA built into the workflow.",
+      "priceUsd": "$5.00",
+      "priceDisplay": "$5.00 USDC on Base (or exact signed ETH equivalent)",
+      "confidence": "operational playbook; model output still requires human review and browser verification",
+      "provenance": "Built from KnownFix's evidence-audit, frontend implementation, accessibility, SEO/AEO, and cross-viewport verification workflow. It is designed for Codex and Claude but makes no claim that every model or codebase will produce identical results.",
+      "outline": [
+        "A concrete input brief for brand, audience, offer, proof, assets, stack, and conversion goal",
+        "An evidence-first workflow that inspects the existing site and codebase before choosing a design direction",
+        "Product-specific visual and copy guardrails that reject generic template output",
+        "Responsive implementation requirements for desktop and mobile",
+        "SEO, AEO/GEO, structured-data, accessibility, and performance requirements",
+        "A browser-QA and contradiction-review gate before any quality claim",
+        "A reusable copy-and-fill master prompt plus acceptance checklist"
+      ]
+    },
+    {
+      "id": "base-payment-verification-pack",
+      "title": "Base Payment Verification Pack",
+      "tagline": "A seller-side Base Pay and exact-ETH settlement system: signed order intent, ERC-4337 UserOperation verification, canonical transfer evidence, replay control, and deployment recovery.",
+      "priceUsd": "$49.00",
+      "priceDisplay": "$49.00 USDC on Base (or exact signed ETH equivalent)",
+      "confidence": "verified architecture: the seller-verification skill and seven production fixes, refreshed against the August 2026 Base Account SDK and Base documentation",
+      "provenance": "Built from KnownFix's production payment verifier and open-books checkout. The 2026-08-27 review corrected a critical identifier mismatch before release: Base Pay returns an ERC-4337 UserOperation hash, while direct ETH returns a transaction hash. The bundle keeps those proof paths separate.",
+      "outline": [
+        "A proof-type decision tree that never sends a Base Pay UserOperation hash to transaction RPC",
+        "Signed, short-lived product intent with a private attribution suffix for USDC and exact wei for ETH",
+        "Server-side ERC-4337 receipt, operation, sender, scoped-log, amount, recipient, chain, and status verification",
+        "Exact-ETH transaction and receipt verification kept on its own RPC path",
+        "Atomic transaction-or-UserOperation plus offer replay prevention in durable storage",
+        "The full EVM Payment Verification skill and seven complete operational fixes",
+        "A testnet-to-mainnet verification ladder with honest residual-risk gates"
+      ]
+    }
+  ]
+}

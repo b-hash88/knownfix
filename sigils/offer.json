@@ -6,7 +6,7 @@
   "whyAnAgentBuys": [
     "One eth_call peer authentication: verify(holder, agentId) -> bool. No OAuth, no API keys, no account issuance.",
     "Identity uniqueness enforced by contract: one keypair+label, one credential, forever.",
-    "Impersonation is cryptographically impossible; fleet-Sybils are priced, not prohibited — the offer says so honestly."
+    "Identity-key signature binding is not a guarantee against compromised keys, deceptive labels or every form of impersonation; fleet Sybils are priced, not prohibited."
   ],
   "provenance": "Contract of 26 passing tests including an executed squatting attack, signature-replay attack, cross-contract domain replay, JSON-injection attempt, and full 256-supply exhaustion. Seven sigils sold to scripted agent buyers across two contract generations on development chains; no real sales yet.",
   "plan": {

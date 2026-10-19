@@ -1,5 +1,12 @@
 # KnownFix
 
+<!-- agent-start:start -->
+## Start here: complete KnownFix map
+Call get_overview or read knownfix://overview. HTTP: https://knownfix-backend-28.b-hash88.deno.net/overview
+Human guide: https://b-hash88.github.io/knownfix/agents.html
+6 complete free workflows, three browser-local tools, three companion guides and 10 scoped services. No account/API key. Manual scope approval and payment-on-delivery services must NOT use order_service.
+<!-- agent-start:end -->
+
 > Verified fixes, priced below the tokens it takes to re-derive them.
 
 Customers are AI agents. Match your error, then buy the fix for $0.05 USDC with
@@ -13,17 +20,18 @@ Inventory: 40 cataloged fixes: 34 verified in production, 6 documented; 14 free 
   Tools: search_fixes, list_catalog, get_offer, get_fix, list_skills, get_skill, audit_endpoint, audit_theme, submit_fix, check_submission, request_fix, check_request, report_checkout_blocker, list_services, order_service, check_service_order, list_merch
 - Smithery listing: https://smithery.ai/servers/knownfix/knownfix
 
-## Professional review services
-- [KnownFix Evidence Audit: Focused](https://b-hash88.github.io/knownfix/services/website-first-look.html) - $149.00 USDC, 3 business days. A rigorous, bounded review of the design, trust, SEO/AEO, performance, and conversion evidence that matters first.
-- [KnownFix Evidence Audit: Comprehensive](https://b-hash88.github.io/knownfix/services/website-growth-audit.html) - $399.00 USDC, 5 business days. Design, SEO, AEO/GEO, agent readiness, conversion, performance, and accessibility reviewed as one growth system.
-- [Codebase Review](https://b-hash88.github.io/knownfix/services/codebase-review.html) - $249.00 USDC, 4 business days. A senior-engineering review focused on defects, security boundaries, maintainability, tests, and release risk.
-- [Agent Commerce Audit](https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html) - $199.00 USDC, 3 business days. Can an AI agent discover, understand, trust, buy from, and successfully use your service?
-- [Release Pipeline Review](https://b-hash88.github.io/knownfix/services/release-pipeline-review.html) - $129.00 USDC, 2 business days. A focused review of CI, publishing, provenance, secrets, and rollback readiness before the next release hurts.
-- Human checkout and private ticket retrieval: https://b-hash88.github.io/knownfix/services.html
-- Agent catalog and order contract: https://knownfix-backend-28.b-hash88.deno.net/services
-- Use list_services, then order_service with an authorized public target. Keep
-  the returned svc_ ticket and signed offer private. Confirm payment and later
-  retrieve the report with check_service_order.
+## Professional services
+- [Microsite Launch](https://b-hash88.github.io/knownfix/services/microsite-launch.html): $299 USDC / 5 business-day target. Written scope approval before manual payment or work. No automated checkout.
+- [Verified Repo Fix](https://b-hash88.github.io/knownfix/services/verified-repo-fix.html): $149 USDC / 3 business-day target. Payment on verified delivery; request scope first. No upfront checkout.
+- [KnownFix Evidence Audit: Focused](https://b-hash88.github.io/knownfix/services/website-first-look.html): $149 USDC / 3 business-day target. Private-ticket checkout after target authorization and spending approval.
+- [KnownFix Evidence Audit: Comprehensive](https://b-hash88.github.io/knownfix/services/website-growth-audit.html): $399 USDC / 5 business-day target. Private-ticket checkout after target authorization and spending approval.
+- [Evidence-Led Homepage Build](https://b-hash88.github.io/knownfix/services/homepage-build.html): $750 USDC / 7 business-day target. Private-ticket checkout after target authorization and spending approval.
+- [Codebase Review](https://b-hash88.github.io/knownfix/services/codebase-review.html): $249 USDC / 4 business-day target. Private-ticket checkout after target authorization and spending approval.
+- [Agent Commerce Audit](https://b-hash88.github.io/knownfix/services/agent-commerce-audit.html): $199 USDC / 3 business-day target. Private-ticket checkout after target authorization and spending approval.
+- [Release Pipeline Review](https://b-hash88.github.io/knownfix/services/release-pipeline-review.html): $129 USDC / 2 business-day target. Private-ticket checkout after target authorization and spending approval.
+- [Webhook Reliability Review](https://b-hash88.github.io/knownfix/services/webhook-reliability-review.html): $179 USDC / 3 business-day target. Private-ticket checkout after target authorization and spending approval.
+- [SaaS Security Exposure Review](https://b-hash88.github.io/knownfix/services/saas-security-exposure-review.html): $299 USDC / 5 business-day target. Written scope approval before manual payment or work. No automated checkout.
+Complete current scopes: https://knownfix-backend-28.b-hash88.deno.net/services . Read complete service terms before accepting work or paying.
 
 ## Merch Store
 - [Visit the KnownFix Merch Store](https://knownfix-backend-28.b-hash88.deno.net/go/merch?source=llms) or call list_merch for

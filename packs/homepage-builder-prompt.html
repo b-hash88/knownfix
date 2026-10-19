@@ -36,7 +36,7 @@
     var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
   }
   window.knownfixTrack=function(name,context){
-    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||typeof window.gtag!=='function')return;
     var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
     window.gtag('event',name,parameters);
   };
@@ -68,7 +68,7 @@
 a{color:var(--accent)}.included strong{display:block;color:var(--accent);font:600 16px/1.4 Archivo,sans-serif}
 @media(max-width:560px){.wrap{width:min(100% - 28px,800px);padding-top:18px}.mast{padding-top:28px}.actions button{flex:1 1 100%}.preview{padding:15px 18px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
-</style></head><body><main class="wrap">
+</style><link rel="stylesheet" href="../scripts/site-quality.css"></head><body><a class="skip-link" href="#knownfix-main">Skip to content</a><main id="knownfix-main" class="wrap">
 <a class="brand" href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" alt="" width="34" height="34">KnownFix</a>
 <header class="mast"><h1>Homepage Builder Prompt for Codex and Claude</h1><p class="lede">A production-minded prompt that turns a real brand, offer, and codebase into a distinctive homepage, then requires implementation evidence and browser QA before calling it finished.</p><p class="price">$5.00 USDC on Base &middot; signed exact ETH also available</p></header>
 <section><h2>One reusable production workflow</h2><ul class="included"><li><strong>Grounded input brief</strong><small>Audience, offer, proof, assets, stack, constraints, and conversion goal</small></li><li><strong>Production workflow</strong><small>Design, copy, implementation, SEO/AEO, accessibility, and browser QA</small></li><li><strong>Reusable master prompt</strong><small>Codex and Claude compatible, with a contradiction review and acceptance checklist</small></li></ul></section>

@@ -32,7 +32,7 @@
     var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
   }
   window.knownfixTrack=function(name,context){
-    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||typeof window.gtag!=='function')return;
     var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
     window.gtag('event',name,parameters);
   };
@@ -77,7 +77,7 @@
 a{color:var(--accent)}.included strong{display:block;color:var(--accent);font:600 16px/1.4 Archivo,sans-serif}
 @media(max-width:560px){.wrap{width:min(100% - 28px,800px);padding-top:18px}.mast{padding-top:28px}.actions button{flex:1 1 100%}.preview{padding:15px 18px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
-</style></head><body><main class="wrap">
+</style><link rel="stylesheet" href="../scripts/site-quality.css"></head><body><a class="skip-link" href="#knownfix-main">Skip to content</a><main id="knownfix-main" class="wrap">
 <a class="brand" href="https://b-hash88.github.io/knownfix/"><img src="https://b-hash88.github.io/knownfix/knownfix-icon.png" alt="" width="34" height="34">KnownFix</a>
 <header class="mast"><h1>Windows Agent Shell Pack</h1><p class="lede">A shell-layer decision system for Windows agents that need to distinguish PowerShell, cmd.exe, MSYS2, Node.js, and process-environment failures before changing the command.</p><p class="price">$4.00 USDC on Base &middot; signed exact ETH also available</p></header>
 <section><h2>Six execution-layer recoveries</h2><ul class="included"><li><a href="https://b-hash88.github.io/knownfix/fixes/windows-libuv-assert-on-exit.html">Node on Windows: 'Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING)' at exit</a><small>Assertion failed: !(handle-&gt;flags &amp; UV_HANDLE_CLOSING), file src\win\async.c</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/node-test-dir-arg-windows.html">node --test with a bare directory argument fails with a nameless failing 'test'</a><small>test at test:1:1 ... 'test failed' with zero real tests run</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/ps51-no-pipeline-chain-operators.html">PowerShell 5.1: '&amp;&amp;' and '||' are parser errors</a><small>The token '&amp;&amp;' is not a valid statement separator in this version</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/msys-curl-format-path-mangling.html">curl -w format strings mangled into C:/Program Files/Git/ paths on git-bash</a><small>C:/Program Files/Git/ prefixed onto strings that started with a forward slash</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/powershell-readhost-prompt-secret.html">PowerShell Read-Host: secret pasted into the prompt string yields an empty variable</a><small>$t = Read-Host "&lt;the secret itself&gt;" ... later auth fails with ENEEDAUTH / empty credential</small></li><li><a href="https://b-hash88.github.io/knownfix/fixes/windows-setx-not-in-running-shell.html">Windows: an env var set with setx is missing in the shell that set it</a><small>environment variable appears unset immediately after setx reported success</small></li></ul></section>

@@ -32,7 +32,7 @@
     var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
   }
   window.knownfixTrack=function(name,context){
-    if(!loaded||readChoice()!=='granted'||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||typeof window.gtag!=='function')return;
     var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
     window.gtag('event',name,parameters);
   };
@@ -53,7 +53,7 @@
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
-</script><link rel="stylesheet" href="./scripts/tool-learning.css"></head><body><main>
+</script><link rel="stylesheet" href="./scripts/tool-learning.css"><link rel="stylesheet" href="./scripts/site-quality.css"></head><body><a class="skip-link" href="#knownfix-main">Skip to content</a><main id="knownfix-main">
 <nav aria-label="Main"><a href="./"><img src="./knownfix-icon.png" alt="">KnownFix</a><a href="./free-skills.html">Free skills &amp; tools</a><a href="./services.html">Services</a><a href="./privacy.html">Privacy</a></nav>
 <h1>Webhook Retry Planner</h1><p class="muted">Backoff, jitter and delivery budgets · Free</p>
 <noscript>JavaScript is required for this calculator. The free webhook triage skill and service scopes remain available below.</noscript>

@@ -1,4 +1,13 @@
-# KnownFix — full free tier
+# KnownFix
+
+<!-- agent-start:start -->
+## Start here: complete KnownFix map
+Call get_overview or read knownfix://overview. HTTP: https://knownfix-backend-28.b-hash88.deno.net/overview
+Human guide: https://b-hash88.github.io/knownfix/agents.html
+6 complete free workflows, three browser-local tools, three companion guides and 10 scoped services. No account/API key. Manual scope approval and payment-on-delivery services must NOT use order_service.
+<!-- agent-start:end -->
+
+— full free tier
 
 > Verified fixes, priced below the tokens it takes to re-derive them.
 > Everything free about this store, in one fetch. Paid fix bodies are NOT here.

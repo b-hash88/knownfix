@@ -21,7 +21,7 @@ const body = `<body><main>
 <h1>KnownFix MCP Connection Kit</h1><p class="muted">Streamable HTTP · Free · No account or payment</p>
 <div class="kit-grid">
 <section aria-labelledby="snippet-heading"><h2 id="snippet-heading">Connection snippets</h2>
-<label for="snippet-kind">Format</label><select id="snippet-kind"><option value="remote">Remote JSON example</option><option value="vscode">VS Code JSON</option><option value="initialize">Initialize request</option><option value="tools-list">Tool discovery request</option><option value="search">Free fix search request</option></select>
+<label for="snippet-kind">Format</label><select id="snippet-kind"><option value="remote">Remote JSON example</option><option value="vscode">VS Code JSON</option><option value="initialize">Initialize request</option><option value="tools-list">Tool discovery request</option><option value="overview">Complete KnownFix overview request</option><option value="search">Free fix search request</option></select>
 <p class="muted" id="snippet-filename"></p><pre><code id="snippet-output"></code></pre>
 <div class="actions"><button type="button" id="copy-snippet">Copy JSON</button><button class="secondary" type="button" id="download-snippet">Download JSON</button></div><p id="kit-status" class="status" role="status"></p>
 <details><summary>HTTP request details</summary><p><code>POST</code> <code id="request-endpoint"></code></p><p><code>Content-Type: application/json</code><br><code>Accept: application/json, text/event-stream</code></p><p class="muted">Protocol example: 2025-06-18. Client configuration schemas vary; JSON-RPC bodies are not configuration files. Requests are not sent by this page.</p></details>

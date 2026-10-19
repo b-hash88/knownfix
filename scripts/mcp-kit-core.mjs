@@ -4,6 +4,7 @@ export function connectionSnippet(kind) {
   const request = kind === 'initialize'
     ? { jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'knownfix-connection-kit', version: '1' } } }
     : kind === 'tools-list' ? { jsonrpc: '2.0', id: 2, method: 'tools/list' }
+    : kind === 'overview' ? { jsonrpc: '2.0', id: 4, method: 'tools/call', params: { name: 'get_overview', arguments: {} } }
     : kind === 'search' ? { jsonrpc: '2.0', id: 3, method: 'tools/call', params: { name: 'search_fixes', arguments: { query: '__dirname is not defined in ES module scope' } } }
     : null;
   if (request) return JSON.stringify(request, null, 2);

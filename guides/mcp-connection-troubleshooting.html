@@ -27,9 +27,8 @@
     var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
   }
   window.knownfixTrack=function(name,context){
-    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedContexts,context)||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||typeof window.gtag!=='function')return;
-    var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
-    window.gtag('event',name,parameters);
+    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||!Object.prototype.hasOwnProperty.call(allowedContexts,context)||typeof window.gtag!=='function')return;
+    window.gtag('event',name,{event_context:context});
   };
   function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
   function setChoice(value){saveChoice(value);var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();if(value==='granted')loadAnalytics();else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});updateStatus(value)}
@@ -48,7 +47,7 @@
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
-</script></head><body><main>
+</script><link rel="stylesheet" href="../scripts/site-quality.css"></head><body><a class="skip-link" href="#knownfix-main">Skip to content</a><main id="knownfix-main">
 <nav class="site-nav" aria-label="Main"><a href="../"><img src="../knownfix-icon.png" alt="">KnownFix</a><a href="../free-skills.html">Free tools and skills</a><a href="../services.html">Services</a><a href="../privacy.html">Privacy</a></nav>
 <p class="breadcrumb"><a href="../mcp-connect.html">MCP Connection Kit</a> / Companion guide</p><h1>MCP Connection Troubleshooting: Config, Transport and Initialization</h1><p>A configuration can be valid JSON and still fail to connect. Start by separating the client configuration, the transport, and the protocol exchange. Each needs different evidence.</p><p class="reviewed">Reviewed 19 October 2026. Examples are synthetic; no customer data or production outcomes.</p><p><a href="../mcp-connect.html#config-heading" data-knownfix-event="guide_action" data-knownfix-context="open-tool">Open the free MCP Connection Kit</a></p>
 <div class="guide-layout"><aside class="contents"><nav aria-label="On this page"><h2>In this guide</h2><ol><li><a href="#evidence">Start with evidence</a></li><li><a href="#examples">Worked examples</a></li><li><a href="#decisions">Diagnostic decisions</a></li><li><a href="#limits">Limits</a></li><li><a href="#sources">Sources</a></li></ol></nav></aside><article class="guide-article">

@@ -2,14 +2,17 @@
   "servers": [
     {
       "name": "knownfix",
-      "description": "Verified fixes, professional reviews, and evidence-led apparel over MCP.",
+      "description": "Developer fixes, free skills, browser tools and scoped technical services over MCP.",
       "transport": "streamable-http",
       "endpoint": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
       "registry": "io.github.b-hash88/knownfix",
       "smithery": "https://smithery.ai/servers/knownfix/knownfix",
       "npm": "knownfix",
-      "docs": "https://b-hash88.github.io/knownfix/llms.txt",
-      "offer": "https://b-hash88.github.io/knownfix/.well-known/farebox.json"
+      "docs": "https://b-hash88.github.io/knownfix/agents.html",
+      "offer": "https://b-hash88.github.io/knownfix/.well-known/farebox.json",
+      "overview": "https://knownfix-backend-28.b-hash88.deno.net/overview",
+      "startTool": "get_overview",
+      "startResource": "knownfix://overview"
     }
   ]
 }

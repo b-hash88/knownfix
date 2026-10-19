@@ -60,8 +60,10 @@ const consentStyle = consentTemplate.match(/<style>\s*#knownfix-analytics-consen
 const consentScript = consentTemplate.match(/<script>\s*\(function\(\)[\s\S]*?<\/script>/)[0]
   .replace('pageType="mcp-response"', 'pageType="guide"')
   .replace('var allowedEvents={mcp_response_action:1};', 'var allowedEvents={guide_action:1},allowedContexts={"open-tool":1,"download-example":1,"related-guide":1};')
-  .replace("if(!loaded||readChoice()!=='granted'||", 'if(!loaded||')
-  .replace("if(!loaded||!allowedEvents[name]", "if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedContexts,context)||!Object.prototype.hasOwnProperty.call(allowedEvents,name)");
+  .replace(/window\.knownfixTrack=function\(name,context\)\{[\s\S]*?\n  \};/, `window.knownfixTrack=function(name,context){
+    if(!loaded||readChoice()!=='granted'||!Object.prototype.hasOwnProperty.call(allowedEvents,name)||!Object.prototype.hasOwnProperty.call(allowedContexts,context)||typeof window.gtag!=='function')return;
+    window.gtag('event',name,{event_context:context});
+  };`);
 
 for (const guide of guides) {
   const path = `guides/${guide.id}.html`;
@@ -110,3 +112,4 @@ for (const file of ['llms.txt', 'llms-full.txt']) {
   write(file, text.trimEnd() + `\n\n${start}\n## Free companion guides\n` + guides.map(guide => `${site}/guides/${guide.id}.html\n${guide.description}\n`).join('\n') + `${end}\n`);
 }
 console.log('Updated three tools, three companion guides, nine fixed JSON examples and discovery links.');
+await import('./sync-site-quality.mjs');

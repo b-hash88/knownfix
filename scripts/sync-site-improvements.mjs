@@ -48,4 +48,5 @@ write('privacy.html', privacy);
 let detail = read('services/webhook-reliability-review.html');
 if (!detail.includes('/webhook-retry.html')) detail = detail.replace('<footer>', '<footer><p><a href="../webhook-retry.html">Free Webhook Retry Planner</a></p>');
 write('services/webhook-reliability-review.html', detail);
+await import('./sync-site-quality.mjs');
 console.log(`Updated ${services.length}-service comparison and retry planner entry points.`);

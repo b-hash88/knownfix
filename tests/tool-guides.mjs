@@ -92,5 +92,5 @@ const generated = ['mcp-connect.html', 'mcp-response.html', 'webhook-retry.html'
 const before = generated.map(read);
 const synced = spawnSync(process.execPath, ['scripts/sync-tool-guides.mjs'], { cwd: root, encoding: 'utf8' });
 assert.equal(synced.status, 0, synced.stderr);
-assert.deepEqual(generated.map(read), before, 'Generator must be idempotent');
+generated.forEach((file, index) => assert(read(file) === before[index], 'Generator must be idempotent: ' + file));
 console.log(`PASS ${pages} guides, nine reproducible examples twice, local links/downloads/schema/discovery, consent/withdrawal/fixed events and idempotent generation.`);

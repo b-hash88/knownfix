@@ -127,10 +127,30 @@ Run the dependency-free production suite with Node 20 or newer:
 node tests/live-e2e.mjs
 ```
 
-The suite crawls every canonical URL, checks all 38 free/paid page pairs, five
-product packs, five services, HTTP and MCP search/delivery/offer flows, distinct
+The suite crawls every canonical URL and checks the current free/paid page pairs,
+product packs and service catalog, HTTP and MCP search/delivery/offer flows, distinct
 UserOperation and transaction proofs, anonymous stats access controls, and security headers.
 Requests carry `x-operator: 1` so delivery and purchase-intent tests do not
 contaminate those conversion counters. Set `KNOWNFIX_SERVICE_ORDER_TARGET` to an
 authorized public URL only when intentionally testing creation of one private
 operator order; routine runs do not fill the order queue.
+
+## Public Discovery And Site Quality
+
+`agents.html` is the human-readable MCP start page; `notes-for-agents.md` is its
+portable counterpart. Start with `get_overview` / `knownfix://overview` /
+backend `GET /overview`. `get_free_skill({id})` supports tool-only clients;
+resource-capable clients can read each `knownfix://free-skill/<id>` directly.
+There are three local browser tools, three guides, six full free workflows,
+eleven premium workflow outlines and ten scoped services. Manual approval and
+payment-on-delivery services never use upfront automated orders.
+
+After other storefront generators, run `node scripts/sync-site-quality.mjs`.
+The guide and comparison generators invoke this finalizer too. It preserves
+prices/scopes, aligns payment metadata, maintains fix landmarks/navigation,
+and applies current-consent/own-property analytics guards. `premium-skills.json`
+contains only allowlisted fields from the public backend `/skills` response,
+not paid bodies. Refresh that snapshot only after checking current public terms.
+`node tests/site-quality.mjs` protects consistency and generator idempotence.
+`scripts/audit-site.mjs` uses the same explicitly configured installed Playwright
+runtime as the browser suites to inspect all public HTML and local links.

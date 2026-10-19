@@ -18,7 +18,7 @@ function inspect(folder) {
     if (!scripts.length) continue;
     assert.equal(scripts.length, 1, file.href);
     assert(scripts[0].includes(measurementId), file.href);
-    for (const consent of ['', 'denied', 'granted']) {
+    for (let consent of ['', 'denied', 'granted']) {
       const appended = [], handlers = {};
       const context = {
         localStorage:{getItem:()=>consent}, URL,
@@ -40,6 +40,14 @@ function inspect(folder) {
         assert.equal(config[2].allow_ad_personalization_signals,false);
         assert(!JSON.stringify(context.dataLayer).includes('private'));
         assert.equal(context.dataLayer.filter(args=>args[0]==='config').length,1);
+        const eventCount = () => context.dataLayer.filter(args=>args[0]==='event').length;
+        if (typeof context.knownfixTrack === 'function') {
+          context.knownfixTrack('constructor','test');
+          assert.equal(eventCount(),0,'Inherited event names must not pass the allowlist');
+          consent = 'denied';
+          for (const event of ['catalog_search','service_select','mcp_kit_action','mcp_response_action','retry_planner_action','guide_action','free_skill_download']) context.knownfixTrack(event,'test');
+          assert.equal(eventCount(),0,'No action event after consent withdrawal');
+        }
       } else assert.equal(context.dataLayer,undefined);
     }
     pages++;

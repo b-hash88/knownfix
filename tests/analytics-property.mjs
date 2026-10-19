@@ -35,7 +35,7 @@ function inspect(folder) {
         const config = context.dataLayer.find(args=>args[0]==='config');
         assert.equal(config[1],measurementId);
         assert.equal(config[2].page_location,'https://example.com/page');
-        assert([undefined,'https://example.org/ref'].includes(config[2].page_referrer), file.href);
+        assert.equal(config[2].page_referrer,'https://example.org/ref', file.href);
         assert.equal(config[2].allow_google_signals,false);
         assert.equal(config[2].allow_ad_personalization_signals,false);
         assert(!JSON.stringify(context.dataLayer).includes('private'));

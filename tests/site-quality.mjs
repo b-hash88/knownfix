@@ -11,6 +11,7 @@ assert(!home.includes('no rate limit'));
 assert(home.includes('id="premium"') && home.includes('id="workflows"'));
 assert(home.includes('minmax(min(100%,19rem),1fr)'));
 const guide = read('agents.html');
+assert(guide.includes('<code>resources/list</code> lists metadata; <code>resources/read</code> retrieves a selected free body;'));
 for (const service of services) assert(guide.includes(`/services/${service.id}.html`));
 for (const skill of JSON.parse(read('free-skills.json')).skills) assert(guide.includes(`knownfix://free-skill/${skill.id}`));
 const previews = read('premium-skills.html');

@@ -17,7 +17,7 @@ const OPERATOR_HEADERS = {
 };
 const DISCOVERY_DESCRIPTION =
   "Verified fixes, professional reviews, and evidence-led apparel over MCP.";
-const ANALYTICS_MEASUREMENT_ID = "G-781DC76YQN";
+const ANALYTICS_MEASUREMENT_ID = "G-PPPE9TYRM2";
 const results = [];
 
 function assertAnalyticsBoundary(html, label) {

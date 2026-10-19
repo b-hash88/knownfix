@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import './analytics-property.mjs';
 
 const root = new URL('../', import.meta.url);
 const data = JSON.parse(fs.readFileSync(new URL('free-skills.json', root), 'utf8'));

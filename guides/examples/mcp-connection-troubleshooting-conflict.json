@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "example": {
+      "url": "https://knownfix-backend-28.b-hash88.deno.net/mcp",
+      "command": "node"
+    }
+  }
+}

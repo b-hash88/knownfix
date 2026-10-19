@@ -24,6 +24,17 @@ action labels only; those events are not unique users or successful deliveries.
 
 ## Storefront Checks
 
+Three companion guides live under `guides/`, with nine fixed synthetic JSON
+examples, linked from the tools, homepage and free-skills hub. Regenerate this
+content with `node scripts/sync-tool-guides.mjs`. The MCP-kit and retry-planner
+generators also run this sync. `node tests/tool-guides.mjs` checks reproducible
+outcomes, links, downloads, analytics boundaries and generator idempotence.
+`tests/tool-guides-browser.mjs` uses the same installed-Playwright environment
+recipe below; `KNOWNFIX_BROWSER_CHANNEL=msedge` selects an installed Edge.
+Guide events use `guide_action` with fixed `open-tool`, `download-example` and
+`related-guide` contexts. Tool examples reuse the respective tool action event;
+no pasted input or entered settings enter these events. All require consent.
+
 Run `node tests/retry-planner.mjs` and `node tests/service-comparison.mjs` for the
 new tool and catalog consistency. The existing Gitea workflow includes both.
 `tests/retry-planner-browser.mjs` uses the existing `KNOWNFIX_PLAYWRIGHT_PATH`

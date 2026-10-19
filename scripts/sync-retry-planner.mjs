@@ -41,3 +41,4 @@ for (const file of ['llms.txt', 'llms-full.txt']) {
   if (!text.includes('/webhook-retry.html')) write(file, text + `\n## Free webhook retry planner\n${site}/webhook-retry.html\nBrowser-local capped exponential backoff and full-jitter timing calculator with per-attempt timeouts and budget checks. Exports a planning record and checklist. No webhook calls or saved inputs; optional analytics sends fixed action names only.\n`);
 }
 console.log('Generated webhook retry planner and discovery links.');
+await import('./sync-tool-guides.mjs');

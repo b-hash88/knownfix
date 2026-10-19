@@ -1,4 +1,5 @@
 import { DEFAULT_PLAN, planRetries, planChecklist } from './retry-planner-core.mjs';
+import { RETRY_EXAMPLES } from './tool-examples.mjs';
 
 const form = document.getElementById('retry-form');
 const result = document.getElementById('retry-result');
@@ -8,6 +9,14 @@ const copyChecklist = document.getElementById('copy-checklist');
 let plan = null;
 const track = action => window.knownfixTrack?.('retry_planner_action', action);
 const seconds = value => Number(value.toFixed(2)).toLocaleString('en-US', { maximumFractionDigits: 2 }) + 's';
+
+document.getElementById('load-scenario')?.addEventListener('click', () => {
+  const key = document.getElementById('example-case').value;
+  const example = Object.hasOwn(RETRY_EXAMPLES, key) && RETRY_EXAMPLES[key];
+  if (!example) return;
+  for (const [field, value] of Object.entries(example.config)) form.elements.namedItem(field).value = value;
+  calculate(); track('example-' + key);
+});
 
 function calculate() {
   document.getElementById('export-fallback').hidden = true;

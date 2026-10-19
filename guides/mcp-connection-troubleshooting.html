@@ -1,0 +1,85 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MCP Connection Troubleshooting: Config, Transport and Initialization | KnownFix</title><meta name="description" content="Separate JSON configuration problems from MCP transport and initialization failures. Worked examples and a practical evidence checklist."><link rel="canonical" href="https://b-hash88.github.io/knownfix/guides/mcp-connection-troubleshooting.html"><meta property="og:type" content="article"><meta property="og:title" content="MCP Connection Troubleshooting: Config, Transport and Initialization"><meta property="og:description" content="Separate JSON configuration problems from MCP transport and initialization failures. Worked examples and a practical evidence checklist."><meta property="og:url" content="https://b-hash88.github.io/knownfix/guides/mcp-connection-troubleshooting.html"><meta property="og:image" content="https://b-hash88.github.io/knownfix/knownfix-icon.png"><link rel="icon" href="../knownfix-icon.png"><link rel="stylesheet" href="../scripts/guide.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Connection Troubleshooting: Config, Transport and Initialization","description":"Separate JSON configuration problems from MCP transport and initialization failures. Worked examples and a practical evidence checklist.","datePublished":"2026-10-19","dateModified":"2026-10-19","author":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"},"mainEntityOfPage":"https://b-hash88.github.io/knownfix/guides/mcp-connection-troubleshooting.html"}</script><style>
+#knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
+#knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
+#knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
+#knownfix-analytics-consent .knownfix-consent-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+#knownfix-analytics-consent button{min-height:2.25rem;border:1px solid #8ad6c4;border-radius:3px;padding:.42rem .72rem;background:#8ad6c4;color:#101512;font:600 12px Arial,sans-serif;cursor:pointer}
+#knownfix-analytics-consent button[data-knownfix-consent="denied"]{background:transparent;color:#f2f4f1;border-color:#788078}
+@media(max-width:42rem){#knownfix-analytics-consent .knownfix-consent-inner{grid-template-columns:1fr}}
+</style><script>
+(function(){
+  'use strict';
+  var measurementId="G-PPPE9TYRM2",storageKey="knownfix.analytics.consent",pageType="guide",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var allowedEvents={guide_action:1},allowedContexts={"open-tool":1,"download-example":1,"related-guide":1};
+  function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
+  function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
+  function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
+  function loadAnalytics(){
+    if(loaded||readChoice()!=='granted')return;
+    loaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+    window.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    window.gtag('js',new Date());
+    var config={page_location:safePageUrl(location.href),page_title:document.title,content_group:pageType,allow_google_signals:false,allow_ad_personalization_signals:false,transport_type:'beacon'};
+    var referrer=safePageUrl(document.referrer);if(referrer)config.page_referrer=referrer;
+    window.gtag('config',measurementId,config);
+    var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
+  }
+  window.knownfixTrack=function(name,context){
+    if(!loaded||readChoice()!=='granted'||!allowedContexts[context]||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
+    window.gtag('event',name,parameters);
+  };
+  function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
+  function setChoice(value){saveChoice(value);var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();if(value==='granted')loadAnalytics();else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});updateStatus(value)}
+  function consentButton(label,value){var button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.knownfixConsent=value;return button}
+  function showChoice(){
+    if(readChoice())return;
+    var banner=document.createElement('aside');banner.id='knownfix-analytics-consent';banner.setAttribute('aria-label','Analytics choice');
+    var inner=document.createElement('div');inner.className='knownfix-consent-inner';
+    var copy=document.createElement('p');copy.append(document.createTextNode('Allow optional analytics? KnownFix measures sanitized page paths and fixed funnel events, never searches, form entries, tickets, wallet proofs, or reports. '));
+    var details=document.createElement('a');details.href=privacyUrl;details.textContent='Privacy details';copy.append(details);
+    var actions=document.createElement('div');actions.className='knownfix-consent-actions';actions.append(consentButton('Allow analytics','granted'),consentButton('No thanks','denied'));
+    inner.append(copy,actions);banner.append(inner);document.body.append(banner);
+  }
+  document.addEventListener('click',function(event){var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script></head><body><main>
+<nav class="site-nav" aria-label="Main"><a href="../"><img src="../knownfix-icon.png" alt="">KnownFix</a><a href="../free-skills.html">Free tools and skills</a><a href="../services.html">Services</a><a href="../privacy.html">Privacy</a></nav>
+<p class="breadcrumb"><a href="../mcp-connect.html">MCP Connection Kit</a> / Companion guide</p><h1>MCP Connection Troubleshooting: Config, Transport and Initialization</h1><p>A configuration can be valid JSON and still fail to connect. Start by separating the client configuration, the transport, and the protocol exchange. Each needs different evidence.</p><p class="reviewed">Reviewed 19 October 2026. Examples are synthetic; no customer data or production outcomes.</p><p><a href="../mcp-connect.html#config-heading" data-knownfix-event="guide_action" data-knownfix-context="open-tool">Open the free MCP Connection Kit</a></p>
+<div class="guide-layout"><aside class="contents"><nav aria-label="On this page"><h2>In this guide</h2><ol><li><a href="#evidence">Start with evidence</a></li><li><a href="#examples">Worked examples</a></li><li><a href="#decisions">Diagnostic decisions</a></li><li><a href="#limits">Limits</a></li><li><a href="#sources">Sources</a></li></ol></nav></aside><article class="guide-article">
+<section id="evidence"><h2>Start with evidence</h2><ol><li>Record the client and version, the configuration file it actually loads, and whether the server is remote HTTP or a local process. Keep tokens and private paths out of shared notes.</li><li>Check the configuration structure before changing the network. The checker accepts <code>mcpServers</code> or <code>servers</code>, but that does not make either schema valid for every client.</li><li>For an authorized connection test, retain the HTTP status and content type or local-process exit status separately from the JSON-RPC body. Never test a third-party endpoint without permission.</li></ol></section>
+<section id="examples"><h2>Worked examples</h2><p>These examples exercise the current tool logic. Load the matching case on the tool page to reproduce its result. Downloads contain only the fixed synthetic example, never your pasted input.</p><h3>Remote HTTP configuration</h3><p>Structure passes. The campaign query produces a reminder to keep secrets out of URLs.</p><details><summary>Example JSON</summary><pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;knownfix&quot;: {
+      &quot;url&quot;: &quot;https://knownfix-backend-28.b-hash88.deno.net/mcp?utm_source=site-kit&amp;utm_campaign=mcp-connect-20261010&quot;
+    }
+  }
+}</code></pre></details><p><a href="./examples/mcp-connection-troubleshooting-remote.json" download data-knownfix-event="guide_action" data-knownfix-context="download-example">Download remote http configuration JSON</a></p>
+<h3>Local stdio configuration</h3><p>Structure passes with one stdio server. The example file is illustrative and is not supplied or executed.</p><details><summary>Example JSON</summary><pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;example&quot;: {
+      &quot;command&quot;: &quot;node&quot;,
+      &quot;args&quot;: [
+        &quot;./example-server.mjs&quot;
+      ]
+    }
+  }
+}</code></pre></details><p><a href="./examples/mcp-connection-troubleshooting-stdio.json" download data-knownfix-event="guide_action" data-knownfix-context="download-example">Download local stdio configuration JSON</a></p>
+<h3>Conflicting transports</h3><p>Needs attention: choose url or command, not both.</p><details><summary>Example JSON</summary><pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;example&quot;: {
+      &quot;url&quot;: &quot;https://knownfix-backend-28.b-hash88.deno.net/mcp&quot;,
+      &quot;command&quot;: &quot;node&quot;
+    }
+  }
+}</code></pre></details><p><a href="./examples/mcp-connection-troubleshooting-conflict.json" download data-knownfix-event="guide_action" data-knownfix-context="download-example">Download conflicting transports JSON</a></p></section>
+<section id="decisions"><h2>Diagnostic decisions</h2><dl><dt>JSON parses, but the client ignores it</dt><dd>Confirm the client-specific schema and file location. The kit's VS Code example uses a <code>servers</code> object; its generic remote example uses <code>mcpServers</code>. A request body with <code>method</code> and <code>params</code> is not a client configuration.</dd><dt>A local process starts and immediately exits</dt><dd>Check the actual command, working directory, dependencies and stderr in your own environment. The synthetic stdio example below only demonstrates shape; it does not provide a server file.</dd><dt>HTTP responds, but discovery fails</dt><dd>Inspect initialization first. For the pinned 2025-06-18 protocol example, send <code>initialize</code>, verify the negotiated version/capabilities, then send <code>notifications/initialized</code> before normal operations. Preserve any required session identifier and negotiated protocol-version header in the client; do not publish them.</dd></dl></section>
+<section id="limits"><h2>What this does not establish</h2><p>A green structure check does not verify DNS, TLS, authentication, process execution, client support, session state or tool discovery. The page sends no MCP requests. Its HTTP request examples are separate bodies, not a complete session runner. Protocol 2025-06-18 is the kit's pinned example, not a claim about the newest revision.</p><p>Optional analytics records sanitized page paths and fixed action labels after consent. The tools keep your input local. An action count is not a person, installation, resolved incident or sale.</p></section>
+<section id="sources"><h2>Primary references</h2><ul><li><a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle">MCP 2025-06-18 lifecycle</a></li><li><a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/transports">MCP 2025-06-18 Streamable HTTP transport</a></li><li><a href="https://code.visualstudio.com/docs/copilot/customization/mcp-servers">VS Code MCP configuration</a></li></ul></section>
+<section><h2>Continue with KnownFix</h2><div class="related-links"><a href="./mcp-response-validation.html" data-knownfix-event="guide_action" data-knownfix-context="related-guide">MCP Response Validation: JSON-RPC Errors and Tool Failures</a><a href="./webhook-retry-budget.html" data-knownfix-event="guide_action" data-knownfix-context="related-guide">Webhook Retry Budgets: Backoff, Jitter and Delivery Deadlines</a><a href="../mcp-connect.html" data-knownfix-event="guide_action" data-knownfix-context="open-tool">MCP Connection Kit</a></div></section>
+</article></div><footer><a href="../free-skills.html">Free tools and skills</a> &middot; <a href="../">KnownFix catalog</a> &middot; <a href="../privacy.html">Analytics choice</a></footer></main></body></html>

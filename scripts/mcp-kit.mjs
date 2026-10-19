@@ -1,4 +1,5 @@
 import { checkConfig, connectionSnippet, ENDPOINT } from './mcp-kit-core.mjs';
+import { CONFIG_EXAMPLES } from './tool-examples.mjs';
 
 const select = document.getElementById('snippet-kind');
 const code = document.getElementById('snippet-output');
@@ -27,7 +28,12 @@ document.getElementById('download-snippet').addEventListener('click', () => {
 });
 function invalidateConfig() { document.getElementById('config-result').replaceChildren(); }
 input.addEventListener('input', invalidateConfig);
-document.getElementById('load-example').addEventListener('click', () => { input.value = connectionSnippet('remote'); invalidateConfig(); input.focus(); });
+document.getElementById('load-example').addEventListener('click', () => {
+  const key = document.getElementById('example-case')?.value || 'remote';
+  const example = Object.hasOwn(CONFIG_EXAMPLES, key) && CONFIG_EXAMPLES[key];
+  if (!example) return;
+  input.value = example.text; invalidateConfig(); input.focus(); track('example-' + key);
+});
 document.getElementById('clear-config').addEventListener('click', () => { input.value = ''; document.getElementById('config-result').replaceChildren(); input.focus(); });
 document.getElementById('config-form').addEventListener('submit', event => {
   event.preventDefault();

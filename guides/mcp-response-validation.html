@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MCP Response Validation: JSON-RPC Errors and Tool Failures | KnownFix</title><meta name="description" content="Read JSON-RPC result and error envelopes without mistaking structural success for a successful MCP tool call. Synthetic examples and diagnostic boundaries."><link rel="canonical" href="https://b-hash88.github.io/knownfix/guides/mcp-response-validation.html"><meta property="og:type" content="article"><meta property="og:title" content="MCP Response Validation: JSON-RPC Errors and Tool Failures"><meta property="og:description" content="Read JSON-RPC result and error envelopes without mistaking structural success for a successful MCP tool call. Synthetic examples and diagnostic boundaries."><meta property="og:url" content="https://b-hash88.github.io/knownfix/guides/mcp-response-validation.html"><meta property="og:image" content="https://b-hash88.github.io/knownfix/knownfix-icon.png"><link rel="icon" href="../knownfix-icon.png"><link rel="stylesheet" href="../scripts/guide.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Response Validation: JSON-RPC Errors and Tool Failures","description":"Read JSON-RPC result and error envelopes without mistaking structural success for a successful MCP tool call. Synthetic examples and diagnostic boundaries.","datePublished":"2026-10-19","dateModified":"2026-10-19","author":{"@type":"Organization","name":"KnownFix","url":"https://b-hash88.github.io/knownfix/"},"mainEntityOfPage":"https://b-hash88.github.io/knownfix/guides/mcp-response-validation.html"}</script><style>
+#knownfix-analytics-consent{position:fixed;z-index:2147483646;inset:auto 0 0;background:#151912;color:#f2f4f1;border-top:2px solid #6fc3b0;font:14px/1.45 Arial,sans-serif}
+#knownfix-analytics-consent .knownfix-consent-inner{width:min(68rem,100%);margin:auto;padding:.8rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.7rem 1rem;align-items:center}
+#knownfix-analytics-consent p{margin:0;max-width:72ch}#knownfix-analytics-consent a{color:#8ad6c4}
+#knownfix-analytics-consent .knownfix-consent-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+#knownfix-analytics-consent button{min-height:2.25rem;border:1px solid #8ad6c4;border-radius:3px;padding:.42rem .72rem;background:#8ad6c4;color:#101512;font:600 12px Arial,sans-serif;cursor:pointer}
+#knownfix-analytics-consent button[data-knownfix-consent="denied"]{background:transparent;color:#f2f4f1;border-color:#788078}
+@media(max-width:42rem){#knownfix-analytics-consent .knownfix-consent-inner{grid-template-columns:1fr}}
+</style><script>
+(function(){
+  'use strict';
+  var measurementId="G-PPPE9TYRM2",storageKey="knownfix.analytics.consent",pageType="guide",privacyUrl="https://b-hash88.github.io/knownfix/privacy.html",loaded=false;
+  var allowedEvents={guide_action:1},allowedContexts={"open-tool":1,"download-example":1,"related-guide":1};
+  function readChoice(){try{return localStorage.getItem(storageKey)||''}catch(_error){return ''}}
+  function saveChoice(value){try{localStorage.setItem(storageKey,value)}catch(_error){}}
+  function safePageUrl(value){try{var parsed=new URL(value);return parsed.origin+parsed.pathname}catch(_error){return ''}}
+  function loadAnalytics(){
+    if(loaded||readChoice()!=='granted')return;
+    loaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};
+    window.gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+    window.gtag('js',new Date());
+    var config={page_location:safePageUrl(location.href),page_title:document.title,content_group:pageType,allow_google_signals:false,allow_ad_personalization_signals:false,transport_type:'beacon'};
+    var referrer=safePageUrl(document.referrer);if(referrer)config.page_referrer=referrer;
+    window.gtag('config',measurementId,config);
+    var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
+  }
+  window.knownfixTrack=function(name,context){
+    if(!loaded||readChoice()!=='granted'||!allowedContexts[context]||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
+    window.gtag('event',name,parameters);
+  };
+  function updateStatus(value){document.querySelectorAll('[data-knownfix-consent-status]').forEach(function(node){node.textContent=value==='granted'?'Analytics is allowed on this browser.':value==='denied'?'Analytics is disabled on this browser.':'Choose whether this browser may send analytics.'})}
+  function setChoice(value){saveChoice(value);var banner=document.getElementById('knownfix-analytics-consent');if(banner)banner.remove();if(value==='granted')loadAnalytics();else if(typeof window.gtag==='function')window.gtag('consent','update',{analytics_storage:'denied'});updateStatus(value)}
+  function consentButton(label,value){var button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.knownfixConsent=value;return button}
+  function showChoice(){
+    if(readChoice())return;
+    var banner=document.createElement('aside');banner.id='knownfix-analytics-consent';banner.setAttribute('aria-label','Analytics choice');
+    var inner=document.createElement('div');inner.className='knownfix-consent-inner';
+    var copy=document.createElement('p');copy.append(document.createTextNode('Allow optional analytics? KnownFix measures sanitized page paths and fixed funnel events, never searches, form entries, tickets, wallet proofs, or reports. '));
+    var details=document.createElement('a');details.href=privacyUrl;details.textContent='Privacy details';copy.append(details);
+    var actions=document.createElement('div');actions.className='knownfix-consent-actions';actions.append(consentButton('Allow analytics','granted'),consentButton('No thanks','denied'));
+    inner.append(copy,actions);banner.append(inner);document.body.append(banner);
+  }
+  document.addEventListener('click',function(event){var choice=event.target.closest('[data-knownfix-consent]');if(choice){setChoice(choice.dataset.knownfixConsent);return}var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  document.addEventListener('submit',function(event){var target=event.target.closest('[data-knownfix-event]');if(target)window.knownfixTrack(target.dataset.knownfixEvent,target.dataset.knownfixContext||'')});
+  function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script></head><body><main>
+<nav class="site-nav" aria-label="Main"><a href="../"><img src="../knownfix-icon.png" alt="">KnownFix</a><a href="../free-skills.html">Free tools and skills</a><a href="../services.html">Services</a><a href="../privacy.html">Privacy</a></nav>
+<p class="breadcrumb"><a href="../mcp-response.html">MCP Response Inspector</a> / Companion guide</p><h1>MCP Response Validation: JSON-RPC Errors and Tool Failures</h1><p>A successful HTTP request, a valid JSON-RPC envelope and a successful tool operation are different observations. Keep all three in the diagnostic record.</p><p class="reviewed">Reviewed 19 October 2026. Examples are synthetic; no customer data or production outcomes.</p><p><a href="../mcp-response.html#input-heading" data-knownfix-event="guide_action" data-knownfix-context="open-tool">Open the free MCP Response Inspector</a></p>
+<div class="guide-layout"><aside class="contents"><nav aria-label="On this page"><h2>In this guide</h2><ol><li><a href="#evidence">Start with evidence</a></li><li><a href="#examples">Worked examples</a></li><li><a href="#decisions">Diagnostic decisions</a></li><li><a href="#limits">Limits</a></li><li><a href="#sources">Sources</a></li></ol></nav></aside><article class="guide-article">
+<section id="evidence"><h2>Start with evidence</h2><ol><li>Keep the response's HTTP status and content type as separate evidence. Do not paste authorization headers, session identifiers or customer data into a public issue.</li><li>Inspect one JSON response object. For an SSE response, identify the relevant JSON message with an appropriate transport client first; the inspector does not decode a stream.</li><li>Compare the response identifier with the request privately. Then read the expected method result schema and the actual operation outcome.</li></ol></section>
+<section id="examples"><h2>Worked examples</h2><p>These examples exercise the current tool logic. Load the matching case on the tool page to reproduce its result. Downloads contain only the fixed synthetic example, never your pasted input.</p><h3>Result envelope</h3><p>Envelope structure passes. An empty tool list is not evidence that a useful tool ran.</p><details><summary>Example JSON</summary><pre><code>{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: 1,
+  &quot;result&quot;: {
+    &quot;tools&quot;: []
+  }
+}</code></pre></details><p><a href="./examples/mcp-response-validation-result.json" download data-knownfix-event="guide_action" data-knownfix-context="download-example">Download result envelope JSON</a></p>
+<h3>Tool-level failure</h3><p>Envelope structure passes, with a tool-level error flag. Structural success is not task success.</p><details><summary>Example JSON</summary><pre><code>{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: 1,
+  &quot;result&quot;: {
+    &quot;isError&quot;: true,
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;Synthetic example failure.&quot;
+      }
+    ]
+  }
+}</code></pre></details><p><a href="./examples/mcp-response-validation-tool.json" download data-knownfix-event="guide_action" data-knownfix-context="download-example">Download tool-level failure JSON</a></p>
+<h3>Result and error together</h3><p>Needs attention: a response must contain exactly one of result or error.</p><details><summary>Example JSON</summary><pre><code>{
+  &quot;jsonrpc&quot;: &quot;2.0&quot;,
+  &quot;id&quot;: 1,
+  &quot;result&quot;: {},
+  &quot;error&quot;: {
+    &quot;code&quot;: -32603,
+    &quot;message&quot;: &quot;Synthetic example error.&quot;
+  }
+}</code></pre></details><p><a href="./examples/mcp-response-validation-conflict.json" download data-knownfix-event="guide_action" data-knownfix-context="download-example">Download result and error together JSON</a></p></section>
+<section id="decisions"><h2>Diagnostic decisions</h2><dl><dt>Both result and error are present</dt><dd>A JSON-RPC response must select one of these members. The third example deliberately violates this rule and should fail the envelope check.</dd><dt>The envelope passes, but isError is true</dt><dd>The inspector reports a tool-level error flag. A valid outer envelope does not establish that a tool completed its task. Follow the tool's documented error contract.</dd><dt>The input begins with data: or HTTP headers</dt><dd>That is framing rather than one JSON object. Keep the raw evidence locally and extract the appropriate message without treating a transport frame as a standalone response.</dd></dl></section>
+<section id="limits"><h2>What this does not establish</h2><p>This is an envelope check, not full MCP conformance. It does not validate method-specific schemas, match request identifiers, detect duplicate JSON keys, verify transport/authentication, or establish a real tool outcome. A parseable result can still contain application-level problems. The copied checklist deliberately omits input, identifiers, payloads and server messages.</p><p>Optional analytics records sanitized page paths and fixed action labels after consent. The tools keep your input local. An action count is not a person, installation, resolved incident or sale.</p></section>
+<section id="sources"><h2>Primary references</h2><ul><li><a href="https://www.jsonrpc.org/specification#response_object">JSON-RPC 2.0 response objects</a></li><li><a href="https://modelcontextprotocol.io/specification/2025-06-18/server/tools#error-handling">MCP 2025-06-18 tool error handling</a></li><li><a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/transports">MCP 2025-06-18 transport framing</a></li></ul></section>
+<section><h2>Continue with KnownFix</h2><div class="related-links"><a href="./mcp-connection-troubleshooting.html" data-knownfix-event="guide_action" data-knownfix-context="related-guide">MCP Connection Troubleshooting: Config, Transport and Initialization</a><a href="./webhook-retry-budget.html" data-knownfix-event="guide_action" data-knownfix-context="related-guide">Webhook Retry Budgets: Backoff, Jitter and Delivery Deadlines</a><a href="../mcp-response.html" data-knownfix-event="guide_action" data-knownfix-context="open-tool">MCP Response Inspector</a></div></section>
+</article></div><footer><a href="../free-skills.html">Free tools and skills</a> &middot; <a href="../">KnownFix catalog</a> &middot; <a href="../privacy.html">Analytics choice</a></footer></main></body></html>

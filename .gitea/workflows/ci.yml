@@ -23,3 +23,7 @@ jobs:
         run: node tests/retry-planner.mjs
       - name: Service comparison and free tool discovery
         run: node tests/service-comparison.mjs
+      - name: Companion guides and reproducible examples
+        run: node tests/tool-guides.mjs
+      - name: Owner analytics consent and data minimization
+        run: node tests/analytics-property.mjs

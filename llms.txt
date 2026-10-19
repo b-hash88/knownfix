@@ -168,3 +168,15 @@ Limitations: 149 USDC is due only on verified patch delivery meeting the agreed 
 
 - [Microsite Launch](https://b-hash88.github.io/knownfix/services/microsite-launch.html): $299 USDC; 5 business days. One responsive static page with up to five sections, built from client-supplied approved copy, brand assets and one primary call to action. Source is handed off for a client-owned repository; no private repository access is needed.
 Limitations: $299 USDC, invoiced manually after written scope approval and before work. The five-business-day delivery target starts after scope approval, approved copy/assets and confirmed payment. No backend, login, payment checkout, CMS, copywriting strategy, custom illustration, domain purchase, production deployment, ongoing hosting or maintenance. The client must have rights to supplied content. No ranking, traffic, sales, accessibility-conformance or performance-score guarantee. Do not send credentials or private customer data.
+
+<!-- companion-guides:start -->
+## Free companion guides
+https://b-hash88.github.io/knownfix/guides/mcp-connection-troubleshooting.html
+Separate JSON configuration problems from MCP transport and initialization failures. Worked examples and a practical evidence checklist.
+
+https://b-hash88.github.io/knownfix/guides/mcp-response-validation.html
+Read JSON-RPC result and error envelopes without mistaking structural success for a successful MCP tool call. Synthetic examples and diagnostic boundaries.
+
+https://b-hash88.github.io/knownfix/guides/webhook-retry-budget.html
+Calculate a serial webhook retry window with capped backoff, full jitter and per-attempt timeouts. Worked 215-second and 155-second planning examples.
+<!-- companion-guides:end -->

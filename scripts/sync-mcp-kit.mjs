@@ -44,3 +44,4 @@ let sitemap = read('sitemap.xml');
 if (!sitemap.includes('/mcp-connect.html')) sitemap = sitemap.replace('</urlset>', `<url><loc>${site}/mcp-connect.html</loc></url></urlset>`);
 write('sitemap.xml', sitemap);
 console.log('MCP connection kit generated; discovery updated.');
+await import('./sync-tool-guides.mjs');

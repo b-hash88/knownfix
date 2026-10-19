@@ -32,7 +32,7 @@
     var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId);script.referrerPolicy='no-referrer';document.head.appendChild(script);
   }
   window.knownfixTrack=function(name,context){
-    if(!loaded||!allowedEvents[name]||typeof window.gtag!=='function')return;
+    if(!loaded||readChoice()!=='granted'||!allowedEvents[name]||typeof window.gtag!=='function')return;
     var parameters={};if(typeof context==='string'&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(context))parameters.event_context=context;
     window.gtag('event',name,parameters);
   };
@@ -53,11 +53,14 @@
   function start(){var choice=readChoice();updateStatus(choice);if(choice==='granted')loadAnalytics();else if(!choice)showChoice()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
-</script></head><body><main>
+</script><link rel="stylesheet" href="./scripts/tool-learning.css"></head><body><main>
 <nav aria-label="Main"><a href="./"><img src="./knownfix-icon.png" alt="">KnownFix</a><a href="./free-skills.html">Free skills &amp; tools</a><a href="./services.html">Services</a><a href="./privacy.html">Privacy</a></nav>
 <h1>Webhook Retry Planner</h1><p class="muted">Backoff, jitter and delivery budgets · Free</p>
 <noscript>JavaScript is required for this calculator. The free webhook triage skill and service scopes remain available below.</noscript>
 <div class="planner"><section aria-labelledby="settings-title"><h2 id="settings-title">Retry settings</h2>
+<!-- tool-example-picker:start -->
+<div class="example-picker"><label for="example-case">Worked example</label><select id="example-case"><option value="standard">Six attempts, generous budget</option><option value="tight">Six attempts, 65-second budget</option><option value="capped">Fixed waits with a 30-second cap</option></select><button type="button" class="secondary" id="load-scenario">Load scenario</button></div>
+<!-- tool-example-picker:end -->
 <form id="retry-form">
 <div class="field-pair"><div class="field"><label for="attempts">Total attempts</label><input id="attempts" name="attempts" type="number" min="1" max="20" step="1" value="6" required><small>Includes the first attempt.</small></div>
 <div class="field"><label for="timeout">Timeout (s)</label><input id="timeout" name="timeout" type="number" min="0.1" max="3600" step="any" value="10" required><small>Per attempt.</small></div></div>
@@ -72,5 +75,8 @@
 <div class="actions"><button type="button" id="copy-plan" disabled>Copy plan JSON</button><button type="button" class="secondary" id="copy-checklist" disabled>Copy review checklist</button></div><pre id="export-fallback" hidden tabindex="0"></pre>
 <details><summary>Timing assumptions</summary><p>Every attempt is unsuccessful and consumes its full timeout. Each wait starts after the previous failure. The first attempt starts at zero; it has no wait.</p><p>Retry delay = min(cap, initial delay × multiplier^(retry number − 1)). Full jitter uses a uniform range from zero to that delay; expected wait is half the capped delay. Ranges are bounds, not a random sample or a percentile forecast.</p><p>The budget check uses the latest modeled finish. Queue latency, network overhead, provider retry rules and Retry-After are excluded. This JSON is a planning record, not a provider configuration.</p></details></section></div>
 <section class="related"><h2>From delivery timing to source review</h2><div class="resources"><a href="./free-skills/webhook-delivery-triage.html">Free Webhook Delivery Triage skill</a><a href="./services/webhook-reliability-review.html">Webhook Reliability Review · $179 USDC</a><a href="./mcp-response.html">MCP Response Inspector</a></div><p class="muted">The paid review covers one public repository, one integration and up to three event paths. Delivery target: 3 business days after confirmed payment and a complete in-scope brief.</p></section>
+<!-- tool-learning:start -->
+<section class="tool-notes" id="worked-examples" aria-labelledby="examples-title"><h2 id="examples-title">Worked examples and expected results</h2><p>Synthetic fixtures checked against this tool's current local logic. They are not live connection or delivery tests.</p><ul><li><strong>Six attempts, generous budget.</strong> Maximum 215 seconds; expected 137.5 seconds; all 6 attempts fit the 600-second budget.</li><li><strong>Six attempts, 65-second budget.</strong> Maximum 215 seconds; only 3 of 6 attempts fit the 65-second budget.</li><li><strong>Fixed waits with a 30-second cap.</strong> Maximum and expected duration 155 seconds; 5 of 6 attempts fit the 120-second budget.</li></ul><h2>When to investigate further</h2><dl><dt>Expected duration is not a deadline</dt><dd>Use the maximum modeled finish for the budget check. Full jitter changes the range and expected wait; it does not guarantee a delivery time.</dd><dt>Your provider uses Retry-After</dt><dd>That policy is outside this calculator. Compare the exported plan with the actual provider rules before implementing or replaying anything.</dd></dl><a class="guide-link" href="./guides/webhook-retry-budget.html" data-knownfix-event="retry_planner_action" data-knownfix-context="read-guide">Read the companion guide: Webhook Retry Budgets: Backoff, Jitter and Delivery Deadlines</a></section>
+<!-- tool-learning:end -->
 <footer><a href="./">KnownFix catalog</a> · <a href="./services.html">Compare services</a> · <a href="./privacy.html">Analytics choice</a></footer>
 </main><script type="module" src="./scripts/retry-planner.mjs"></script></body></html>

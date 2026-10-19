@@ -1,5 +1,6 @@
 import { checkConfig, connectionSnippet, ENDPOINT } from './mcp-kit-core.mjs';
 import { CONFIG_EXAMPLES } from './tool-examples.mjs';
+import { clientSetup, installationLinks } from './mcp-client-configs.mjs';
 
 const select = document.getElementById('snippet-kind');
 const code = document.getElementById('snippet-output');
@@ -11,20 +12,21 @@ function update() {
   revision++;
   status.textContent = '';
   code.textContent = connectionSnippet(select.value);
-  document.getElementById('snippet-filename').textContent = select.value === 'vscode' ? '.vscode/mcp.json' : select.value === 'remote' ? 'Remote JSON example (client schema varies)' : 'JSON-RPC request body';
+  document.getElementById('snippet-filename').textContent = clientSetup(select.value)?.filename || (select.value === 'remote' ? 'Remote JSON example (client schema varies)' : 'JSON-RPC request body');
   document.getElementById('request-endpoint').textContent = ENDPOINT;
 }
 select.addEventListener('change', update);
 document.getElementById('copy-snippet').addEventListener('click', async () => {
   const current = revision;
   try { await navigator.clipboard.writeText(code.textContent); if (current === revision) status.textContent = 'Copied.'; track('copy-snippet'); }
-  catch { if (current === revision) status.textContent = 'Clipboard unavailable. Select the JSON to copy it.'; }
+  catch { if (current === revision) status.textContent = 'Clipboard unavailable. Select the snippet to copy it.'; }
 });
 document.getElementById('download-snippet').addEventListener('click', () => {
-  const url = URL.createObjectURL(new Blob([code.textContent + '\n'], { type: 'application/json' }));
-  const link = document.createElement('a'); link.href = url; link.download = 'knownfix-mcp.json'; link.click();
+  const extension = clientSetup(select.value)?.extension || 'json';
+  const url = URL.createObjectURL(new Blob([code.textContent + '\n'], { type: extension === 'json' ? 'application/json' : 'text/plain' }));
+  const link = document.createElement('a'); link.href = url; link.download = 'knownfix-mcp.' + extension; link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  status.textContent = 'JSON downloaded.'; track('download-snippet');
+  status.textContent = 'Snippet downloaded.'; track('download-snippet');
 });
 function invalidateConfig() { document.getElementById('config-result').replaceChildren(); }
 input.addEventListener('input', invalidateConfig);
@@ -44,4 +46,5 @@ document.getElementById('config-form').addEventListener('submit', event => {
   for (const text of [...result.errors, ...result.warnings, ...result.servers.map(s => `${s.label}: ${s.transport}`)]) { const item = document.createElement('li'); item.textContent = text; list.append(item); }
   output.append(list); track('config-check');
 });
+for (const [client, href] of Object.entries(installationLinks(ENDPOINT))) document.getElementById('install-' + client)?.setAttribute('href', href);
 update();

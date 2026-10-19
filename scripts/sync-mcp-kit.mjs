@@ -21,9 +21,10 @@ const body = `<body><main>
 <h1>KnownFix MCP Connection Kit</h1><p class="muted">Streamable HTTP · Free · No account or payment</p>
 <div class="kit-grid">
 <section aria-labelledby="snippet-heading"><h2 id="snippet-heading">Connection snippets</h2>
-<label for="snippet-kind">Format</label><select id="snippet-kind"><option value="remote">Remote JSON example</option><option value="vscode">VS Code JSON</option><option value="initialize">Initialize request</option><option value="tools-list">Tool discovery request</option><option value="overview">Complete KnownFix overview request</option><option value="search">Free fix search request</option></select>
+<label for="snippet-kind">Client or request</label><select id="snippet-kind"><option value="remote">Remote JSON example</option><option value="claude-code">Claude Code command</option><option value="codex">Codex TOML</option><option value="cursor">Cursor JSON</option><option value="vscode">VS Code JSON</option><option value="claude-desktop">Claude Desktop stdio bridge</option><option value="initialize">Initialize request</option><option value="tools-list">Tool discovery request</option><option value="overview">Complete KnownFix overview request</option><option value="search">Free fix search request</option><option value="free-skill">Retrieve a free workflow</option></select>
 <p class="muted" id="snippet-filename"></p><pre><code id="snippet-output"></code></pre>
-<div class="actions"><button type="button" id="copy-snippet">Copy JSON</button><button class="secondary" type="button" id="download-snippet">Download JSON</button></div><p id="kit-status" class="status" role="status"></p>
+<div class="actions"><button type="button" id="copy-snippet">Copy snippet</button><button class="secondary" type="button" id="download-snippet">Download snippet</button></div><p id="kit-status" class="status" role="status"></p>
+<div class="resources"><a id="install-vscode">Add to VS Code</a><a id="install-cursor">Add to Cursor</a></div>
 <details><summary>HTTP request details</summary><p><code>POST</code> <code id="request-endpoint"></code></p><p><code>Content-Type: application/json</code><br><code>Accept: application/json, text/event-stream</code></p><p class="muted">Protocol example: 2025-06-18. Client configuration schemas vary; JSON-RPC bodies are not configuration files. Requests are not sent by this page.</p></details>
 </section>
 <section aria-labelledby="config-heading"><h2 id="config-heading">Check JSON configuration</h2>
@@ -31,6 +32,20 @@ const body = `<body><main>
 <div class="actions"><button type="submit">Check configuration</button><button type="button" class="secondary" id="load-example">Load example</button><button type="button" class="secondary" id="clear-config">Clear</button></div></form>
 <p class="muted">Configuration stays in this browser. It is not saved or uploaded. This is a structure check, not a live connection or security audit.</p><div id="config-result" role="status" aria-live="polite"></div>
 </section></div>
+<section class="kit-links" aria-labelledby="client-setup"><h2 id="client-setup">Client setup</h2>
+<p>KnownFix public discovery and free workflows need no API key. Review the server and approve only the tools you intend to use. Never put an owner-stats credential in client configuration.</p>
+<dl><dt><strong>Claude Code</strong></dt><dd>Use the terminal command above from your project, then check <code>/mcp</code>. This is not a Claude Desktop JSON file.</dd>
+<dt><strong>Codex</strong></dt><dd>Merge the TOML section into <code>~/.codex/config.toml</code> without replacing existing settings. <code>codex mcp list</code> confirms configuration, not a successful tool result.</dd>
+<dt><strong>VS Code / Cursor</strong></dt><dd>Use the install link and review the prompt, or merge the corresponding JSON into the named project file. Existing entries should be preserved.</dd>
+<dt><strong>Claude Desktop</strong></dt><dd>The JSON example uses the version-pinned local stdio bridge and requires Node.js/npm. Its first launch downloads the package. Review the command and restart the client after merging its configuration. Remote-connector UI availability depends on the client/account.</dd></dl>
+<p>Formats follow the linked official documentation. Snippet syntax and the public MCP lifecycle are checked separately; a saved config or install link does not prove every client/version connected.</p>
+<div class="resources"><a href="https://code.claude.com/docs/en/mcp">Claude Code</a><a href="https://developers.openai.com/learn/docs-mcp">Codex</a><a href="https://code.visualstudio.com/api/extension-guides/ai/mcp">VS Code</a><a href="https://cursor.com/docs/context/mcp">Cursor</a></div>
+</section>
+<section class="kit-links" aria-labelledby="first-result"><h2 id="first-result">First free result</h2>
+<ol><li><strong>Configured:</strong> the client has saved the KnownFix entry.</li><li><strong>Discovered:</strong> initialization succeeds and <code>tools/list</code> includes <code>get_free_skill</code>.</li><li><strong>Successfully used:</strong> call <code>get_free_skill</code> with <code>{&quot;id&quot;:&quot;api-response-triage&quot;}</code>. Confirm a non-error result containing the full <strong>API Response Triage</strong> workflow and its acceptance checklist.</li></ol>
+<p>Suggested request: “Use KnownFix to retrieve the free api-response-triage workflow. Do not buy anything, create an order, or send private input.” A catalog listing alone is not a completed tool call.</p>
+<p><a href="./toolkit/README.md">Install the six free skills and local CLI toolkit</a> · <a href="./agents.html">Complete agent catalog</a></p>
+</section>
 <section class="kit-links"><h2>Connection references</h2><div class="resources"><a href="./free-skills/mcp-connection-triage.html">MCP Connection Triage</a><a href="https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle">MCP lifecycle</a><a href="https://code.visualstudio.com/docs/copilot/customization/mcp-servers">VS Code MCP settings</a><a href="https://knownfix-backend-28.b-hash88.deno.net/books">Owner stats (sign-in required)</a></div></section>
 <footer><a href="./mcp-response.html">MCP Response Inspector</a> · <a href="./free-skills.html">Free workflow skills</a> · <a href="./">KnownFix catalog</a> · <a href="./privacy.html">Analytics choice</a></footer>
 </main><script type="module" src="./scripts/mcp-kit.mjs"></script></body></html>\n`;

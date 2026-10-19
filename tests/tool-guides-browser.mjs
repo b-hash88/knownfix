@@ -50,6 +50,24 @@ try {
       assert((await page.locator(tool.output).innerText()).includes(tool.text));
       assert.deepEqual(external, []);
       assert.equal(await page.evaluate(() => window.dataLayer?.length || 0), 0);
+      if (tool.file === 'mcp-connect.html') {
+        for (const client of ['claude-code', 'claude-desktop', 'codex', 'cursor', 'vscode']) {
+          await page.locator('#snippet-kind').selectOption(client);
+          const snippet = await page.locator('#snippet-output').innerText();
+          assert(snippet.includes('knownfix'));
+          if (client === 'codex') {
+            assert(snippet.startsWith('[mcp_servers.knownfix]'));
+            const pending = page.waitForEvent('download');
+            await page.locator('#download-snippet').click();
+            assert((await pending).suggestedFilename().endsWith('.toml'));
+          }
+        }
+        assert((await page.locator('#install-cursor').getAttribute('href')).startsWith('https://cursor.com/link/mcp/install?'));
+        assert((await page.locator('#install-vscode').getAttribute('href')).startsWith('vscode:mcp/install?'));
+        await page.locator('#snippet-kind').selectOption('free-skill');
+        assert.equal(JSON.parse(await page.locator('#snippet-output').innerText()).params.name, 'get_free_skill');
+        assert.deepEqual(external, []);
+      }
       assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
       if (captures) await page.screenshot({ path: path.join(captures, `KnownFix_20261019_${tool.guide}-${label}_IMG.png`), fullPage: true });
 

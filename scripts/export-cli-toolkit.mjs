@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = fileURLToPath(new URL('../', import.meta.url));
+const target = process.argv[2] && path.resolve(process.argv[2]);
+if (!target || JSON.parse(fs.readFileSync(path.join(target, 'package.json'), 'utf8')).name !== 'knownfix') throw new Error('Supply the explicit KnownFix CLI checkout path.');
+for (const dir of ['toolkit', 'skills']) fs.cpSync(path.join(root, dir), path.join(target, dir), { recursive: true });
+fs.mkdirSync(path.join(target, 'lib'), { recursive: true });
+fs.copyFileSync(path.join(root, 'scripts/mcp-client-configs.mjs'), path.join(target, 'lib/mcp-client-configs.mjs'));
+console.log('Exported reviewed toolkit, skill directories and client formats to the explicit CLI checkout.');

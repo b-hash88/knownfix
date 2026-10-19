@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: MCP kit configuration tests
         run: node tests/mcp-kit.mjs
+      - name: Installable toolkit and client setup contracts
+        run: node tests/agent-toolkit.mjs
       - name: MCP response envelope and privacy tests
         run: node tests/mcp-response.mjs
       - name: Free skill and analytics boundaries

@@ -1,18 +1,23 @@
 # KnownFix
 
-KnownFix is an agent-facing catalog of 38 development-error fixes: 34 verified
-in production, 4 documented, and 12 available in full for free. Search is free;
+KnownFix is an agent-facing catalog of development-error fixes. The current
+[overview](https://knownfix-backend-28.b-hash88.deno.net/overview) reports inventory
+and evidence labels; fourteen fixes are available in full for free. Search is free;
 paid fixes start at $0.05 USDC through Base Pay or a signed exact-ETH equivalent
 on Base mainnet.
 
-KnownFix offers eight scoped services, including website audits, a homepage build,
+KnownFix offers ten scoped services, including website audits, a homepage build,
 code and release reviews, a Webhook Reliability Review ($179 USDC / 3 business
 days), and a SaaS Security Exposure Review ($299 USDC / 5 business days).
-Delivery targets begin after payment and a complete in-scope brief. SaaS security
-requires written ownership/testing permission and an agreed target/method/window
-allowlist before payment or testing; its automated checkout is disabled. Payment
-and private delivery for that service are arranged after approval. Other services
-use the existing private order ticket and verified report delivery.
+Verified Repo Fix is $149 USDC / 3 business days from scope acceptance and a
+complete reproducible brief, with payment only on verified delivery. Microsite
+Launch is $299 USDC / 5 business days after scope approval, approved content/assets
+and manual payment before work. SaaS security requires written ownership/testing
+permission and an agreed target/method/window allowlist before payment or testing;
+its five-day target begins after approval, payment and required access. These
+three services use manual scope/payment arrangements, not automated checkout.
+Other review targets begin after payment and a complete in-scope brief. The
+[service catalog](https://b-hash88.github.io/knownfix/services.html) is authoritative.
 
 Three free browser-local tools complement six free workflow skills:
 [MCP Connection Kit](https://b-hash88.github.io/knownfix/mcp-connect.html),
@@ -62,6 +67,32 @@ The service sync also refreshes that comparison after catalog changes.
 - [Public Evidence Audit sample](https://b-hash88.github.io/knownfix/reports/KnownFix_20260830_Evidence-Audit-Sample_RPT.html)
 
 ## Connect an agent
+
+Use the [client-specific connection kit](https://b-hash88.github.io/knownfix/mcp-connect.html)
+for Claude Code, Codex, Cursor, VS Code or the Claude Desktop stdio bridge. It
+includes supported install links and a free first-use example. Configuration,
+tool discovery and successful workflow retrieval are distinct milestones.
+
+## Install the free toolkit
+
+Six standard `skills/<name>/SKILL.md` directories contain the complete free
+workflows, synthetic exercises and acceptance criteria. Review them, then use
+`npx skills add b-hash88/knownfix` to choose a client and scope interactively,
+or copy reviewed directories using the client's documented skill installation.
+
+The [toolkit](toolkit/README.md) also provides dependency-free local commands:
+
+```sh
+node toolkit/cli.mjs inspect-response toolkit/examples/response.json
+node toolkit/cli.mjs retry-plan toolkit/examples/retry.json
+```
+
+Node.js 18+, file/stdin JSON, 200,000-byte cap. No network or telemetry during
+these commands. Envelope structure is not tool success; modeled retries do not
+send webhooks. Run `node scripts/sync-agent-toolkit.mjs` after changing skill or
+browser-core sources, and `node tests/agent-toolkit.mjs` to verify parity.
+
+## Remote endpoint
 
 KnownFix is listed as `io.github.b-hash88/knownfix`. Its remote Streamable HTTP
 MCP endpoint is:

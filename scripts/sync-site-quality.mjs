@@ -144,4 +144,15 @@ for (const file of ['agents.html', 'notes-for-agents.md']) {
   text = file.endsWith('.html') ? text.replace('<h2>6 complete free workflows</h2>', '<h2>6 complete free workflows</h2><p>Tool-only clients can call <code>get_free_skill</code> with <code>{"id":"workflow-id"}</code> for the complete body. Use an ID from the list below; premium products are excluded.</p>') : text.replace('## Complete free workflows', 'Tool-only MCP clients can call get_free_skill with an id below for its complete Markdown body. Premium products are excluded.\n\n## Complete free workflows');
   write(file, text);
 }
+for (const file of ['free-skills.html', 'agents.html']) {
+  const section = '<section><h2>Install the free toolkit</h2><p>Six portable SKILL.md workflows and local-only response inspection and retry planning commands. <a href="./toolkit/README.md">Installation, examples and limits</a></p></section>';
+  const html = read(file).replace(section, '');
+  write(file, html.replace('<footer', section + '<footer'));
+}
+for (const file of ['llms.txt', 'llms-full.txt']) {
+  let text = read(file).replace(/\n*## Installable free toolkit\n[^\n]*\n[^\n]*\n?/, '');
+  text = text.trimEnd() + `\n\n## Installable free toolkit\n${site}/toolkit/README.md\nSix standard skills/<id>/SKILL.md directories plus local-only Node.js response-inspector and retry-planner commands. No uploaded inputs or live execution; installation is separate from successful use.\n`;
+  write(file, text);
+}
+await import('./sync-agent-toolkit.mjs');
 console.log('Synchronized public agent guide, current service boundaries, semantics and consent guards.');

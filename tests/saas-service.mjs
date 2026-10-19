@@ -4,7 +4,7 @@ import vm from 'node:vm';
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const data=JSON.parse(read('services.json'));
 const s=data.services.find(s=>s.id==='saas-security-exposure-review');
-assert.equal(data.services.length,9);
+assert.equal(data.services.length,10);
 assert.equal(s.priceUsdCents,29900);
 assert.equal(s.deliveryBusinessDays,5);
 assert.equal(s.requiresScopeApproval,true);

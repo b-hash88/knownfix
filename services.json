@@ -3,6 +3,26 @@
   "currency": "USD-equivalent USDC on Base mainnet",
   "services": [
     {
+      "id": "microsite-launch",
+      "title": "Microsite Launch",
+      "tagline": "A focused one-page site for a developer tool, open-source project or small service.",
+      "priceUsdCents": 29900,
+      "priceWei": "119600000000000000",
+      "deliveryBusinessDays": 5,
+      "targetKind": "website",
+      "requiresScopeApproval": true,
+      "scope": "One responsive static page with up to five sections, built from client-supplied approved copy, brand assets and one primary call to action. Source is handed off for a client-owned repository; no private repository access is needed.",
+      "deliverables": [
+        "Agreed one-page brief, section outline and primary call to action",
+        "Responsive HTML, CSS and minimal JavaScript source",
+        "Page title, description, canonical URL and social-preview metadata using approved facts",
+        "Desktop and mobile browser checks, keyboard checks and a launch checklist",
+        "Source handoff and deployment instructions for client-owned hosting",
+        "One consolidated in-scope revision requested within seven days of delivery"
+      ],
+      "limitations": "$299 USDC, invoiced manually after written scope approval and before work. The five-business-day delivery target starts after scope approval, approved copy/assets and confirmed payment. No backend, login, payment checkout, CMS, copywriting strategy, custom illustration, domain purchase, production deployment, ongoing hosting or maintenance. The client must have rights to supplied content. No ranking, traffic, sales, accessibility-conformance or performance-score guarantee. Do not send credentials or private customer data."
+    },
+    {
       "id": "verified-repo-fix",
       "title": "Verified Repo Fix",
       "tagline": "One reproducible repository issue, a tested patch, and payment only on verified delivery.",

@@ -8,7 +8,9 @@ const s = data.services.find(s => s.id === (process.argv[2] || 'webhook-reliabil
 if (!s) throw new Error('Missing approved service');
 const base = 'https://b-hash88.github.io/knownfix';
 const api = 'https://knownfix-backend-28.b-hash88.deno.net';
+const microsite = s.id === 'microsite-launch';
 const scopeContact = 'mailto:knownfix.agent@gmail.com?subject=' + encodeURIComponent('KnownFix SaaS Security Exposure Review - scope approval');
+const microContact = 'mailto:knownfix.agent@gmail.com?subject=' + encodeURIComponent('KnownFix Microsite Launch - scope approval');
 const afterDelivery = s.paymentTiming === 'after-verified-delivery';
 const fixContact = 'mailto:knownfix.agent@gmail.com?subject=' + encodeURIComponent('KnownFix Verified Repo Fix - scope request');
 const esc = v => String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -44,6 +46,17 @@ hub = hub.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/, (
 });
 hub = hub.replace("event.preventDefault();var submit=document.getElementById('order-submit');", "event.preventDefault();var selected=serviceById(serviceInput.value);if(selected&&(selected.requiresScopeApproval||selected.paymentTiming==='after-verified-delivery')){updateHint();return}var submit=document.getElementById('order-submit');")
   .replace('finally{submit.disabled=false}', 'finally{updateHint()}');
+if (!hub.includes("var launch=service&&service.id==='microsite-launch'")) hub = hub
+  .replace("notice.textContent=delivery?", "var launch=service&&service.id==='microsite-launch';notice.textContent=launch?'Microsite Launch: written scope and approved copy/assets first; manual invoicing before work. Five business days after approval, approved content and payment. ':delivery?")
+  .replace("contact.href=delivery?", "contact.href=launch?'" + microContact + "':delivery?")
+  .replace("targetHint.textContent=delivery?", "targetHint.textContent=launch?'Request scope approval for a static page. No automated checkout; no credentials.':delivery?");
+if (microsite) {
+  hub = hub.replace(new RegExp('(<article class="service" id="microsite-launch">[\\s\\S]*?)</article>'), part => part.replaceAll(scopeContact,microContact).replace('Written scope approval required','Static microsite / scope approval first'));
+  hub = hub.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/, (_,raw) => {
+    const schema=JSON.parse(raw); const item=schema.itemListElement.find(v=>v.item.name===s.title); item.item.offers.url=microContact;
+    return '<script type="application/ld+json">'+JSON.stringify(schema)+'</script>';
+  });
+}
 write('services.html', hub);
 // Reuse the established source renderer only for the new page, not a full stale site rebuild.
 const require = createRequire(import.meta.url);
@@ -93,6 +106,14 @@ if (afterDelivery) EDITORIAL[s.id] = {
     ['Are revisions, deployment or security fixes included?',s.limitations]
   ]
 };
+if (microsite) EDITORIAL[s.id] = {
+  seoTitle:'Microsite Launch | $299 / 5 business days | KnownFix',
+  metaDescription:'One responsive static page, up to five sections, approved client content and one revision. $299 USDC; scope approval before payment.',
+  overview:'Launch a compact site from content you already have. This is a bounded static build, not a brand strategy, custom application or ongoing hosting contract.',
+  audience:['Developer tools with a focused launch brief','Open-source projects that need a clear public page','Small services with approved content and one call to action'],
+  questions:['What is the one action the visitor should take?','Which approved facts and assets belong on the page?','Does it work at desktop and mobile sizes?','Can the client launch it from the delivered source?'],
+  faq:[['What is included?',s.scope],['When does delivery begin?','Five business days after written scope approval, approved copy/assets and confirmed payment. Manual invoicing after approval and before work. No automated checkout.'],['What do I provide?','Approved copy, content rights, logo or other authorized assets, intended domain and one primary call to action. Never send credentials or customer data.'],['How is this different from the $750 Homepage Build?','Microsite Launch uses your approved copy and assets within five sections. The larger Homepage Build includes evidence-led audience strategy, information architecture and conversion copy.'],['Is deployment or hosting included?','No. You receive source for your own repository plus deployment instructions. Domain purchase, production access, backend, accounts and checkout are excluded.'],['What about revisions and results?',s.limitations]]
+};
 let detail = renderServiceDetailPage({base,backend:api,iconFile:'knownfix-icon.png',service:s,relatedServices:data.services.filter(v=>v.id!==s.id)});
 if (afterDelivery) detail = detail.replaceAll(base+'/services.html?service='+s.id+'#order', fixContact)
   .replaceAll('Order this review','Request a scoped fix').replaceAll('Order '+s.title,'Request a scoped fix')
@@ -108,6 +129,17 @@ if (afterDelivery) detail = detail.replaceAll(base+'/services.html?service='+s.i
   .replace('</style>', '@media(max-width:48rem){.facts{grid-template-columns:1fr}.facts dt{margin-top:.6rem}.facts dd{max-width:65ch}}\n</style>');
 if (s.requiresScopeApproval) detail = detail.replaceAll(base+'/services.html?service='+s.id+'#order', scopeContact).replaceAll('Order this review','Request scope approval').replaceAll('Order '+s.title,'Request scope approval').replace('3 business days after confirmed payment','5 business days after scope approval, payment and test access').replace('5 business days after confirmed payment','5 business days after scope approval, payment and test access');
 if (s.requiresScopeApproval) detail = detail.replaceAll('Private ticket delivery','Private report delivery').replaceAll('EXACT ETH ALTERNATIVE','SCOPE APPROVAL FIRST').replaceAll('USDC or the signed exact-ETH alternative','USDC after scope approval');
+if (microsite) detail = detail.replaceAll(scopeContact,microContact).replaceAll('5 business days after scope approval, payment and test access','5 business days after scope approval, approved copy/assets and payment')
+  .replaceAll('Private report delivery','Source handoff').replaceAll('Portable HTML + verified Markdown','Source + launch checklist')
+  .replaceAll('KnownFix professional review','KnownFix static-site service').replaceAll('Who should buy this review?','Who is this for?')
+  .replaceAll('Know exactly what is being reviewed.','One page. One clear purpose.').replaceAll('The report is built to answer these.','The brief answers these.')
+  .replaceAll('Other KnownFix reviews','Other KnownFix services')
+  .replace('Choose this review only when its published scope matches the decision you need to make. The order target and notes remain private unless you explicitly publish the target.','Approve the scope before invoicing. Work begins after approved copy/assets and payment. No credentials or production access needed.')
+  .replace('</main>','<section class="band"><div class="wrap"><h2>See an example build</h2><p><a href="../examples/patchnote.html">Patchnote example microsite</a> is a fictional demonstration, not a client project or a live product. No fabricated customer results.</p></div></section></main>')
+  .replace('clamp(2.7rem,6vw,5rem)','3.5rem')
+  .replace('>All reviews<','>All services<')
+  .replaceAll('.7rem','.8rem')
+  .replace('</head>','<style>@media(max-width:48rem){.facts{grid-template-columns:1fr}.facts dt{margin-top:.6rem}.facts dd{max-width:65ch}}</style></head>');
 detail = detail.replace('The books are public.', 'Owner-only statistics.');
 detail = detail.replace(/\.6[578]rem/g, '.75rem');
 if (!s.requiresScopeApproval && !afterDelivery) detail = detail.replace('<footer>', '<footer><p><a href="' + base + '/free-skills/webhook-delivery-triage.html">Free Webhook Delivery Triage skill</a></p>');

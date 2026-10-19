@@ -4,7 +4,7 @@ const read = file => fs.readFileSync(new URL(file, root), 'utf8');
 const write = (file, text) => fs.writeFileSync(new URL(file, root), text);
 const { services } = JSON.parse(read('services.json'));
 const esc = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const kind = s => s.requiresScopeApproval ? 'security' : s.targetKind === 'github-repository' ? 'repository' : 'website';
+const kind = s => s.id === 'saas-security-exposure-review' ? 'security' : s.targetKind === 'github-repository' ? 'repository' : 'website';
 const labels = { security: 'Authorized SaaS', repository: 'Public repository', website: 'Public website / API' };
 const compare = `<!-- service-comparison:start -->
 <section class="band service-compare" id="compare"><div class="section-head"><h2>Compare services</h2><p>Published scopes, prices and delivery targets.</p></div>

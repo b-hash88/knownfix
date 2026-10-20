@@ -67,5 +67,17 @@ assert.equal(JSON.parse(decodeURIComponent(links.vscode.split('?')[1])).url, MCP
 assert.equal(JSON.parse(atob(new URL(links.cursor).searchParams.get('config'))).url, MCP_ENDPOINT);
 assert.equal(new URL(links.cursor).searchParams.get('name'), 'knownfix');
 assert.match(read('mcp-connect.html'), /Configured:[\s\S]*Discovered:[\s\S]*Successfully used:/);
+for (const file of ['index.html', 'mcp-connect.html']) {
+  const html = read(file);
+  const notice = html.split('id="smithery-migration"')[1]?.split(file === 'index.html' ? '</p>' : '</aside>')[0];
+  assert(notice, `${file}: Smithery migration notice is present`);
+  assert(notice.includes('<time datetime="2026-10-31">October 31, 2026</time>'));
+  assert(notice.includes('<code>run.tools</code>') && notice.includes('<code>server.smithery.ai</code>'));
+  assert(notice.includes(`<code>${MCP_ENDPOINT}</code>`));
+  assert(notice.includes('https://smithery.ai/future'));
+}
+assert(read('index.html').includes('./mcp-connect.html#smithery-migration'));
+assert(read('mcp-connect.html').includes('replace only its KnownFix entry'));
+assert(read('mcp-connect.html').includes('do not copy Smithery credentials'));
 assert(read('free-skills.html').includes('./toolkit/README.md'));
 console.log('PASS six standard skills, standalone installation, offline CLI boundaries/parity, client formats and install-link payloads.');

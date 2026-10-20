@@ -79,5 +79,20 @@ for (const file of ['index.html', 'mcp-connect.html']) {
 assert(read('index.html').includes('./mcp-connect.html#smithery-migration'));
 assert(read('mcp-connect.html').includes('replace only its KnownFix entry'));
 assert(read('mcp-connect.html').includes('do not copy Smithery credentials'));
+const migrationNotice = read('mcp-connect.html').match(/<aside id="smithery-migration"[\s\S]*?<\/aside>/)[0];
+const generatedRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'knownfix-kit-generation-'));
+try {
+  fs.cpSync(root, generatedRoot, {
+    recursive: true,
+    filter: source => !path.relative(root, source).split(path.sep).some(part => ['.git', 'node_modules'].includes(part)),
+  });
+  for (let repeat = 0; repeat < 2; repeat++) {
+    const generated = spawnSync(process.execPath, ['scripts/sync-mcp-kit.mjs'], { cwd: generatedRoot, encoding: 'utf8', timeout: 15000 });
+    assert.equal(generated.status, 0, generated.stderr);
+    const html = fs.readFileSync(path.join(generatedRoot, 'mcp-connect.html'), 'utf8').replace(/\r\n/g, '\n');
+    assert.equal(html.match(/<aside id="smithery-migration"[\s\S]*?<\/aside>/)?.[0], migrationNotice, 'MCP kit regeneration must preserve the migration instructions');
+    assert.equal((html.match(/id="smithery-migration"/g) || []).length, 1);
+  }
+} finally { fs.rmSync(generatedRoot, { recursive: true, force: true }); }
 assert(read('free-skills.html').includes('./toolkit/README.md'));
 console.log('PASS six standard skills, standalone installation, offline CLI boundaries/parity, client formats and install-link payloads.');
